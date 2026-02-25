@@ -1,0 +1,274 @@
+\section{Clase 18 - Pr\'actica 7 (Interpolaci\'on)}
+
+\underline{Con los ceros de $T_{n + 1}$ en $[-1, 1]$}:
+
+$$|f(x) - P_{n}(x)| \leq \frac{\|f^{(n + 1)}\|_{\infty, [-1, 1]}}{(n + 1)!}\frac{1}{2^{n}}$$\\
+
+\underline{Ra\'ices de $T_{n + 1}$ en $[a, b]$ y error}:
+
+$$x_{k} = \frac{b - a}{2}\cos\bigg(\frac{(2k + 1)\pi}{2n + 2}\bigg) + \frac{a + b}{2},\ k = 0, \cdots, n$$
+
+$$|f(x) - P_{n}(x)| \leq \frac{\|f^{(n + 1)}\|_{\infty, [-1, 1]}}{(n + 1)!}\bigg(\frac{b - a}{2}\bigg)^{n + 1}\frac{1}{2^{n}}$$\\
+
+\subsection{Interpolaci\'on de Hermite}
+
+Buscamos interpolar $f$ y alguna de sus derivadas en algunos puntos.\\
+
+\textit{Ejemplo}:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c c c}
+        $P(0) = 1$ & $P'(0) = -3$ & $P''(0) = 4$\\
+        $P(1) = 2$ &  & \\
+        $P(-1) = -2$ &  & \\
+    \end{tabular}
+\end{table}
+
+
+5 condiciones $\rightarrow P$ de grado 4.\\
+
+\begin{itemize}
+	\item Por coeficientes indeterminados:
+	
+	$$P(x) = a_{0} + a_{1}x + a_{2}x^{2} + a_{3}x^{3} + a_{4}x^{4}$$
+	$$P'(x) = a_{1} + 2a_{2}x + 3a_{3}x^{2} + 4a_{4}x^{3}$$
+	$$P''(x) = 2a_{2} + 6a_{3}x + 12a_{4}x^{2}$$
+
+	$$
+    \begin{cases}
+        a_{0} = 1\\
+        a_{1} = -3\\
+        2a_{2} = 4\\
+        a_{0} + a_{1} + a_{2} + a_{3} + a_{4} = 2\\
+        a_{0} - a_{1} + a_{2} - a_{3} + a_{4} = -2\\ 
+    \end{cases}
+	$$
+
+	$$\text{y resuelvo...}$$
+	
+	\item Con tabla de diferencias divididas:\\
+	
+	\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c}
+        $x$ & $f[\cdot]$ & $f[\cdot, \cdot]$ & $f[\cdot, \cdot, \cdot]$ & $f[\cdot, \cdot, \cdot, \cdot]$ & $f[\cdot, \cdot, \cdot, \cdot, \cdot]$\\ \hline
+        $-1$ & $-2$ &  & & &\\
+        &&&&&\\
+        $0$ & $1$ & $\frac{1 - (-2)}{0 - (-1)} = 3$ & & & \\
+        &&&&&\\
+        $0$ & $1$ & $f'(0) = -3$ & $\frac{-3 - 3}{0 - (-1)} = -6$ & &\\
+        &&&&&\\
+        $0$ & $1$ & $f'(0) = -3$ & $\frac{f''(0)}{2!} = \frac{4}{2} = 2$ & $\frac{2 - (-6)}{0 - (-1)} = 8$ &\\
+        &&&&&\\
+        $1$ & $2$ & $\frac{2 - 1}{1 - 0} = 1$ & $\frac{1 - (-3)}{1 - 0} = 4 = 2$ & $\frac{4 - 2}{1 - 0} = 2$ & $\frac{2 - 8}{1 - (-1)} = -3$\\
+    \end{tabular}
+\end{table}
+
+$$P(x) = -2 + 3(x - (-1)) + (-6)(x - (-1))(x - 0) + 8(x - 0)^{2}(x - (-1)) + (-3)(x - 0)^{3}(x - (-1))$$
+$$ = -2 + 3(x + 1) - 6(x + 1)x + 8x^{2}(x + 1) - 3(x + 1)x^{3}$$\\
+
+\end{itemize}
+
+\underline{Definici\'on}: $f[x_{j}, \cdots, x_{j}] = \frac{f^{(k)}(x_{j})}{k!}$\\
+
+\textit{Expresi\'on del error en el ejemplo}: $f(x) - P(x) = \frac{f^{(5)}(\theta)}{5!}(x + 1)x^{3}(x - 1),\ \theta \in (-1, 1)$\\
+
+\underline{En general}: No siempre se puede hallar el interpolador de $f$ y sus derivadas.\\
+
+\underline{Teorema}: Sea $f$, puntos distintos $x_{0}, \cdots, x_{k}$ y $m_{0}, \cdots, m_{k} \in \mathbb{N}_{0}\ / \ m_{0} + \cdots + m_{k} = n + 1,\ \exists!$ polinomio $P$ de grado $\leq n$ que satisface
+
+$$
+	\begin{cases}
+     	P(x_{0}) = f(x_{0}), P'(x_{0}) = f'(x_{0}), \cdots, P^{(m_{0} - 1)}(x_{0}) = f^{(m_{0} - 1)}(x_{0})\\
+		P(x_{1}) = f(x_{1}), P'(x_{1}) = f'(x_{1}), \cdots, P^{(m_{1} - 1)}(x_{1}) = f^{(m_{1} - 1)}(x_{1})\\
+		\vdots\\
+        P(x_{k}) = f(x_{k}), P'(x_{k}) = f'(x_{k}), \cdots, P^{(m_{k} - 1)}(x_{k}) = f^{(m_{k} - 1)}(x_{k})\\ 
+    \end{cases}
+$$\\
+
+\textit{Expresi\'on del error}: $f(x) - P(x) = \frac{f^{(n + 1)}(\theta)}{(n + 1)!}\prod \limits_{j = 0}^{k}(x - x_{j})^{m_{j}},\ \theta$ entre $x_{0}, \cdots, x_{k}$.\\
+
+\subsection{Interpolaci\'on lineal a trozos}
+
+Tomo $a = x_{0} < x_{1} < \cdots < x_{n} = b$ y en cada subintervalo $[x_{i - 1}, x_{i}]$ armo un polinomio de grado 1 que interpole a la funci\'on en los extremos.\\
+
+Usando, por ejemplo, la forma de Lagrange podemos definir
+
+$$P_{1, i} = f(x_{i - 1})\frac{x - x_{i}}{x_{i - 1} - x_{i}} + f(x_{i})\frac{x - x_{i - 1}}{x_{i} - x_{i - 1}}$$
+
+Los polinomios se pegan con continuidad dando una poligonal $P$.\\
+
+\underline{Error de interpolaci\'on lineal a trozos}\\
+
+Como $x \in [a, b]$ pertenece a alg\'un subintervalo $[x_{i - 1}, x_{i}]$:
+
+$$f(x) - P(x) = f(x) - P_{1, i}(x) = \frac{f''(\theta_{i, x})}{2}(x - x_{i - 1})(x - x_{i})$$
+
+y como $|(x - x_{i - 1})(x - x_{i})| = (x - x_{i - 1})(x_{i} - x) \leq \bigg(\frac{x_{i} - x_{i - 1}}{2}\bigg)^{2}$, si $x_{i} - x_{i - 1} = \frac{b - a}{n}$, tenemos
+
+$$|f(x) - P(x)| \leq \frac{\max \limits_{\theta \in [a, b]} |f''(\theta)|}{8}\bigg(\frac{b - a}{n}\bigg)^{2}$$
+
+\subsection{Splines c\'ubicos}
+
+Interpolamos en cada intervalo $[x_{i - 1}, x_{i}]$ por un polinomio $P_{i}$ de grado 3 de forma tal que
+
+\begin{itemize}
+	\item $P_{i}(x_{i - 1}) = y_{i - 1},\ P_{i}(x_{i}) = y_{i},\ i = 1, \cdots, n$
+	\item $P'_{i - 1}(x_{i}) = P'_{i}(x_{i}),\ i = 1, \cdots, n - 1$
+	\item $P''_{i - 1}(x_{i}) = P''_{i}(x_{i}),\ i = 1, \cdots, n - 1$
+\end{itemize}
+
+Cada $P_{i}$ tiene 4 coeficientes. Hay que hallar entonces $4n$ coeficientes. Sin embargo, hasta ac\'a planteamos solo $2n + (n - 1) + (n - 1) = 4n - 2$ restricciones.\\
+
+\underline{Condiciones de borde}:
+
+\begin{itemize}
+	\item NOT-A-KNOT (DEFAULT) $[\cdots]$ Cuidado! Solo sirve cuando hay 3 o m\'as intervalos.\\
+	\item PERIODIC si se asume que la $f$ original es peri\'odica, de per\'iodo $x_{n} - x_{0} \Rightarrow y_{0} = y_{n}$ y vale que $P'_{0}(x_{0}) = P'_{n - 1}(x_{n})$ y $P''_{0}(x_{0}) = P''_{n - 1}(x_{n})$\\
+	\item CLAMPED $P'_{0}(x_{0}) = P'_{n - 1}(x_{n}) = 0$\\
+	\item NATURAL $P''_{0}(x_{0}) = P''_{n - 1}(x_{n}) = 0$\\
+\end{itemize}
+
+\textit{Ejemplo}: 
+
+\begin{verbatim}
+	scipy.interpolate.CubicSpline(x, y, bc_type = 'periodic')
+\end{verbatim}
+
+$$f(x) = \sin(\pi x)$$
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        $x$ & $-\frac{1}{2}$ & 0 & $\frac{1}{2}$\\ \hline
+        $y$ & -1 & 0 & 1\\ \hline
+    \end{tabular}
+\end{table}
+
+Buscamos $P_{3, 1}$ en $[-\frac{1}{2}, 0]$ y $P_{3, 2}$ en $[0, \frac{1}{2}]\ /$
+
+\begin{itemize}
+	\item $P_{3, 1}(-\frac{1}{2}) = -1,\ P_{3, 1}(0) = 0,\ P_{3, 2}(0) = 0,\ P_{3, 2}(\frac{1}{2}) = 1$
+	\item $P'_{3, 1}(0) = P'_{3, 2}(0) = 0$
+	\item $P''_{3, 1}(0) = P''_{3, 2}(0) = 0$\\
+\end{itemize}
+
+Hasta ac\'a tenemos 6 restricciones para 8 inc\'ognitas. Pedimos adem\'as $P'_{3, 1}(-\frac{1}{2}) = 0$ y $P'_{3, 2}(\frac{1}{2}) = 0$ (CLAMPED). Si:\\
+
+$$P_{3, 1}(x) = a_{0} + a_{1}x + a_{2}x^{2} + a_{3}x^{3}$$
+$$P_{3, 2}(x) = b_{0} + b_{1}x + b_{2}x^{2} + b_{3}x^{3}$$
+
+$$
+	\begin{cases}
+		P_{3, 1}(-\frac{1}{2}) = -1 \rightarrow a_{0} + a_{1}(-\frac{1}{2}) + a_{2}(-\frac{1}{2})^{2} + a_{3}(-\frac{1}{2})^{3} = -1\\
+		
+		P_{3, 1}(0) = 0\ \rightarrow \ a_{0} + a_{1}0 + a_{2}0^{2} + a_{3}0^{3} = 0\\
+		
+     	P_{3, 2}(0) = 0\ \rightarrow \ b_{0} + b_{1}0 + b_{2}0^{2} + b_{3}0^{3} = 0\\
+	
+		P_{3, 2}(\frac{1}{2}) = 1\ \rightarrow \ b_{0} + b_{1}(\frac{1}{2}) + b_{2}(\frac{1}{2})^{2} + b_{3}(b\frac{1}{2})^{3} = 1\\
+		
+		P'_{3, 1}(0) = P'_{3, 2}(0)\ \rightarrow \ a_{1} + 2a_{2}0 + 3a_{3}0^{2} = b_{1} + 2b_{2}0 + 3b_{3}0^{2}\\
+		
+		P''_{3, 1}(0) = P''_{3, 2}(0)\ \rightarrow \ 2a_{2} + 6a_{3}0 = 2b_{2} + 6b_{3}0\\
+		
+		P'_{3, 1}(-\frac{1}{2}) = 0\ \rightarrow \ a_{1} + 2a_{2}(-\frac{1}{2}) + 3a_{3}(-\frac{1}{2})^{3} = 0\\
+		
+		P'_{3, 2}(\frac{1}{2}) = 0\ \rightarrow \ b_{1} + 2b_{2}(\frac{1}{2}) + 3b_{3}(\frac{1}{2})^{3} = 0\\
+    \end{cases}
+$$\\
+
+$$
+    \begin{pmatrix}
+        1 & -\frac{1}{2} & \frac{1}{4} & -\frac{1}{8} & 0 & 0 & 0 & 0\\
+		1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0 & 1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{8}\\
+		0 & 1 & 0 & 0 & 0 & -1 & 0 & 0\\
+		0 & 0 & 2 & 0 & 1 & 0 & -2 & 0\\
+		0 & 1 & -1 & \frac{3}{4} & 0 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0 & 0 & 1 & 1 & \frac{3}{4}\\
+		\end{pmatrix}
+    \begin{pmatrix}
+        a_{0}\\
+        a_{1}\\
+        a_{2}\\
+        a_{3}\\
+        b_{0}\\
+        b_{1}\\
+        b_{2}\\
+        b_{3}\\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        -1\\
+        0\\
+        0\\
+        1\\
+        0\\
+        0\\
+        0\\
+        0\\
+    \end{pmatrix}
+$$
+
+$$\Rightarrow a_{0} = 0,\ a_{1} = 3,\ a_{2} = 0,\ a_{3} = -4,\ b_{0} = 0,\ b_{1} = 3,\ b_{2} = 0,\ b_{3} = -4$$
+
+$$P_{3, 1}(x) = P_{3, 2}(x) = 3x - 4x^{3}$$\\
+
+\underline{Teorema}: Sean $x_{0}, \cdots, x_{n} n + 1$ puntos distintos y sean $y_{0}, \cdots, y_{n}, y'_{0}, \cdots, y'_{n}\ (2n + 2)$ puntos cualesquiera, entonces existen un \'unico polinomio $P \in \mathcal{P}_{2n + 1}\ /\ P(x_{j}) = y_{i}$ y $P'(x_{j}) = y'_{j}$.\\
+
+\underline{Demostraci\'on}: Vamos a escribir a $P$ de la forma
+
+$$P(x) = \sum \limits_{j = 0}^{n} y_{i}Q_{j}(x) + \sum \limits_{j = 0}^{n} y'_{j}R_{j}(x)$$
+
+con $R_{j}, Q_{j}$ tal que
+
+$$Q_{j}(x_{k}) = \delta_{jk},\ Q'_{j}(x_{k}) = 0,\ 0 \leq k \leq n$$
+$$R_{j}(x_{k}) = 0,\ R'_{j}(x_{k}) = \delta_{jk},\ 0 \leq k \leq n$$
+$$j = 0, \cdots, n$$
+
+Recordemos $l_{j}(x) = \prod \limits_{k = 0}^{n} \frac{(x - x_{k})}{x_{j} - x_{k}}$. Sean $Q_{j}(x) = (1 - 2(x - x_{j})l'_{j}(x_{j}))l_{j}^{2}(x) = A(x)l_{j}^{2}(x)$ y $R_{j}(x) = (x - x_{j})l_{j}^{2}(x),\ j = 0, \cdots, n$. Veamos que cumplen lo pedido:\\
+
+\begin{itemize}
+	\item $Q_{j}(x_{k}) = A(x_{k})l_{j}^{2}(x_{k}) = 0$ si $k \neq j$
+	\item $Q_{j}(x_{j}) = A(x_{j})l_{j}^{2}(x_{j}) = A(x_{j}) = 1$
+	\item $Q'_{j}(x) = A'(x)l_{j}^{2}(x) + A(x)2l_{j}(x)l'_{j}(x)$:
+	
+	\begin{itemize}
+		\item $Q'_{j}(x_{k}) = 0 + 0 = 0$ si $k \neq j$
+		\item $Q'_{j}(x_{j}) = A'(x_{j}) + 2(A(x_{j})l'_{j}(x_{j})) = -2l'(x_{j}) + 2l'(x_{j}) = 0$
+	\end{itemize}
+	
+	\item $R_{j}(x_{k}) = 0\ \forall \ k = 0, \cdots, n$
+	\item $R'_{j}(x) = l_{j}^{2}(x) + (x - x_{j})2l_{j}(x)l'_{j}(x)$:
+	
+	\begin{itemize}
+		\item $R'_{j}(x_{k}) = 0 + 0 = 0$ si $k \neq j$
+		\item $R'_{j}(x_{j}) = 1 + 0 = 1$
+	\end{itemize}
+\end{itemize}
+
+Vemos entonces que $P$ existe. Veamos que es \'unico. Supongamos que $\tilde{P} \in \mathcal{P}_{2n + 1}$ es tal que $\tilde{P}(x_{j}) = y_{j},\ \tilde{P}'(x_{j}) = y'_{j}$. Sea $T(x) = P(x) - \tilde{P}(x) \in \mathcal{P}_{2n + 1}$. $T$ cumple que $T(x_{j}) = 0,\ T'(x_{j}) = 0\ \forall \ j = 0, \cdots, n$. Es decir, $T$ tiene $n + 1$ ceros con multiplicidad al menos 2. Por lo tanto, $T \equiv 0$ y $P$ es \'unico.\\
+
+\underline{Teorema}: $f \in C^{2n + 2}([a, b]),\ x_{0}, x_{1}, \cdots, x_{n} \in [a, b]$ distintos, $P \in \mathcal{P}_{2n + 1}\ / \ P(x_{j}) = f(x_{j})$ y $P'(x_{j}) = f'(x_{j}),\ j = 0, \cdots, n$. Sea $x \in [a, b]$: 
+
+$$f(x) - P_{n}(x) = \frac{f^{(2n + 2)}(\zeta)}{(2n + 2)!}(W_{n + 1}(x))^{2}$$
+
+con $\zeta \in (a, b),\ W_{n + 1}(x) = \prod \limits_{j = 0}^{n} (x - x_{j})$.\\
+
+\underline{Demostraci\'on}: Si $x = x_{i}$, vale pues $f(x_{i}) = P(x_{i})$ y $W_{n + 1}(x_{i}) = 0,\ i = 0, \cdots, n$. Si $x \neq x_{i}$ para $0 \leq i \leq n,\ x \in [a, b]$ definimos
+
+$$F(t) = (f(t) - P(t))(W_{n + 1}(x))^{2} - (f(x) - P(x))(W_{n + 1}(t))^{2}$$
+
+Como $F(x) = F(x_{0}) = \cdots = F(x_{n}) = 0$. $F$ tiene al menos $n + 2$ ceros distintos en $(a, b)$. Por el teorema de Rolle, $F'$ tiene al menos $n + 1$ ceros distintos en $(a, b)$ distintos de $x, x_{0}, \cdots, x_{n}$.
+
+$$F'(t) = (f'(t) - P'(t))(W_{n + 1}(x))^{2} - (f(x) - P(x))2W_{n + 1}(t)W'_{n + 1}(t)$$
+
+y vale que $F'(x_{i}) = 0$ para $i = 0, \cdots, n$. Por lo tanto, $F'$ tiene al menos $2n + 2$ ceros distintos. Nuevamente, por el teorema de Rolle, $F''$ tiene al menos $2n + 1$ ceros distintos en $(a, b)$. Y as\'i, deducimos que $F^{(2n + 2)}$ tiene al menos un cero, $\zeta \in (a, b)$:
+
+$$0 = F^{(2n + 2)}(\zeta) = f^{(2n + 2)}(\zeta)(W_{n + 1}(x))^{2} - (f(x) - P_{n}(x))(2n + 2)!$$
+
+como quer\'iamos probar.

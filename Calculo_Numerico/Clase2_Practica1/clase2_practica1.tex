@@ -1,0 +1,159 @@
+\section{Clase 2 - Pr\'actica 1 (Aritm\'etica de punto flotante)}
+
+Sea $ax^{2} + bx + c = 0$. El algoritmo 1 es:
+
+$$x_{1} = \frac{-b + \sqrt{b^{2} - 4ac}}{2a}$$
+
+$$x_{2} = \frac{-b - \sqrt{b^{2} - 4ac}}{2a}$$
+
+Puede pasar que $\sqrt{b^{2} - 4ac} \approx |b|$. Si $b < 0$, el problema surge al calcular $x_{2}$; en cambio si $b > 0$, el problema surge al calcular $x_{1}$.\\
+
+Proponemos un algoritmo 2:
+
+$$x_{1} = -\frac{b + \text{sg}(b)\sqrt{b^{2} - 4ac}}{2a}$$
+
+$$\text{sg}(b) = 
+	\begin{cases}
+        1\ \text{si}\ b > 0\\
+        -1\ \text{si}\ b < 0\\
+    \end{cases}
+$$
+
+Como $x_{1},\ x_{2}$ son ra\'ices de la cuadr\'atica, entonces $ax^{2} + bx + c = a(x - x_{1})(x - x_{2}) \Rightarrow c = ax_{1}x_{2} \Rightarrow x_{2} = \frac{c}{ax_{1}}$.\\
+
+\subsection{Inestabilidad}
+
+Un algoritmo es inestable cuando los peque\~nos errores (redondeo, truncamiento) que se introducen en alguna de sus etapas se agrandan en etapas posteriores y deterioran la exactitud del c\'alculo en su conjunto.\\
+
+En el ejemplo anterior, el algoritmo 1 es inestable.\\
+
+\textit{Ejemplo}: $Ax = b,\ A = \begin{pmatrix}
+        10^{-6} & 1\\
+        1 & 1\\
+	\end{pmatrix},\ b = \begin{pmatrix}
+        1\\
+        2\\
+	\end{pmatrix}$\\
+	
+Procedo a mano:
+
+$$
+    \begin{pmatrix}
+        10^{-6} & 1 & | & 1\\
+        1 & 1 & | & 2\\
+	\end{pmatrix}
+	\rightarrow_{\tilde{F}_{2} = F_{2} - 10^{6}F_{1}}
+    \begin{pmatrix}
+        10^{-6} & 1 & | & 1\\
+        0 & 1 - 10^{6} & | & 2 - 10^{6}\\
+	\end{pmatrix}
+$$
+
+$\Rightarrow y = \frac{2 - 10^{6}}{1 - 10^{6}} = \frac{10^{6} - 2}{10^{6} - 1} \approx 1$\\
+
+$10^{-6}x = 1 - y \Rightarrow 10^{-6}x - \frac{10^{6} - 2}{10^{6} - 1} \Rightarrow 10^{-6}x - \frac{1}{10^{6} - 1} \Rightarrow x = \frac{10^{6}}{10^{6} - 1} \approx 1$\\
+
+Ahora para la m\'aquina, definimos $m = 5,\ \beta = 10$, repitiendo el c\'alculo $\tilde{F}_{2} = F_{2} - 10^{6}F_{1}$:\\
+
+$0.1\cdot10 - 1\cdot10^{6} \cdot 0.1\cdot10^{-5} = 0.1\cdot10 - 0.1\cdot10\cdot10^{6} \cdot 0.1\cdot10^{-5} = 0.1\cdot10 - 0.01\cdot10^{2} = 0.1\cdot10 - 0.01\cdot10\cdot10 = 0.1\cdot10 - 0.1\cdot10 = 0$\\
+
+$0.1\cdot10 - 0.1\cdot10^{7} \cdot 0.1\cdot10 = 0.1\cdot10 - 0.01\cdot10^{8} = 0.1\cdot10 - 0.01\cdot10\cdot10^{7} = 0.1\cdot10 - 0.1\cdot10^{7} = 0.1\cdot10^{-6}\cdot10^{6}\cdot 10 - 0.1\cdot10^{7} = -0.0999999\cdot10^{7} = -0.0999999\cdot10\cdot10^{6} = -0.999999\cdot10^{6}$\\
+
+Ahora redondeamos, tenemos $m = 5$, entonces como el n\'umero detr\'as del quinto d\'igito es mayor a 5, redondeamos a 1:\\
+
+$-1\cdot10^{6} = -0.1\cdot10\cdot10^{6} = -0.1\cdot10^{7}$\\
+
+$0.2\cdot10^{1} - 0.1\cdot10^{7}\cdot0.1\cdot10^{1} = 0.2\cdot10^{1} - 0.01\cdot10^{8} = 0.2\cdot10^{1} - 0.01\cdot10\cdot10^{7} = 0.2\cdot10^{1} - 0.1\cdot10^{7} = 0.2\cdot10^{-6}\cdot10^{6}\cdot10^{1} - 0.1\cdot10^{7} = 0.0000002\cdot10^{7} - 0.1\cdot10^{7} = -0.0999998\cdot10^{7} = -0.999998\cdot10^{6}$\\
+
+$-1\cdot10^{6} = -0.1\cdot10\cdot10^{6} = -0.1\cdot10^{7}$\\
+
+$$ \Rightarrow A_{M} = 
+    \begin{pmatrix}
+        0.1\cdot10^{-5} & 0.1\cdot10^{1} & | & 0.1\cdot10^{1}\\
+        0 & -0.1\cdot10^{7} & | & -0.1\cdot10^{7}\\
+	\end{pmatrix}
+$$
+
+Luego, $y = \frac{-0.1\cdot10^{7}}{-0.1\cdot10^{7}} = 1 = 0.1\cdot10$.\\
+
+$0.1\cdot10^{5}x + 0.1\cdot10^{1}\cdot0.1\cdot10^{1} = 0.1\cdot10^{1} \Rightarrow 0.1\cdot10^{5}x + 0.01\cdot10^{2} = 0.1\cdot10^{1} \Rightarrow 0.1\cdot10^{5}x + 0.1\cdot10 = 0.1\cdot10 \Rightarrow x = 0$\\
+
+De d\'onde viene el error?
+
+$$10^{-6}x + 1(y + \Delta y) = 1 \Rightarrow x = (1 - 1(y + \Delta y))10^{6}$$ 
+
+Se multiplica el error. Una estrategia para minimizar el error ser\'ia permutar las filas y elegir otro pivote, por ejemplo:
+
+$$
+    \begin{pmatrix}
+        1 & 1 & | & 2\\
+        10^{-6} & 1 & | & 1\\
+	\end{pmatrix}
+$$
+
+Haciendo $\tilde{F}_{2} = F_{2} - 10^{-6}F_{1}$:\\
+
+$0.1\cdot10^{-5} - 0.1\cdot10^{-5}\cdot0.1\cdot10 = 0.1\cdot10^{-5} - 0.01\cdot10^{-4} = 0.1\cdot10^{-5} - 0.1\cdot10^{-1}\cdot10^{-4} = 0.1\cdot10^{-5} - 0.1\cdot10^{-5} = 0$\\
+
+$0.1\cdot10 - 0.1\cdot10^{-5}\cdot0.1\cdot10 = 0.1\cdot10 - 0.01\cdot10^{-4} = 0.1\cdot10 - 0.1\cdot10^{-1}\cdot10^{-4} = 0.1\cdot10 - 0.1\cdot10^{-5} = 0.1\cdot10 - 0.1\cdot10^{-5}\cdot10^{-1}\cdot10 = 0.1\cdot10 - 0.1\cdot10^{-6}\cdot10 = 0.1\cdot10 - 0.0000001\cdot10 = 0.0999999\cdot10 = 0.999999\ \text{(redondeo)} \ = 0.1\cdot10$\\
+
+$0.1\cdot10 - 0.1\cdot10^{-5}\cdot0.2\cdot10^{1} = 0.1\cdot10 - 0.02\cdot10^{-4} = 0.1\cdot10 - 0.2\cdot10^{-1}\cdot10^{-4} = 0.1\cdot10 - 0.2\cdot10^{-5} = 0.1\cdot10 - 0.2\cdot10^{-5}\cdot10^{-1}\cdot10 = 0.1\cdot10 - 0.0000002\cdot10 = 0.0999998\cdot10 = 0.999998\ \text{(redondeo)} \ = 0.1\cdot10$\\
+
+Luego, la matriz queda:
+
+$$
+    \begin{pmatrix}
+        0.1\cdot10 & 0.1\cdot10 & | & 0.2\cdot10\\
+        0 & 0.1\cdot10 & | & 0.1\cdot10\\
+	\end{pmatrix}
+$$\\
+
+$0.1\cdot10x + 0.1\cdot10\cdot0.1\cdot10 = 0.2\cdot10 \Rightarrow 0.1\cdot10x + 0.01\cdot10^{2} = 0.2\cdot10 \Rightarrow 0.1\cdot10x + 0.1\cdot10^{1} = 0.2\cdot10 \Rightarrow 0.1\cdot10x = 0.2\cdot10^{1} - 0.1\cdot10 \Rightarrow x = \frac{0.1\cdot10}{0.1\cdot10} = 1$\\
+
+\subsection{Notaci\'on $o$ y $\mathcal{O}$}
+
+$f = \mathcal{O}(g)$ cuando $x \rightarrow x_{0} \iff \ \exists \ \epsilon > 0\ / \ |f| \leq \epsilon|g|\ \forall \ x \ \text{en un entorno de}\ x_{0}$\\
+
+$f = o(g)$ cuando $x \rightarrow 0 \iff \ \forall \ \epsilon > 0\ / \ |f| < \epsilon|g|\ \forall \ x \ \text{en un entorno de}\ 0$\\
+
+\subsection{Condicionamiento}
+
+Es el t\'ermino que usamos para describir como peque\~nos errores en el dato pueden alterar el resultado, es decir, cuan sensible es el problema a perturbaciones en el dato de entrada.
+
+$$\text{DATO} \rightarrow f(\text{DATO})$$
+$$\text{DATO*} \rightarrow f(\text{DATO*})$$
+
+Si esto est\'a cerca, el problema est\'a bien condicionado.\\
+
+Al resolver un problema, si el resultado es diferente debemos preguntarnos si esto se debe a que el m\'etodo es inestable o el problema est\'a mal condicionado.
+
+$$x_{0}\ \text{dato} \rightarrow f(x_{0})$$
+$$\tilde{x}_{0}\ \text{perturbado} \rightarrow f(\tilde{x}_{0})$$
+
+Si pensamos que $f$ es continua en $[x_{0}, \tilde{x}_{0}]$ y derivable en $(x_{0}, \tilde{x}_{0})$, y usando el teorema del valor medio:
+
+$$\frac{|f(x_{0}) - f(\tilde{x}_{0})|}{|f(x_{0})|} = \frac{|f'(\theta_{0})(x_{0} - \tilde{x}_{0})|}{|f(x_{0})|} = \bigg|\frac{x_{0}f'(x_{0})}{f(x_{0})}\bigg| \bigg|\frac{x_{0} - \tilde{x}_{0}}{x_{0}}\bigg| = C \bigg|\frac{x_{0} - \tilde{x}_{0}}{x_{0}}\bigg|$$
+
+donde $\theta_{0}$ pertenece al intervalo de extremos $x_{0}$ y $\tilde{x}_{0}$, y $C$ es el n\'umero de condici\'on.\\
+
+Si $C \approx 1$, el problema est\'a bien condicionado seg\'un lo que arroje, puede agrandar o achicar.\\
+
+\textit{Ejemplo}: $f(x) = x - t$, con $x \approx t$\\
+
+$f'(x) = 1 \Rightarrow \bigg|\frac{x\cdot1}{x - t}\bigg|$ es grande, por lo tanto el problema est\'a mal condicionado.\\
+
+Aplico $h(x) = \frac{1}{x + t} \Rightarrow h'(x) = -\frac{1}{(x + t)^{2}} \Rightarrow \bigg|\frac{x \frac{1}{(x + t)^{2}}}{\frac{1}{x + t}}\bigg| = \bigg|\frac{x}{x + t}\bigg| \approx \frac{1}{2}$\\
+
+\textit{Ejemplo}: $f(x) = \sqrt{x + 1} - \sqrt{x}$, con $x$ grande\\
+
+$h(x) = (\sqrt{x + 1} - \sqrt{x}) \frac{\sqrt{x + 1} + \sqrt{x}}{\sqrt{x + 1} + \sqrt{x}} = \frac{1}{\sqrt{x + 1} + \sqrt{x}}$\\
+
+Si $x = 12345$ y $m = 6 \Rightarrow f(12345) = 0.00450003262$\\
+
+Ahora, $12345 = 0.12345\cdot10^{5} + 0.1\cdot10^{1} = 0.12345\cdot10^{5} + 0.1\cdot10^{1}\cdot10^{-4}\cdot10^{4} = 0.12345\cdot10^{5} + 0.00001\cdot10^{5} = 0.12346\cdot10^{5}$\\
+
+$fl(\sqrt{12346}) = 0.111113\cdot10^{3}$\\
+
+$fl(\sqrt{12345}) = 0.111108\cdot10^{3}$\\
+
+$\Rightarrow fl(fl(\sqrt{12346}) - fl(\sqrt{12345})) = 5\cdot10^{-6}\cdot10^{3} = 5\cdot10^{-3} = 0.005$

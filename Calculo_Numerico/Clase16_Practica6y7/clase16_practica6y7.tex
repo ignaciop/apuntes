@@ -1,0 +1,302 @@
+\section{Clase 16 - Pr\'actica 6 (Resoluci\'on num\'erica de ecuaciones no lineales) y Pr\'actica 7 (Interpolaci\'on)}
+
+\subsection{Orden de convergencia}
+
+Sea $\{a_{n}\}_{n \in \mathbb{N}}$ una sucesi\'on de n\'umeros reales, $a_{n} \rightarrow_{n \to \infty} l, l \in \mathbb{R}$. Decimos que $a_{n}$ converge a $l$ con orden al menos $p$ si existen $C > 0, n_{0} \in \mathbb{N}$ tales que $\frac{|a_{n + 1} - l|}{|a_{n} - l|} \leq C\ \forall n \geq n_{0}$.\\
+
+Decimos que $a_{n}$ converge a $l$ con orden exactamente $p$ si converge con orden al menos $p$ y $\forall \epsilon > 0$ $\frac{|a_{n + 1} - l|}{|a_{n} - l|^{p - \epsilon}} \rightarrow_{n \to +\infty} 0$.\\
+
+\underline{Ra\'ices m\'ultiples}\\
+
+Sea $r$ tal que $f(r) = 0, ..., f^{(p - 1)}(r) = 0, f \in C^{p}$. Adem\'as, $f(x) = (x - r)^{p}g(x), g(r) \neq 0, g \in C^{1}$\\
+
+\begin{itemize}
+    \item Para Newton-Raphson:
+
+    $$x_{n + 1} = x_{n} - \frac{(x_{n} - r)^{p}g(x_{n})}{p(x_{n} - r)^{p - 1}g(x_{n}) + (x_{n} - r)^{p}g'(x_{n})}$$
+
+    $$e_{n + 1} = e_{n} - \frac{e_{n}^{p}g(x_{n})}{pe_{n}^{p - 1}g(x_{n}) + e_{n}^{p}g'(x_{n})} = e_{n} - \frac{e_{n}g(x_{n})}{pg(x_{n}) + e_{n}g'(x_{n})}$$
+
+    $$\Rightarrow e_{n + 1} = e_{n}\frac{(p - 1)g(x_{n})}{pg(x_{n}) + e_{n}g'(x_{n})} + e_{n}^{2}\frac{g'(x_{n})}{pg(x_{n}) + e_{n}g'(x_{n})}$$
+
+    Si $x_{n} \rightarrow r$ y $p \neq 1$,
+
+    $$\frac{(p - 1)g(x_{n})}{pg(x_{n}) + e_{n}g'(x_{n})} \rightarrow \frac{(p - 1)g(r)}{pg(r)} = \frac{p - 1}{p} \neq 0$$
+
+    y la convergencia es lineal.\\
+
+    \item Para punto fijo:\\
+
+    Si $g \in C^{1}$ y $x_{n + 1} = g(x_{n}) \rightarrow r$,
+
+    $$e_{n + 1} = x_{n + 1} - r = g(x_{n}) - g(r) = g'(\zeta_{n})(x_{n} - r) = g'(\zeta_{n})e_{n}$$
+
+    Si $e_{n} \neq 0, \frac{e_{n + 1}}{e_{n}} = g'(\zeta_{n})) \rightarrow g'(r)$. Si $g'(r) \neq 0$, la convergencia es lineal. Si $g \in C^{p}, g^{(k)} = 0$ para $1 \leq k \leq p, g^{(p)} \neq 0$,
+
+    $$e_{n + 1} = x_{n + 1} - r = g(x_{n}) - g(r) = g'(r)(x_{n} - r) + \frac{g''(r)}{2}(x_{n} - r)^{2} + ... + \frac{g^{(p)}(\zeta_{n})}{p!}(x_{n} - r)^{p}$$
+
+    $$\Rightarrow e_{n + 1} = \frac{g^{(p)}(\zeta_{n})}{p!}e_{n}^{p} \Rightarrow \frac{e_{n + 1}}{e_{n}} \rightarrow \frac{g^{(p)}(r)}{p!} \neq 0$$
+
+    y el m\'etodo tiene orden $p$.
+\end{itemize}
+
+\subsection{Sistemas de ecuaciones no lineales}
+
+$$
+    \begin{cases}
+        f_{1}(x, y) = 0\\
+        f_{2}(x, y) = 0
+    \end{cases}
+$$\\
+
+Llamamos $F(x, y) = (f_{1}(x, y), f_{2}(x, y)),\ F: \mathbb{R}^{2} \rightarrow \mathbb{R}^{2}$. Buscamos $\Vec{r} = (r_{1}, r_{2})$ tal que $F(\Vec{r}) = (0, 0)$.\\
+
+\underline{Newton-Raphson}\\
+
+Recordemos la ecuaci\'on del plano tangente en $(x_{0}, y_{0}, f(x_{0}, y_{0}))$:
+
+$$z - f(x_{0}, y_{0}) = \frac{\partial f}{\partial x}(x_{0}, y_{0})(x - x_{0}) + \frac{\partial f}{\partial y}(x_{0}, y_{0})(y - y_{0})$$\\
+
+Propongo $(x_{1}, y_{1})$ tal que:
+
+$$ 0 = \frac{\partial f_{i}}{\partial x}(x_{0}, y_{0})(x_{1} - x_{0}) + \frac{\partial f_{i}}{\partial y}(x_{0}, y_{0})(y_{1} - y_{0}) + f_{i}(x_{0}, y_{0}),\ i = 1, 2$$\\
+
+Reordeno:
+
+$$ -\frac{\partial f_{i}}{\partial x}(x_{0}, y_{0})x_{1} - \frac{\partial f_{i}}{\partial y}(x_{0}, y_{0})y_{1} = -\frac{\partial f_{i}}{\partial x}(x_{0}, y_{0})x_{0} - \frac{\partial f_{i}}{\partial y}(x_{0}, y_{0})y_{0} + f_{i}(x_{0}, y_{0}),\ i = 1, 2$$\\
+
+En forma matricial:
+
+$$    -
+    \begin{pmatrix}
+        \frac{\partial f_{1}}{\partial x}(x_{0}, y_{0}) & \frac{\partial f_{1}}{\partial y}(x_{0}, y_{0})\\
+        \frac{\partial f_{2}}{\partial x}(x_{0}, y_{0}) & \frac{\partial f_{2}}{\partial y}(x_{0}, y_{0})
+    \end{pmatrix}
+    \begin{pmatrix}
+        x_{1}\\
+        y_{1}
+    \end{pmatrix}
+    = -
+    \begin{pmatrix}
+        \frac{\partial f_{1}}{\partial x}(x_{0}, y_{0}) & \frac{\partial f_{1}}{\partial y}(x_{0}, y_{0})\\
+        \frac{\partial f_{2}}{\partial x}(x_{0}, y_{0}) & \frac{\partial f_{2}}{\partial y}(x_{0}, y_{0})
+    \end{pmatrix}
+    \begin{pmatrix}
+        x_{0}\\
+        y_{0}
+    \end{pmatrix}
+    +
+    \begin{pmatrix}
+        f_{1}(x_{0}, y_{0})\\
+        f_{2}(x_{0}, y_{0})
+    \end{pmatrix}
+$$\\
+
+Si
+
+$$J_{n} = Jac\ F(x_{n}, y_{n}) = \begin{pmatrix}
+        \frac{\partial f_{1}}{\partial x}(x_{n}, y_{n}) & \frac{\partial f_{1}}{\partial y}(x_{n}, y_{n})\\
+        \frac{\partial f_{2}}{\partial x}(x_{n}, y_{n}) & \frac{\partial f_{2}}{\partial y}(x_{n}, y_{n})
+    \end{pmatrix}$$
+
+y $J_{n}^{-1}$ su inversa, el m\'etodo es:
+
+\begin{itemize}
+    \item Tomo $x_{0} \in \mathbb{R}^{2}$ que aproxima a $\Vec{r}$
+
+    \item Para $n = 0, 1, 2, ...$, $\Vec{x}_{n + 1} = \Vec{x}_{n} - J_{n}^{-1}F(\Vec{x}_{n})$\\
+
+    \textit{Observaci\'on}: $J_{n}^{-1}F(\Vec{x}_{n}) = \Vec{v}_{n} \iff J_{n}\Vec{v}_{n} = F(\Vec{x}_{n})$. Es decir, $\Vec{v}_{n}$ es la soluci\'on del sistema lineal $A\Vec{x} = \Vec{b}$, con $A = J_{n}$ y $\Vec{b} = F(\Vec{x}_{n})$.\\
+\end{itemize}
+
+\underline{Punto fijo}
+
+$$F(x, y) = (0, 0) \Rightarrow G(x, y) = (x, y)$$
+
+El m\'etodo nos queda:
+
+\begin{itemize}
+    \item Tomo $x_{0} \in \mathbb{R}^{2}$ que aproxima a $\Vec{r}$
+
+    \item Para $n = 0, 1, 2, ...$, $\Vec{x}_{n + 1} = G(\Vec{x}_{n})$\\
+\end{itemize}
+
+\textit{Ejemplo}: Aproximar por el m\'etodo de Newton las $x$ del sistema no lineal
+
+$$
+    \begin{cases}
+        x^{2} + y^{2} = 10\\
+        x^{2} - y^{2} = 1
+    \end{cases}
+$$\\
+
+Tenemos $f_{1}(x, y ) = x^{2} + y^{2} - 10$ y $f_{2}(x, y) = x^{2} - y^{2} - 1$. Entonces
+
+$$Jac\ F(x, y) = \begin{pmatrix}
+        2x & 2y\\
+        2x & -2y
+    \end{pmatrix}$$\\
+
+\underline{\textbf{Interpolaci\'on}}\\
+
+Partimos de una tabla de datos
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        $x$ & $x_{0}$ & $x_{1}$ & $x_{2}$ & $...$ & $x_{n}$\\ \hline
+        $y$ & $y_{0}$ & $y_{1}$ & $y_{2}$ & $...$ & $y_{n}$\\ \hline
+    \end{tabular}
+\end{table}
+
+con $x_{0}, x_{1}, \cdots , x_{n}$ distintos. Buscamos un polinomio de grado $\leq n$ que pase por esos puntos.\\
+
+\underline{Teorema}: Dados $n + 1$ valores distintos $x_{0}, x_{1}, \cdots , x_{n}$ y $n + 1$ valores cualesquiera $y_{0}, y_{1}, \cdots , y_{n}$, existe un polinomio $P_{n}$ de grado $\leq n$ que satisface $P_{n}(x_{i}) = y_{i}, \ i = 0, \cdots , n$.\\
+
+Si $y_{i} = f(x_{j})$ para cierta funci\'on $f$, decimos que $P_{n}$ interpola a $f$ en $x_{0}, ... , x_{n}$.\\
+
+Vamos a ver tres maneras de armar $P_{n}$: coeficientes indeterminados, forma de Lagrange y forma de Newton (tabla de diferencias finitas).\\
+
+\subsection{Coeficientes indeterminados}
+
+$$P_{n}(x) = a_{0} + a_{1}x + a_{2}x^{2} + ... + a_{n}x^{n}$$
+
+y resuelvo un sistema lineal para hallar $a_{0}, ... ,a_{n}$.\\
+
+$$P_{n}(x_{0}) = a_{0} + a_{1}x_{0} + a_{2}x_{0}^{2} + ... + a_{n}x_{0}^{n} = y_{0}$$
+$$ \vdots $$
+$$P_{n}(x_{n}) = a_{0} + a_{1}x_{n} + a_{2}x_{n}^{2} + ... + a_{n}x_{n}^{n} = y_{n}$$\\
+
+En forma matricial (matriz de Vandermonde):
+
+$$
+    \begin{pmatrix}
+        1 & x_{0} & x_{0}^{2} & \cdots & x_{0}^{n}\\
+        \vdots & \vdots & \vdots & \cdots & \vdots\\
+        \vdots & \vdots & \vdots & \cdots & \vdots\\
+        1 & x_{n} & x_{n}^{2} & \cdots & x_{n}^{n}\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        a_{0}\\
+        a_{1}\\
+        \vdots\\
+        a_{n}\\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        y_{0}\\
+        y_{1}\\
+        \vdots\\
+        y_{n}\\
+    \end{pmatrix}
+$$\\
+
+\textit{Ejemplo}:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        $x$ & -1 & 0 & 1\\ \hline
+        $y$ & 12 & 5 & 4\\ \hline
+    \end{tabular}
+\end{table}
+
+Tenemos 3 puntos, luego $n = 2 \rightarrow P_{2}(x) = a_{0} + a_{1}x + a_{2}x^{2}$, armamos la matriz de Vandermonde y resolvemos:
+
+$$
+    \begin{pmatrix}
+        1 & -1 & 2\\
+        1 & 0 & 0\\
+        1 & 1 & 1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        a_{0}\\
+        a_{1}\\
+        a_{2}\\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        12\\
+        5\\
+        4\\
+    \end{pmatrix}
+$$\\
+
+$$ \Rightarrow P_{2}(x) = 5 - 4x + 3x^{2}$$
+
+\subsection{Forma de Lagrange}
+
+$$P_{n}(x) = y_{0}l_{0}(x) + y_{1}l_{1}(x) + y_{2}l_{2}(x) + \cdots + y_{n}l_{n}(x)$$\\
+
+con $l_{0}, l_{1}, \cdots, l_{n}$ polinomios tales que $l_{i}(x_{j}) = \delta_{ij}$.\\
+
+Expl\'icitamente:
+
+$$l_{j}(x) = \frac{(x - x_{0})(x - x_{1})(x - x_{j - 1})(x - x_{j + 1})\cdots(x - x_{n})}{(x_{j} - x_{0})(x_{j} - x_{1})(x_{j} - x_{j - 1})(x_{j} - x_{j + 1})\cdots(x_{j} - x_{n})}$$\\
+
+con $\{l_{0}, \cdots, l_{n}\}$ base de Lagrange.\\
+
+\textit{Ejemplo anterior}:
+
+$$P_{2}(x) = y_{0}l_{0}(x) + y_{1}l_{1}(x) + y_{2}l_{2}(x) = 12l_{0}(x) + 5l_{1}(x) + 4l_{2}(x)$$
+
+$$l_{0}(x) = \frac{(x - 0)(x - 1)}{(-1 + 0)(-1 - 1)} = \frac{1}{2}x(x - 1)$$
+
+$$l_{1}(x) = \frac{(x + 1)(x - 1)}{(0 + 1)(0 - 1)} = -(x + 1)(x - 1)$$
+
+$$l_{2}(x) = \frac{(x + 1)(x - 0)}{(1 + 1)(1 - 0} = \frac{1}{2}(x + 1)x$$
+
+$$\Rightarrow P_{2}(x) = 12\frac{1}{2}x(x - 1) - 5(x + 1)(x - 1) + 4\frac{1}{2}(x + 1)x = 3x^{2} - 4x + 5$$
+
+\subsection{Forma de Newton - Tabla de diferencias divididas}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|ccc}
+        $x_{i}$ & $f[\cdot]$ & $f[\cdot, \cdot]$ & $f[\cdot, \cdot, \cdot]$\\ \hline
+        $x_{0}$ & $f(x_{0})$ &  & \\
+        &&&\\
+        $x_{1}$ & $f(x_{1})$ & $f[x_{0}, x_{1}] = \frac{f(x_{1}) - f(x_{0})}{x_{1} - x_{0}}$ & \\
+        &&&\\
+        $x_{2}$ & $f(x_{2})$ & $f[x_{1}, x_{2}] = \frac{f(x_{2}) - f(x_{1})}{x_{2} - x_{1}}$ & $f[x_{0}, x_{1}, x_{2}] = \frac{f[x_{1}, x_{2}] - f[x_{0}, x_{1}]}{x_{2} - x_{0}}$\\
+    \end{tabular}
+\end{table}
+
+$$P_{n}(x) = f[x_{0}] + f[x_{0}, x_{1}](x - x_{0}) + f[x_{0}, x_{1}, x_{2}](x - x_{0})(x - x_{1}) + \cdots + f[x_{0}, \cdots, x_{n}](x - x_{0})...(x - x_{n - 1})$$\\
+
+\underline{Definici\'on}: Diferencias divididas
+
+\begin{itemize}
+    \item $f[x_{i}] = f(x_{i})$, de orden 0.
+    \item $f[x_{i}, x_{i + 1}, \cdots, x_{i + m}] = \frac{f[x_{i + 1}, \cdots, x_{i + m}] - f[x_{i}, \cdots, x_{i + m - 1}]}{x_{i + m} - x_{i}}$, de orden $m$.\\
+\end{itemize}
+
+\newpage
+\textit{Ejemplo anterior}:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|ccc}
+        $x_{i} $ & $f[\cdot]$ & $f[\cdot, \cdot]$ & $f[\cdot, \cdot, \cdot]$\\ \hline
+        $x_{0} = -1$ & 12 &  & \\
+        &&&\\
+        $x_{1} = 0$ & 5 & $\frac{5 - 12}{0 - (-1)} = -7$ & \\
+        &&&\\
+        $x_{2} = 1$ & 4 & $\frac{4 - 5}{1 - 0} = -1$ & $\frac{-1 - (-7)}{1 - (-1)} = 3$\\
+    \end{tabular}
+\end{table}
+
+$$\Rightarrow P_{2}(x) = 12 - 7(x - (-1)) + 3(x - 0)(x - (-1)) = 3x^{2} - 4x + 5$$\\
+
+\textit{Observaci\'on}:
+
+\begin{itemize}
+    \item Si $y_{i} = f(x_{i})$ y $f$ es un polinomio de grado $\leq n \Rightarrow P_{n} = f$.
+    \item Hay infinitos polinomios de grado $\geq n + 1$ que interpolan en $n$ puntos. Por ejemplo: $P_{n + 1}(x) = P_{n}(x) + \alpha(x - x_{0})(x - x_{1})...(x - x_{n}),\ \alpha \in \mathbb{R}$\\
+\end{itemize}
+
+\underline{Error de interpolaci\'on}: $f:[a, b] \rightarrow \mathbb{R},\ x_{0}, \cdots, x_{n} \in [a, b]$ todos distintos, $x \in [a, b]$:
+
+$$f(x) - P_{n}(x) = \frac{f^{(n + 1)}(\theta)}{(n + 1)!}\prod_{j = 0}^{n} (x - x_{j}),\ \theta \in [a, b]$$

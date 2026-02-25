@@ -1,0 +1,138 @@
+\section{Clase 17 - Pr\'actica 7 (Interpolaci\'on)}
+
+\subsection{Forma de Newton - Tabla de diferencias divididas}
+
+Por qu\'e interpola?
+
+\begin{itemize}
+	\item Si $n = 0$: $P_{0} = f[x_{0}] = f(x_{0})$
+	\item Si $n = 1$: $P_{1} = f[x_{0}] + f[x_{0}, x_{1}](x - x_{0}) = f(x_{0}) + \frac{f(x_{1}) - f(x_{0}}{x_{1} - x_{0}}(x - x_{0})$, (la recta secante).
+	\item Consideremos $x_{0}, x_{1}, \cdots, x_{n + 1}$ $n + 2$ puntos distintos. Supongamos que $P_{n} = f[x_{0}] + f[x_{0}, x_{1}](x - x_{0}) + \cdots + f[x_{0}, \cdots, x_{n}](x - x_{0})...(x - x_{n})$ verifica $P_{n}(x_{i}) = y_{i}$ para $i = 0, \cdots, n$ y que $\tilde{P}_{n} = f[x_{1}] + f[x_{1}, x_{2}](x - x_{1}) + \cdots + f[x_{1}, \cdots, x_{n + 1}](x - x_{1})...(x - x_{n})$ verifica $\tilde{P}_{n}(x_{i}) = y_{i}$ para $i = 1, \cdots, n + 1$.\\
+	
+	Sea $Q$ el polinomio de grado $\leq n + 1$ que interpola a $f$ en $x_{0}, \cdots, x_{n + 1}$, veamos que $Q = f[x_{0}] + \cdots + f[x_{0}, \cdots, x_{n + 1}](x - x_{0})...(x - x_{n})$.
+\end{itemize}
+
+Todo polinomio en $\mathcal{P}_{n + 1}$ se puede escribir en la base $\{1, (x - x_{0}), (x - x_{0})(x - x_{1}), \cdots, (x - x_{0})(x - x_{1})...(x - x_{n})\}$
+
+$$Q(x) = a_{0} + a_{1}(x - x_{0}) + \cdots + a_{n + 1}(x - x_{0})(x - x_{1})...(x - x_{n}) = P(x) + a_{n + 1}(x - x_{0})(x - x_{1})...(x - x_{n})$$
+
+Como $Q(x_{i}) = P(x_{i})$ para $i = 0, \cdots, n$ y $P$ tiene grado $n$, necesariamente $P = P_{n}$. Consideremos el polinomio
+
+$$\tilde{Q}({x}) = \frac{(x - x_{0})\tilde{P}_{n} - (x - x_{n + 1})P_{n}}{x_{n + 1} - x_{0}}$$
+
+El grado de $\tilde{Q}$ es $\leq n + 1$ y vale que
+
+$$\tilde{Q}({x_{i}}) = \frac{(x_{i} - x_{0})\tilde{P}_{n}(x_{i}) - (x_{i} - x_{n + 1})P_{n}(x_{i})}{x_{n + 1} - x_{0}} = f(x_{i})\frac{(x_{i} - x_{0}) - (x_{i} - x_{n + 1})}{x_{n + 1} - x_{0}} = f(x_{i})$$
+
+para $i = 1, \cdots, n$.\\
+
+$$\tilde{Q}({x_{0}}) = \frac{-(x_{0} - x_{n + 1})f(x_{0})}{x_{n + 1} - x_{0}} = f(x_{0})$$
+$$\vdots$$
+$$\tilde{Q}({x_{n + 1}}) = \frac{(x_{n + 1} - x_{0})f(x_{n + 1})}{x_{n + 1} - x_{0}} = f(x_{n + 1})$$
+
+Por lo tanto, $\tilde{Q} = Q$. Si $a_{n + 1} \neq 0,\ a_{n + 1} = \text{coef ppal}(\tilde{Q}) = \frac{f[x_{1}, \cdots, x_{n + 1}] - f[x_{0}, \cdots, x_{n}]}{x_{n + 1} - x_{0}} = f[x_{0}, \cdots, x_{n + 1}]$.\\
+
+\underline{Teorema}: Sean $x_{0}, \cdots, x_{n}$ puntos distintos y sea $z_{0}, \cdots, z_{n}$ una permutaci\'on de $x_{0}, \cdots, x_{n}\Rightarrow f[x_{0}, \cdots, x_{n}] = f[z_{0}, \cdots, z_{n}]$.\\
+
+La demostraci\'on se basa en el hecho de que el polinomio de $\mathcal{P}_{n}$ que interpola en $x_{0}, \cdots, x_{n}$ y en $z_{0}, \cdots, z_{n}$ es el mismo y su coeficiente principal es la diferencia dividida correspondiente.\\
+
+\underline{\textit{Error de interpolaci\'on}}:\\
+
+\underline{Teorema}: $f: [a, b] \rightarrow \mathbb{R}, x_{0}, x_{1}, \cdots, x_{n} \in [a, b]$ distintos, $x \in [a, b]$:
+
+$$f(x) - P_{n}(x) = \frac{f^{(n + 1)}(\zeta)}{(n + 1)!}W_{n + 1}(x)$$
+
+con $\zeta \in [a, b],\ W_{n + 1}(x) = \prod\limits_{j = 0}^{n}(x - x_{j})$.\\
+
+\underline{Demostraci\'on}:\\
+
+Si $x = x_{i}$, vale pues $f(x_{i}) = P_{n}(x_{i})$ y $W_{n + 1}(x) = 0$ para $i = 0, \cdots, n$. Si $x \neq x_{i}$ para  $0 \leq i \leq n$, $x \in [a, b]$, definimos
+
+$$F(t) = (f(t) - P_{n}(t))W_{n + 1}(x) - (f(x) - P_{n}(x))W_{n + 1}(t)$$
+
+Como $F(x) = F(x_{0}) = \cdots = F(x_{n}) = 0,\ F$ tiene al menos $n + 2$ ceros distintos en $(a, b)$. Por el teorema de Rolle, $F'$ tiene al menos $n + 1$ ceros distintos en $(a, b)$. Y as\'i, deducimos que $F^{(n + 1)}$ tiene al menos un cero, $\zeta \in (a, b)$:
+
+$$0 = F^{(n + 1)}(\zeta) = f^{(n + 1)}(\zeta)W_{n + 1}(x) - (f(x) - P_{n}(x))(n + 1)!$$
+
+como quer\'iamos probar.\\
+
+\underline{Corolario}: $|f(x) - P_{n}(x)| \leq \max \limits_{a \leq c \leq b} |f^{(n + 1)}(c)|\frac{|W(x)|}{(n + 1)!}$\\
+
+\underline{Definici\'on}: $\|f\|_{\infty, [a, b]} = \max \limits_{a \leq x \leq b} |f(x)|$\\
+
+\underline{Teorema}: $f(x) - P_{n}(x) = f[x_{0}, \cdots, x_{n}, x]W_{n + 1}(x)$\\
+
+\underline{Demostraci\'on}: Sea $P_{n + 1}$ el polinomio de $\mathcal{P}_{n + 1}$ que interpola a $f$ en $x_{0}, \cdots, x_{n}, x$ en $x \neq x_{i}$ para $0 \leq i \leq n \Rightarrow P_{n + 1}(t) = P_{n}(t) + f[x_{0}, \cdots, x_{n}, x]W_{n + 1}(t)$, y como $P_{n + 1}(x) = f(x)$, vale lo que quer\'iamos.\\
+
+\underline{Corolario}: Sea $f \in C^{n + 1}([a, b]),\ x_{0}, \cdots, x_{n}$ puntos distintos en $[a, b] \Rightarrow \exists \ \zeta \in [a, b] \ / \ f[x_{0}, \cdots, x_{n}] = \frac{f^{(n)}(\zeta)}{n!}$\\
+
+\underline{Teorema}: Si $x_{i} = a + hi$ para $i = 0, 1, \cdots, n \ / \ h = \frac{b - a}{n}$. Entonces para todo $x \in [a, b], \ |W_{n + 1}(x)| \leq \frac{1}{4}h^{n + 1}n!$\\
+
+\underline{Demostraci\'on}: Sea $x \in [a, b]$, existe $j \ / \ x_{j} \leq x \leq x_{j + 1}$. Maximizando la cuadr\'atica $(x - x_{j})(x_{j + 1} - x)$ llegamos a que
+
+$$|x - x_{j}||x - x_{j + 1}| \leq \frac{h^{2}}{4}$$
+
+De esta forma,
+
+$$\prod \limits_{i = 0}^{n} |x - x_{i}| \leq \frac{h^{2}}{4} \prod \limits_{i = 0}^{j - 1} |x - x_{i}|\prod \limits_{i = j + 2}^{n} |x - x_{i}| = \frac{h^{2}}{4} \prod \limits_{i = 0}^{j - 1} |x - x_{i}|\prod \limits_{i = j + 2}^{n} |x_{i} - x|$$
+
+Como $x_{j} \leq x \leq x_{j + 1}$, vale adem\'as que
+
+$$\prod \limits_{i = 0}^{n} |x - x_{i}| \leq \frac{h^{2}}{4} \prod \limits_{i = 0}^{j - 1} |x_{j + 1} - x_{i}|\prod \limits_{i = j + 2}^{n} |x_{i} - x_{j}|$$
+
+y como $x_{i} = a + ih$, $x_{j + 1} - x_{i} = (j - i + 1)h$ y $x_{i} - x_{j} = (i - j)h$
+
+$$\prod \limits_{i = 0}^{n} |x - x_{i}| \leq \frac{h^{2}}{4} h^{j} h^{n - (j + 2) + 1} \prod \limits_{i = 0}^{j - 1} (j - i + 1)\prod \limits_{i = j + 2}^{n} (i - j) \leq \frac{1}{4}h^{n + 1}(j + 1)!(n - j)! \leq \frac{1}{4}h^{n + 1}n!$$
+
+Podemos minimizar el error eligiendo convienientemente los valores $x_{0}, \cdots, x_{n}$? C\'omo podemos minimizar $|W(x)|$?\\
+
+\underline{Teorema}: Si $x_{0}, x_{1}, \cdots, x_{n}$ son los ceros de $T_{n + 1}$, el polinomio de Tchebyshev de grado $n + 1 \Rightarrow$
+
+$$\max \limits_{x \in [-1, 1]} \prod \limits_{j = 0}^{n} |x - x_{j}| \geq \frac{1}{2^{n}}$$
+
+\subsection{Polinomios de Tchebyshev para $x \in [-1, 1]$}
+
+$$T_{n}(x) = \cos(n \arccos(x))$$
+
+Son polinomios $T_{0}(x) = 1,\ T_{1}(x) = \cos(\arccos(x)) = x$, y como $\cos(\alpha + \beta) + \cos(\alpha - \beta) = 2\cos(\alpha)\cos(\beta)$ si ponemos $x = \cos(\theta)$ resulta
+
+$$T_{n + 1}(x) = \cos((n + 1)\theta) = 2\cos(\theta)\cos(n\theta) - \cos((n - 1)\theta)$$
+
+es decir
+
+$$T_{n + 1}(x) = 2xT_{n}(x) - T_{n - 1}(x)$$\\
+
+\underline{Ra\'ices de $T_{n + 1}$}
+
+$$T_{n + 1}(x) = 0 \iff \cos((n + 1)\arccos(x)) = 0$$
+$$\iff (n + 1)\arccos(x) = \frac{\pi}{2} + k\pi$$
+$$\iff \arccos(x) = \frac{(2k + 1)\pi}{2(n + 1)}$$
+$$\iff x_{k} = \cos(\frac{(2k + 1)\pi}{2n + 2}),\ k = 0, \cdots, n$$\\
+
+\underline{Teorema}: Sea $T_{k}$ el polinomio de Tchebyshev de grado $k$
+
+\begin{itemize}
+	\item a) El coeficiente principal de $T_{k}$ es $2^{k - 1},\ \forall k \in \mathbb{N}$
+	\item b) $\|T_{k}\|_{\infty} = 1$. Adem\'as, $T_{k}$ alcanza los valores 1 y -1 en $k + 1$ puntos, es decir $\|T_{k}\|_{\infty} = |T_{k}(y_{i})| = 1$ para $y_{i} = \cos(\frac{i\pi}{k}),\ i = 0, \cdots, k$\\
+\end{itemize}
+
+\underline{Demostraci\'on}:\\
+
+a) Se deduce de hecho de que $T_{k}(x) = 2xT_{k - 1}(x) - T_{k - 2}(x)$.\\
+
+b) Basta notar que $|T_{k}(x)| = |\cos(k\arccos(x))| \leq 1$ y $T_{k}(\cos(\frac{i\pi}{k})) = \pm 1$ en forma alternada y por lo tanto $\|T_{k}\|_{\infty} = 1$.\\
+
+\underline{Teorema}: Si $x_{0}, x_{1}, \cdots, x_{n}$ son los ceros de $T_{n + 1}$, entonces $\|W_{n + 1}\|_{\infty} = \|\prod \limits_{j = 0}^{n} (x - x_{j})\|_{\infty} = \frac{1}{2^{n}}$, y con cualquier elecci\'on de puntos $\tilde{x}_{0}, \tilde{x}_{1}, \cdots, \tilde{x}_{n}$ en $[-1, 1]$ se tiene que $\|\prod \limits_{j = 0}^{n} (x - \tilde{x}_{j})\|_{\infty} \geq \frac{1}{2^{n}}$\\
+
+\underline{Demostraci\'on}: Como $x_{0}, \cdots, x_{n}$ son los ceros de $T_{n + 1}$ y el coef. ppal. de $T_{n + 1}$ es $2^{n}$ vale que $T_{n + 1}(x) = 2^{n}W_{n + 1}(x)$ y se deduce el primer resultado.\\
+
+Supongamos ahora que existe un polinomio $P \in \mathcal{P}_{n + 1}$ de la forma $P = \prod \limits_{j = 0}^{n} (x - \tilde{x}_{j})\ / \ \|P\|_{\infty} < \|W_{n + 1}\|_{\infty}$. Por el teorema anterior, $|W_{n + 1}(x)|$ alcanza su m\'aximo (que es $\frac{1}{2^{n}}$) en los $n + 2$ puntos $y_{i} = \cos(\frac{i\pi}{n + 1}),\ i = 0, \cdots, n + 1$. Y vale
+
+$$\|P\|_{\infty, [y_{i}, y_{i + 1}]} < \frac{1}{2^{n}} = \|W_{n + 1}\|_{\infty, [y_{i}, y_{i + 1}]}$$.
+
+Por otra parte, $W_{n + 1}(y_{i}) = -W_{n + 1}(y_{i + 1})$. Supongamos, por ejemplo, que $W_{n + 1}(y_{i}) > 0$ (en el caso contrario se procede de manera an\'aloga). Entonces
+
+$$P(y_{i}) < W_{n + 1}(y_{i})$$
+$$P(y_{i + 1}) > W_{n + 1}(y_{i})$$
+
+Luego, el polinomio $Q(x) = P(x) - W_{n + 1}(x)$ tiene al menos un cero en el intervalo $(y_{i}, y_{i + 1})$ y como hay $n + 2$ valores de $y_{i}$, $Q$ tiene al menos $n + 1$ ceros. Pero tanto $P$ como $W_{n + 1}$ son polinomios de grado $n + 1$ m\'onicos, de donde se deduce que $Q$ tiene grado a lo sumo $n$. Imposible. Luego, $P$ NO puede existir.\\

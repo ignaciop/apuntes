@@ -1,0 +1,238 @@
+\section{Clase 21 - Pr\'actica 9 (Integraci\'on num\'erica)}
+
+Queremos calcular $I(f) = \int \limits_{a}^{b} f(x)w(x)dx$, con $w > 0$.\\
+
+Dados $x_{0}, \cdots, x_{n}$, sea $P_{n} \in \mathcal{P}_{n}$ el polinomio que interpola a $f$ en esos nodos, podemos escribir
+
+$$P_{n}(x) = \sum \limits_{j = 0}^{n} f(x_{j})l_{j}(x)$$
+
+con $l_{j}$ el $j$-\'esimo polinomio de la base de Lagrange.\\
+
+Calculamos $I(P_{n}) = \int \limits_{a}^{b} P_{n}(x)w(x)dx = \sum \limits_{j = 0}^{n} f(x_{j})\int \limits_{a}^{b} l_{j}(x)w(x) = \sum \limits_{j = 0}^{n} f(x_{j})A_{j}$ y definimos la f\'ormula de cuadratura:
+
+$$Q(f) = \sum \limits_{j = 0}^{n} A_{j}f(x_{j})$$\\
+
+\underline{Definici\'on}: Decimos que una f\'ormula de cuadratura tiene grado de precisi\'on $k$ si $Q(P) = I(P)\ \forall \ P \in \mathcal{P}_{k}$ pero existe $\tilde{P} \in \mathcal{P}_{k + 1}\ / \ Q(\tilde{P}) \neq I(\tilde{P})$.\\
+
+\begin{itemize}
+	\item Dados los puntos $x_{0}, \cdots, x_{n}$ buscamos los pesos $A_{0}, \cdots, A_{n}$ para construir las f\'ormulas de cuadratura.
+	
+	Cuando los puntos se toman equiespaciados, las f\'ormulas reciben el nombre de Newton-Cotes: cerradas (cuando $x_{0} = a$ y $x_{n} = b$) o abiertas (cuando no contienen a los extremos).
+	
+	\item Tambi\'en est\'a el problema de elegir los nodos en el intervalo $[a, b]$ de forma tal de conseguir la mayor precisi\'on posible (\'estas se llamar\'an cuadraturas gaussianas).
+\end{itemize}
+
+\underline{Error}: Sea $Q$ una regla de cuadratura en $n + 1$ nodos, con grado de precisi\'on $k \geq n$, y $P_{k} \in \mathcal{P}_{k}$ un polinomio que interpola a $f$ en esos $n + 1$ nodos, entonces:
+
+$$|I(f) - Q(f)| = |I(f) - I(P_{k}) + I(P_{k}) - Q(P_{k}) + Q(P_{k}) - Q(f)|$$\\
+
+Sabemos que $I(P_{k}) - Q(P_{k}) = 0$ por grado de precisi\'on y $Q(P_{k}) - Q(f) = 0$ por $f(x_{i}) = P_{n}(x_{i})$. Entonces:
+
+$$|I(f) - Q(f)| = |I(f - P_{k})| = \bigg|\int \limits_{a}^{b} (f - P_{k})w(x)dx\bigg| \leq \int \limits_{a}^{b} |f - P_{k}|w(x)dx$$
+
+y usamos la f\'ormula del error de interpolaci\'on.\\
+
+\subsection{Regla de los trapecios}
+
+$$\int \limits_{a}^{b} f(x)dx \approx (\text{base menor} + \text{base mayor})\frac{\text{altura}}{2} = (f(a) + f(b))\frac{b - a}{2} = \int \limits_{a}^{b} P_{1}(x)dx$$
+
+\underline{Error}:
+
+$$\int \limits_{a}^{b} f(x)dx - \int \limits_{a}^{b} P_{1}(x)dx = \int \limits_{a}^{b} (f(x) - P_{1}(x))dx = \int \limits_{a}^{b} \frac{f''(\zeta_{x})}{2}(x - a)(x - b)dx$$\\
+
+\underline{Teorema (TVM para integrales)}: Sean $f, g \in C([a, b])$ con $g$ que no cambia de signo en $[a, b]$, entonces existe $\zeta \in [a, b]$ tal que:
+
+$$\int \limits_{a}^{b} f(x)g(x)dx = f(\zeta)\int \limits_{a}^{b} g(x)dx$$
+
+\underline{Demostraci\'on}: Sean $x_{m}, x_{M} \in [a, b] \ / \ m = f(x_{m}) \leq f(x) \leq f(x_{M}) = M\ \forall \ x \in [a, b]$. Supongamos que $g \geq 0$ en $[a, b]$ y $g \neq 0$:
+
+$$mg(x) \leq f(x)g(x) \leq Mg(x)$$
+
+$$m \int \limits_{a}^{b} g(x)dx \leq \int \limits_{a}^{b} f(x)g(x)dx \leq M \int \limits_{a}^{b} g(x)dx$$
+
+$$m \leq \frac{\int \limits_{a}^{b} f(x)g(x)dx}{\int \limits_{a}^{b} g(x)dx} \leq M$$
+
+Como $f \in C([a, b])$ e $\text{Im}(f) = [m, M],\ \exists \ \zeta \in [a, b]\ / \ f(\zeta) = \frac{\int \limits_{a}^{b} f(x)g(x)dx}{\int \limits_{a}^{b} g(x)dx}$
+
+$$\Rightarrow \int \limits_{a}^{b} f(x)g(x)dx = f(\zeta)\int \limits_{a}^{b} g(x)dx$$\\
+
+Volviendo al error de la regla de los trapecios:
+
+$$\int \limits_{a}^{b} f(x) - P_{1}(x)dx = \int \limits_{a}^{b} \frac{f''(\zeta_{x})}{2}(x - a)(x - b)dx = \frac{f''(\zeta)}{2}\int \limits_{a}^{b}(x - a)(x - b)dx = \frac{f''(\zeta)}{2} \frac{(a - b)^{3}}{6} = \frac{f''(\zeta)}{12}(a - b)^{3}$$\\
+
+\subsection{Regla de los trapecios compuesta}
+
+$$I(f) \approx \sum \limits_{j = 1}^{n} Q_{T, [x_{j - 1}, x_{j}]}(f) = \sum \limits_{j = 1}^{n} (f(x_{j - 1}) + f(x_{j}))\frac{x_{j} - x_{j - 1}}{2} = \sum \limits_{j = 1}^{n} (f(x_{j - 1}) + f(x_{j}))\frac{h}{2}$$
+
+$$\Rightarrow I(f) \approx \frac{h}{2}\bigg(f(a) + 2 \sum \limits_{j = 1}^{n - 1} f(x_{j}) + f(b)\bigg)$$\\
+
+\underline{Error de trapecios compuesta}:
+
+$$E_{T} = I(f) - \sum \limits_{j = 1}^{n} Q_{T, [x_{j - 1}, x_{j}]}(f) = \sum \limits_{j = 1}^{n} E_{T, [x_{j - 1}, x_{j}]} = \sum \limits_{j = 1}^{n} -\frac{f''(\zeta_{j})}{12}h^{3} = -\frac{h^{3}}{12}\sum \limits_{j = 1}^{n} f''(\zeta_{j})$$\\
+
+\underline{Proposici\'on}: Sea $g \in C([a, b])$, sean $a_{1}, \cdots, a_{n}$ todos con el mismo signo, $x_{0}, \cdots, x_{n} \in [a, b]$, entonces $\ \exists \ \eta \in [a, b]$ tal que $\sum \limits_{j = 1}^{n} a_{j}g(x_{j}) = g(\eta)\sum \limits_{j = 1}^{n} a_{j}$.\\
+
+\underline{Error de la regla de trapecios compuesta. Corolario}:
+
+$$E_{T} = -f''(\eta)\frac{h^{3}}{12}\sum \limits_{j = 1}^{n} 1 = -f''(\eta)\frac{h^{3}}{12}\eta = -f''(\eta)\frac{h^{2}}{12}(b - a)$$\\
+
+\subsection{Regla de Simpson}
+
+$$\int \limits_{a}^{b} f(x)dx \approx \int \limits_{a}^{b} P_{2}(x)dx$$
+
+$$Q_{S}(f) = A_{0}f(a) + A_{1}f\bigg(\frac{a + b}{2}\bigg) + A_{2}f(b)$$
+
+Como $Q_{S}$ es exacta para polinomios en $\mathcal{P}_{2}$, calculemos los pesos a partir de la siguiente base de $\mathcal{P}_{2}: \{1, x - a, (x - a)(x - b)\}$
+
+\begin{itemize}
+	\item $Q_{S}(1) = A_{0} + A_{1} + A_{2} = \int \limits_{a}^{b} 1 dx = b - a$
+	
+	\item $Q_{S}(x - a) = \frac{b - a}{2}A_{1} + (b - a)A_{2} = I(x - a) = \int \limits_{a}^{b} (x - a) dx = \frac{(b - a)^{2}}{2}$
+	
+	\item $Q_{S}((x - a)(x - b)) = -\frac{(b - a)^{2}}{2}A_{1} = I((x - a)(x - b)) = \int \limits_{a}^{b} (x - a)(x - b) dx = -\frac{(b - a)^{3}}{6}$
+\end{itemize}
+
+y por lo tanto, $A_{1} = \frac{4(b - a)}{6}$ y $A_{0} = A_{2} = \frac{b - a}{6}$.\\
+
+$$Q_{S}(f) = \frac{b - a}{6}\bigg(f(a) + 4f\bigg(\frac{a + b}{2} \bigg) + f(b)\bigg)$$
+
+Veamos que $Q_{S}$ es exacta $\ \forall \ P \in \mathcal{P}_{3}$. Consideramos la siguiente base de $\mathcal{P}_{3}$: 
+
+$$\{1, x - a, (x - a)(x - b), (x - a)(x - b)\bigg(x - \frac{a + b}{2} \bigg)\}$$
+
+Ya sabemos que es exacta $\ \forall \ P \in \mathcal{P}_{2}$, veamos:
+
+\begin{itemize}
+	\item $Q_{S}((x - a)(x - b)\bigg(x - \frac{a + b}{2} \bigg)) = \frac{(b - a)}{6}(0 + 0 + 0) = 0$
+	
+	\item $I((x - a)(x - b)(x - \frac{a + b}{2})) = \int \limits_{a}^{b} (x - a)(x - b)\bigg(x - \frac{a + b}{2} \bigg) dx =$
+	
+	 $ = \int \limits_{-1}^{1} \bigg(\frac{b - a}{2}t + \frac{b - a}{2} \bigg)\bigg(\frac{b - a}{2}t - \frac{b - a}{2} \bigg)\bigg(\frac{b - a}{2}t \bigg)\frac{b - a}{2}dt = \frac{(b - a)^{2}}{4}\int \limits_{-1}^{1} t(t + 1)(t - 1)dt = 0$
+\end{itemize}
+
+Sea $P_{3} \in \mathcal{P}_{3}$ el polinomio que satisface:
+
+$$
+    \begin{cases}
+        P_{3}(a) = f(a)\\
+        P_{3}(b) = f(b)\\
+        P_{3}(\frac{a + b}{2}) = f(\frac{a + b}{2})\\
+        P'_{3}(\frac{a + b}{2}) = f'(\frac{a + b}{2})\\
+    \end{cases}
+$$
+
+Por el error de Hermite, sabemos que
+
+$$f(x) - P_{3}(x) = \frac{f^{IV}(\zeta_{x})}{4!}(x - a)(x - b)\bigg(x - \frac{a + b}{2} \bigg)^{2}$$
+
+$$I(f) - Q_{S}(f) = \int \limits_{a}^{b} f(x) - P_{3}(x) dx = \int \limits_{a}^{b} \frac{f^{IV}(\zeta_{x})}{4!}(x - a)(x - b)\bigg(x - \frac{a + b}{2} \bigg)^{2} dx$$
+
+por el teorema del valor medio,
+
+$$I(f) - Q_{S}(f) = \frac{f^{IV}(\eta)}{4!}\int \limits_{a}^{b} (x - a)(x - b)\bigg(x - \frac{a + b}{2} \bigg)^{2} dx = \frac{f^{IV}(\eta)}{4!} \frac{4}{15} \bigg(\frac{b - a}{2}\bigg)^{5} = - \frac{f^{IV}(\eta)}{90}\bigg(\frac{b - a}{2}\bigg)^{5}$$\\ 
+
+\subsection{Regla de Simpson compuesta}
+
+Consideramos puntos equiespaciados: $x_{j} = a + 2jh,\ 0 \leq j \leq n,\ h = \frac{b - a}{2n}$.
+
+$$I(f) \approx \sum \limits_{j = 1}^{n} Q_{S, [x_{j - 1}, x_{j}]}(f) = \sum \limits_{j = 1}^{n} \frac{h}{3} \bigg(f(x_{j - 1}) + 4f\bigg( \frac{x_{j - 1} + x_{j}}{2}\bigg) + f(x_{j}) \bigg)$$
+
+$$I(f) \approx \frac{h}{3} \bigg(f(a) + 2\sum \limits_{j = 1}^{n - 1}    f(x_{j}) + 4\sum \limits_{j = 1}^{n}f\bigg( \frac{x_{j - 1} + x_{j}}{2}\bigg) + f(b) \bigg)$$
+
+\underline{Error}:
+
+$$E_{S} = - \frac{h^{4}}{180} f^{IV}(\eta)(b - a)$$
+
+\textit{Ejemplo}: Dar una regla de cuadratura en el intervalo $[0, 3]$ tal que 
+
+$$Q(f) = A_{0}f(0) + A_{1}f(2) + A_{2}f(3)$$
+
+sea de grado $\geq 2$ usando:
+
+\begin{itemize}
+	\item 1) La base de Lagrange
+	\item 2) Coeficientes indeterminados
+\end{itemize}
+
+Hallar el grado de precisi\'on de $Q$.\\
+
+1) Si $P_{2}$ es el polinomio que interpola a $f$ en $x_{0} = 0, x_{1} = 2$ y $x_{3} = 3$ y $\{l_{0}, l_{1}, l_{2}\}$ es la correspondiente base de Lagrange, entonces:
+
+$$P_{2}(x) = f(x_{0})l_{0}(x) + f(x_{1})l_{1}(x) + f(x_{2})l_{2}(x)$$
+
+Por otro lado, si esperamos que el grado de la cuadratura sea al menos 2, entonces vale que
+
+$$Q(f) = Q(P_{2}) = I(P_{2})$$
+
+$$\Rightarrow A_{0}f(0) + A_{1}f(2) + A_{2}f(3) = \int \limits_{0}^{3} (f(0)l_{0}(x) + f(2)l_{1}(x) + f(3)l_{2}(x))dx$$
+
+$$ = f(0)\int \limits_{0}^{3} l_{0}(x) dx + f(2)\int \limits_{0}^{3}l_{1}(x) dx + f(3)\int \limits_{0}^{3} l_{2}(x) dx$$
+
+Calculemos
+
+$$l_{0}(x) = \frac{(x - 2)(x - 3)}{6} \Rightarrow \int \limits_{0}^{3} l_{0}(x) dx = \frac{3}{4}$$
+
+$$l_{1}(x) = \frac{x(x - 3)}{-2} \Rightarrow \int \limits_{0}^{3} l_{1}(x) dx = \frac{9}{4}$$
+
+$$l_{2}(x) = \frac{x(x - 2)}{3} \Rightarrow \int \limits_{0}^{3} l_{2}(x) dx = 0$$
+
+Luego,
+
+$$Q(f) = \frac{3}{4}f(0) + \frac{9}{4}f(2)$$\\
+
+2) Como el grado de precisi\'on es al menos 2, tenemos el siguiente sistema lineal de ecuaciones:
+
+\begin{itemize}
+	\item $Q(1) = A_{0} + A_{1} + A_{2} = I(1) = \int \limits_{0}^{3} 1 dx = 3$
+	\item $Q(x) = 2A_{1} + 3A_{2} = I(x) = \int \limits_{0}^{3} x dx = \frac{9}{2}$
+	\item $Q(x^{2}) = 4A_{1} + 9A_{2} = I(x^{2}) = \int \limits_{0}^{3} x^{2} dx = 9$
+\end{itemize}
+
+Es decir, para hallar $A_{0}, A_{1}$ y $A_{2}$ debemos resolver
+
+$$
+    \begin{pmatrix}
+        1 & 1 & 1 & | & 3\\
+        0 & 2 & 3 & | & \frac{9}{2}\\
+        0 & 4 & 9 & | & 9\\
+	\end{pmatrix}
+	\rightarrow_{\tilde{F}_{3} = F_{3} - 2F_{2}}
+    \begin{pmatrix}
+        1 & 1 & 1 & | & 3\\
+        0 & 2 & 3 & | & \frac{9}{2}\\
+        0 & 0 & 3 & | & 0\\
+	\end{pmatrix}
+$$
+
+As\'i, $A_{2} = 0, A_{1} = \frac{9}{4}$ y $A_{0} = \frac{3}{4}$, como hab\'iamos visto con la base de Lagrange.\\
+
+Para determinar el grado de precisi\'on, veamos que sucede para $x^{k}$, con $k \geq 3$:
+
+\begin{itemize}
+	\item $Q(x^{3}) = \frac{3}{4}0^{3} + \frac{9}{4}2^{3} = 18$
+	\item $I(x^{3}) = \int \limits_{0}^{3} x^{3} dx = \frac{81}{4}$
+\end{itemize}
+
+Como $Q(x^{3}) \neq I(x^{3})$, el grado de precisi\'on es 2.\\
+
+\textit{Error}:
+
+$$|I(f) - Q(f)| \leq \int \limits_{0}^{3} |f(x) - P_{2}(x)| dx \leq 
+\int \limits_{0}^{3} \frac{\|f'''\|_{\infty, [0, 3]}}{3!}|x(x - 2)(x - 3)|dx$$
+
+$$ = \frac{\|f'''\|_{\infty, [0, 3]}}{3!} \bigg[\int \limits_{0}^{2}x(x - 2)(x - 3)dx - \int \limits_{2}^{3}x(x - 2)(x - 3)dx \bigg] = \frac{37}{72}\|f'''\|_{\infty, [0, 3]}$$\\
+
+\begin{itemize}
+	\item \underline{Observaci\'on 1}: Usualmente conviene integrar $|(x - x_{0})...(x - x_{n})|$ en vez de integrar una cota de este m\'odulo.
+	
+	\item \underline{Observaci\'on 2}: Aunque veamos $n$ nodos en la f\'ormula de $Q$, si el grado de precisi\'on es $k$ podemos usar cualquier interpolador de grado $k$ para la cota del error (que interpole en $x_{0}, \cdots, x_{n}$).\\
+\end{itemize}
+
+\underline{Generalizaci\'on Lema 7.3 DLR}\\
+
+Llamemos $I(f) = \int \limits_{a}^{b} f(x)w(x)dx,\ \varphi(x) = \frac{d - c}{b - a}(x - a) + c,\ \tilde{w}(y) = w(\varphi^{-1}(y))$. Entonces:
+
+$$\tilde{I}(f) = \int \limits_{c}^{d} f(y)\tilde{w}(y)dy = \frac{d - c}{b - a}\int \limits_{c}^{d} f(\varphi(y))w(x)dx
+ = \frac{d - c}{b - a}I(f \circ \varphi)$$
+ 
+Si $P$ es un polinomio de grado $k$, qu\'e grado tiene $P \circ \varphi$?

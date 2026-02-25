@@ -1,0 +1,72 @@
+\section{TP2}
+\subsection{S\'imbolos de Christoffel y transformaciones de coordenadas}
+
+\begin{itemize}
+    \item Utilice el comporamiento tensorial de la siguiente m\'etrica bajo la transformaci\'on de coordenadas $x^{\mu} \rightarrow y^{\alpha}(x^{\mu})$,
+
+        \begin{equation}
+            g_{\alpha \beta} = J^{\mu}_{\alpha}J^{\nu}_{\beta}g_{\mu \nu}
+            \label{eq10}
+        \end{equation}
+
+        para mostrar que los s\'imbolos de Christoffel transforman como 
+
+        \begin{equation}
+            \Gamma^{\alpha}_{\beta \gamma} = J^{\alpha}_{\mu}J^{\nu}_{\beta}J^{\lambda}_{\gamma}\Gamma^{\mu}_{\nu \lambda} + J^{\alpha}_{\mu}J^{\mu}_{\beta \gamma}
+            \label{eq11}
+        \end{equation}
+
+    \item Muestre que, como consecuencia de (\ref{eq11}), $\Ddot{x}^{\mu} +  \Gamma^{\mu}_{\nu \lambda}\Dot{x}^{\nu}\Dot{x}^{\delta}$ transforma como un \textit{vector} bajo transformaciones de coordenadas, es decir
+
+    $$\Ddot{y}^{\mu} +  \Gamma^{\mu}_{\nu \lambda}\Dot{y}^{\nu}\Dot{y}^{\delta} = J^{\alpha}_{\mu}(\Ddot{x}^{\mu} +  \Gamma^{\mu}_{\nu \lambda}\Dot{x}^{\nu}\Dot{x}^{\delta})$$
+
+    Ayuda: puede usar la siguiente identidad
+
+    $$J^{\alpha}_{\mu}J^{\mu}_{\beta} = \delta_{\alpha}^{\beta}$$
+\end{itemize}
+
+\textbf{Soluci\'on:}\\
+
+Por definici\'on, el s\'imbolo de Christoffel de primer tipo se escribe en funci\'on de las derivadas de la m\'etrica de la siguiente manera
+
+$$2\Gamma_{\alpha \beta \gamma} = \partial_{\gamma}g_{\alpha \beta} + \partial_{\beta}g_{\alpha \gamma} - \partial_{\alpha}g_{\beta \gamma}$$\\
+
+Escribamos la tranformaci\'on del primer t\'ermino de acuerdo a (\ref{eq10}), y los dos restantes seguir\'an la misma l\'inea (con los \'indices correspondientes)
+
+$$ \partial_{\gamma}g_{\alpha \beta} =  \partial_{\gamma}(J^{\mu}_{\alpha}J^{\nu}_{\beta}g_{\mu \nu}) = \partial_{\lambda}g_{\mu \nu}J^{\mu}_{\alpha}J^{\nu}_{\beta}J^{\lambda}_{\gamma} + (J^{\mu}_{\alpha \gamma}J^{\nu}_{\beta} + J^{\nu}_{\beta}J^{\nu}_{\beta \gamma})g_{\mu \nu}$$\\
+
+Aqu\'i se utilizo la regla de la cadena de la derivada (primero en la m\'etrica, teniendo en cuenta las transformaci\'oon $\partial_{\gamma} = J^{\lambda}_{\gamma}\partial_{\lambda}$; y luego en las $J$ con $J^{\mu}_{\beta \gamma} = \partial_{\beta}J^{\mu}_{\gamma} = \frac{\partial^{2}x^{\mu}}{\partial y^{\beta}y^{\gamma}}$). Por lo tanto:
+
+$$2\Gamma_{\alpha \beta \gamma} = \partial_{\gamma}g_{\alpha \beta} + \partial_{\beta}g_{\alpha \gamma} - \partial_{\alpha}g_{\beta \gamma} = 2J^{\mu}_{\alpha}J^{\nu}_{\beta}J^{\lambda}_{\gamma}\Gamma_{\mu \nu \lambda} + (J^{\mu}_{\alpha \gamma}J^{\nu}_{\beta} + J^{\nu}_{\beta}J^{\nu}_{\beta \gamma} + J^{\mu}_{\alpha \beta}J^{\nu}_{\gamma} + J^{\mu}_{\alpha}J^{\nu}_{\gamma \beta} - J^{\mu}_{\beta \alpha}J^{\nu}_{\gamma} - J^{\mu}_{\beta}J^{\nu}_{\gamma \alpha})g_{\mu \nu}$$\\
+
+En esta igualdad, los siguientes t\'erminos se cancelan entre s\'i: el tercero y quinto dado que $J^{\mu}_{\alpha \beta}$ es sim\'etrica; el primero y sexto porque $J^{\mu}_{\alpha \gamma}$ y $g_{\mu \nu}$ son sim\'etricas. El segundo y cuarto se suman, dando lugar a
+
+$$\Gamma_{\alpha \beta \gamma} = J^{\mu}_{\alpha}J^{\nu}_{\beta}J^{\lambda}_{\gamma}\Gamma_{\mu \nu \lambda} + J^{\mu}_{\alpha}J^{\nu}_{\beta \gamma}g_{\mu \nu}$$
+
+Si multiplicamos esta \'ultima igualdad por la m\'etrica inversa $g^{\alpha \delta} = g^{\sigma \rho}J^{\alpha}_{\sigma}J^{\delta}_{\rho}$, obtenemos el resultado buscado:
+
+$$\Gamma^{\alpha}_{\beta \gamma} = g^{\alpha \delta}\Gamma_{\delta \beta \gamma} = J^{\mu}_{\alpha}J^{\nu}_{\beta}J^{\lambda}_{\gamma}\Gamma^{\mu}_{\nu \lambda} + J^{\mu}_{\alpha}J^{\nu}_{\beta \gamma}g_{\mu \nu}\ \checkmark$$\\
+
+Un ejemplo del uso de la ayuda del enunciado es en el c\'alculo del segundo t\'ermino al elevar el \'indice $\alpha$:
+
+$$g^{\alpha \delta}J^{\mu}_{\delta}J^{\nu}_{\beta \gamma}g_{\mu \nu} = (g^{\sigma \rho}J^{\alpha}_{\sigma}J^{\delta}_{\rho})J^{\mu}_{\delta}J^{\nu}_{\beta \gamma}g_{\mu \nu} = g^{\sigma \rho}J^{\alpha}_{\sigma}(\delta^{\mu}_{\rho})J^{\nu}_{\beta \gamma}g_{\mu \nu} = g^{\sigma \mu}J^{\alpha}_{\sigma}J^{\nu}_{\beta \gamma}g_{\mu \nu} = \delta^{\sigma}_{\nu}J^{\alpha}_{\sigma}J^{\nu}_{\beta \gamma} = J^{\alpha}_{\nu}J^{\nu}_{\beta \gamma}$$\\
+
+Las cuadrivelocidades tranforman como vectores, es decir
+
+$$\Dot{y}^{\alpha} = J^{\alpha}_{\mu}\Dot{x}^{\mu}$$
+
+Diferenciando nuevamente, y aplicando la regla de la cadena:
+
+$$\Rightarrow \Ddot{y}^{\alpha} = J^{\alpha}_{\mu}\Ddot{x}^{\mu} + J^{\alpha}_{\mu \nu}\Dot{x}^{\mu}\Dot{x}^{\nu}$$
+
+Reemplaz\'andolo en la geod\'esica, nos queda as\'i
+
+$$\Ddot{y}^{\alpha} + \Gamma^{\alpha}_{\beta \gamma}\Dot{y}^{\beta}\Dot{y}^{\gamma} = J^{\alpha}_{\mu}(\Ddot{x}^{\mu} + \Gamma^{\mu}_{\nu \lambda}J^{\nu}_{\beta}J^{\lambda}_{\gamma}\Dot{y}^{\beta}\Dot{y}^{\gamma}) + J^{\alpha}_{\mu}J^{\mu}_{\beta \gamma}\Dot{y}^{\beta}\Dot{y}^{\gamma} + J^{\alpha}_{\mu \nu}\Dot{x}^{\mu}\Dot{x}^{\nu}$$
+
+$$\Rightarrow \Ddot{y}^{\alpha} + \Gamma^{\alpha}_{\beta \gamma}\Dot{y}^{\beta}\Dot{y}^{\gamma} = J^{\alpha}_{\mu}(\Ddot{x}^{\mu} + \Gamma^{\mu}_{\nu \lambda}\Dot{x}^{\mu}\Dot{x}^{\nu}) + (J^{\alpha}_{\mu}J^{\mu}_{\beta \gamma} + J^{\alpha}_{\mu \nu}J^{\mu}_{\beta}J^{\nu}_{\gamma})\Dot{y}^{\beta}\Dot{y}^{\gamma}$$\\
+
+El primer t\'ermino es el resultado buscado; el segundo es 0, ya que
+
+$$0 = \partial_{\gamma}\delta^{\alpha}_{\beta} = \partial_{\gamma}(J^{\alpha}_{\mu}J^{\mu}_{\beta}) = J^{\alpha}_{\mu \nu}J^{\nu}_{\gamma}J^{\mu}_{\beta} + J^{\alpha}_{\mu}J^{\mu}_{\beta \gamma}$$
+
+$$\Rightarrow \Ddot{y}^{\alpha} + \Gamma^{\alpha}_{\beta \gamma}\Dot{y}^{\beta}\Dot{y}^{\gamma} = J^{\alpha}_{\mu}(\Ddot{x}^{\mu} + \Gamma^{\mu}_{\nu \lambda}\Dot{x}^{\mu}\Dot{x}^{\nu})\ \checkmark$$

@@ -1,0 +1,205 @@
+\section{Clase 7 - Pr\'actica 4 (N\'umero de condici\'on)}
+
+\subsection{Normas vectoriales}
+
+\begin{itemize}
+	\item $\|x\|_{2} = \sqrt{x_{1}^{2} + \cdots + x_{n}^{2}}$
+	
+	\item $\|x\|_{\infty} = \max \limits_{1 \leq i \leq n} |x_{i}|$
+
+	\item $\|x\|_{1} = \max \limits_{1 \leq j \leq n} |x_{j}|$
+
+	\item $\|x\|_{p} = (x_{1}^{p} + \cdots + x_{n}^{p})^{\frac{1}{p}}$
+\end{itemize}
+
+\subsection{Desigualdad de Cauchy - Schwarz}
+
+$$\langle a, b \rangle \leq \|a\|_{2}\|b\|_{2}$$
+
+\underline{Demostraci\'on}: Basta probar que $\langle a, b \rangle^{2}\leq \|a\|_{2}^{2}\|b\|_{2}^{2}$ para $a \neq 0$.
+
+$$0 \leq \|\alpha a - \beta b\|_{2}^{2} = \langle \alpha a - \beta b, \alpha a - \beta b \rangle = \alpha^{2}\|a\|_{2}^{2} - 2\alpha \beta \langle a, b \rangle + \beta^{2}\|b\|_{2}^{2}$$
+
+Si tomamos $\alpha = \langle a, b \rangle$ y $\beta = \|a\|_{2}^{2}$:
+
+$$0 \leq \|a\|_{2}^{2}\langle a, b \rangle^{2} - 2\|a\|_{2}^{2}\langle a, b \rangle^{2} + \|a\|_{2}^{4}\|b\|_{2}^{2} \Rightarrow \|a\|_{2}^{2}\langle a, b \rangle^{2} \leq \|a\|_{2}^{4}\|b\|_{2}^{2} \Rightarrow \langle a, b \rangle^{2} \leq \|a\|_{2}^{2}\|b\|_{2}^{2}$$
+
+\underline{C\'omo se comparan las normas entre s\'i?}\\
+
+Si tomamos $a = (|x_{1}|, \cdots, |x_{n}|),\ b = (1, \cdots, 1)$ por Cauchy - Schwarz.
+
+$$\sum \limits_{1 \leq j \leq n} |x_{j}| = \langle a, b \rangle \leq \|a\|_{2}\|b\|_{2} = \sqrt{n}\|x\|_{2}$$
+
+por lo tanto, $\|x\|_{1} \leq \sqrt{n}\|x\|_{2}$. Vale tambi\'en que
+
+\begin{itemize}
+	\item $\|x\|_{2} \leq \|x\|_{1}$
+
+	\item $\|x\|_{\infty} \leq \|x\|_{1} \leq n\|x\|_{\infty}$
+	
+	\item $\|x\|_{\infty} \leq \|x\|_{2} \leq \sqrt{n}\|x\|_{\infty}$\\
+\end{itemize}
+
+\underline{Definici\'on}: Sea $V$ un espacio vectorial. Una norma en $V$ es una aplicaci\'on $\|.\|: V \rightarrow \mathbb{R}$ tal que:
+
+\begin{itemize}
+	\item 1) $\|x\| \geq 0\ \forall \ x \in V$
+	
+	\item 2) $\|x\| = 0 \iff x = 0$
+	
+	\item 3) $\|\lambda x\| = |\lambda|\|x\|$
+	
+	\item 4) $\|x + y\| \leq \|x\| + \|y\|$\\
+\end{itemize}
+
+\underline{Teorema}: Dadas $\|.\|$ y $\|.\|'$ normas en $\mathbb{R}^{n}$, existen constantes positivas $C_{1}$ y $C_{2}\ / \ C_{1}\|x\| \leq \|x\|' \leq C_{2}\|x\|$.\\
+
+\underline{Demostraci\'on}: Basta demostrar que cualquier norma es equivalente a $\|.\|_{2}$.\\
+
+Sea $e_{i}$ el $i$-\'esimo vector can\'onico. Llamemos $C = \bigg(\sum \limits_{i = 1}^{n} \|e_{i}\|'^{2}\bigg)^{\frac{1}{2}}$:
+
+$$\|x\|' = \bigg\|\sum \limits_{j = 1}^{n} x_{j}e_{j}\bigg\|' \leq \sum \limits_{j = 1}^{n} |x_{j}|\|e_{j}\|' = \langle (|x_{1}|, \cdots, |x_{n}|), (\|e_{1}\|', \cdots, \|e_{n}\|') \rangle$$
+
+Por la desigualdad de Cauchy - Schwarz, vale $\|x\|' \leq \|x\|_{2} \Rightarrow \frac{1}{C}\|x\|' \leq \|x\|_{2}$.\\
+
+Consideramos $C_{1} = \frac{1}{C}$. Queremos ver ahora que existe $C_{2}\ / \ \|x\|_{2} \leq C_{2}\|x\|'$.\\
+
+Supongamos que no, entonces $\forall \ m \in \mathbb{N}\ \exists \ y_{m} \in \mathbb{R}^{n}\ / \ \|y_{m}\|_{2} > m \|y_{m}\|'$.\\
+
+Sea $z_{m} = \frac{y_{m}}{\|y_{m}\|_{2}}$, y por lo tanto:
+
+$$\|z_{m}\|_{2} = 1 \text{ y } \|z_{m}\|' = \frac{1}{\|y_{m}\|_{2}}\|y_{m}\|' \leq \frac{1}{m} \rightarrow_{m \rightarrow +\infty} 0$$
+
+Como $\{z_{m}\}$ es acotada en $\|.\|_{2}$, existe una subsucesi\'on convergente $\{z_{m_{k}}\|_{k}$ y $z \in \mathbb{R}^{n}\ / \ \|z_{m_{k}} - z\|_{2} \rightarrow_{k \rightarrow +\infty} 0$.\\
+
+Vale entonces que $\|z_{m_{k}} - z\|' \leq C\|z_{m_{k}} - z\|_{2} \rightarrow_{k \rightarrow +\infty} 0$ y $0 \leq \|z\|' \leq \|z - z_{m_{k}}\|' + \|z_{m_{k}}\|' \rightarrow_{k \rightarrow +\infty} 0$. Por lo tanto, $z = 0$ pero $\|z_{m_{k}}\|_{2} = 1\ \forall \ k$ y esto lleva a un absurdo.\\
+
+Si tengo una matriz $A$ y un vector $b$ y resuelvo el sistema $Ax = b$, obteniendo $x$. Ahora tengo el vector $\tilde{b}$ y obtengo $\tilde{x}$, c\'omo se comparan $\frac{\|x - \tilde{x}\|'}{\|x\|'}$ y $\frac{\|b - \tilde{b}\|'}{\|b\|'}$?\\
+
+\textit{Ejemplo}:
+
+$$ A = 
+	\begin{pmatrix}
+        4.1 & 2.8\\
+        9.7 & 6.6\\
+	\end{pmatrix}
+	,\ b = 
+    \begin{pmatrix}
+        4.1\\
+        9.7\\
+	\end{pmatrix}
+	,\ x = 
+    \begin{pmatrix}
+        1\\
+        0\\
+	\end{pmatrix}
+	,\ \tilde{b} =
+	\begin{pmatrix}
+        4.11\\
+        9.7\\
+	\end{pmatrix}
+	,\ \tilde{x} =
+	\begin{pmatrix}
+        0.34\\
+        0.97\\
+	\end{pmatrix}
+$$
+
+$$\frac{\|x - \tilde{x}\|_{1}}{\|x\|_{1}} = \frac{0.66 + 0.97}{1} = 1.63$$
+
+$$\frac{\|b - \tilde{b}\|_{1}}{\|b\|_{1}} = \frac{0.01}{13.8} = 0.7246\cdot10^{-3}$$
+
+\underline{Definici\'on}: Sea $A \in \mathbb{R}^{n \times n}$, definimos a la norma de $A$ subordinada a la norma vectorial $\|.\|'$
+como:
+
+$$\|A\|' = \max \limits_{x \neq 0} \frac{\|Ax\|'}{\|x\|'}$$
+
+Equivalentemente, $\|A\|' = \max \limits_{\|x\|' = 1} \|Ax\|'$ (ver que es una norma).\\
+
+\underline{Propiedades}:
+
+\begin{itemize}
+	\item $\|Ax\|' \leq \|A\|'\|x\|'$
+	
+	\item $\|AB\|' \leq \|A\|'\|B\|'$\\
+	
+	\underline{Demostraci\'on}: $\|ABx\|' \leq \|A\|'\|Bx\|' \leq \|A\|'\|B\|'\|x\|' \ \forall \ x$. Por lo tanto:
+	
+	$$\|AB\|' = \max \limits_{x \neq 0} \frac{\|ABx\|'}{\|x\|'} \leq \max \limits_{x \neq 0} \frac{\|A\|'\|B\|'\|x\|'}{\|x\|'} = \max \limits_{x \neq 0} \|A\|'\|B\|' = \|A\|'\|B\|'$$
+
+\end{itemize}
+
+\underline{Teorema}: Sea $A \in \mathbb{R}^{n \times n}$,
+
+\begin{itemize}
+	\item 1) $\|A\|_{\infty} = \max \limits_{1 \leq i \leq n} \sum \limits_{j = 1}^{n} |a_{ij}|$
+	
+	\item 2) Si $A$ es sim\'etrica y $\{\lambda_{1}, \cdots, \lambda_{n}\}$ son sus autovalores, $\|A\|_{2} = \rho(A) = \max \limits_{1 \leq j \leq n} |\lambda_{j}|$.
+	
+	Si $A$ no es sim\'etrica, $\|A\|_{2} = \sqrt{\rho(A^{t}A)}$
+	
+	\item 3) $\|A\|_{1} = \max \limits_{1 \leq j \leq n} \sum \limits_{i = 1}^{n} |a_{ij}|$
+\end{itemize}
+
+\underline{Demostraci\'on}:
+
+\begin{itemize}
+	\item 1)
+	$\leq$:
+
+	$$\|Ax\|_{\infty} = \max \limits_{1 \leq i \leq n} \bigg|\sum \limits_{j = 1}^{n} a_{ij}x_{j}\bigg|  \leq \max \limits_{1 \leq i \leq n} \sum \limits_{j = 1}^{n} |a_{ij}||x_{j}| \leq \max \limits_{1 \leq i \leq n} \|x\|_{\infty} \sum \limits_{j = 1}^{n} |a_{ij}|$$
+
+	$$\Rightarrow \|A\|_{\infty} = \max \limits_{x \neq 0} \frac{\|Ax\|_{\infty}}{\|x\|_{\infty}} \leq \max \limits_{x \neq 0} \frac{\max \limits_{1 \leq i \leq n} \|x\|_{\infty} \sum \limits_{j = 1}^{n} |a_{ij}|}{\|x\|_{\infty}} = \max \limits_{1 \leq i \leq n} \sum \limits_{j = 1}^{n} |a_{ij}|$$
+	
+	$\geq$:
+	
+	Sea $i_{0}$ el \'indice donde se alcanza el m\'aximo. Es decir:
+	
+	$$\max \limits_{1 \leq i \leq n} \sum \limits_{j = 1}^{n} |a_{ij}| = \sum \limits_{j = 1}^{n} |a_{i_{0}j}|$$
+	
+	Sea $\tilde{x} = (\text{sg}(a_{i_{0}1}), \cdots, \text{sg}(a_{i_{0}n}))$. Vale $\|\tilde{x}\|_{\infty} = 1$.
+	
+	$$\|A\tilde{x}\|_{\infty} = \max \limits_{1 \leq i \leq n} \bigg|\sum \limits_{j = 1}^{n} a_{ij}\tilde{x}_{j}\bigg|  \geq \bigg|\sum \limits_{j = 1}^{n} a_{i_{0}j}\tilde{x}_{j}\bigg| = \bigg|\sum \limits_{j = 1}^{n} |a_{i_{0}j}|\bigg| = \sum \limits_{j = 1}^{n} |a_{i_{0}j}| = \max \limits_{1 \leq i \leq n} \sum \limits_{j = 1}^{n} |a_{ij}|$$
+	
+	$$\Rightarrow \|A\|_{\infty} = \max \limits_{x \neq 0} \frac{\|Ax\|_{\infty}}{\|x\|_{\infty}} \geq \frac{\|A\tilde{x}\|_{\infty}}{\|\tilde{x}\|_{\infty}} \geq \max \limits_{1 \leq i \leq n} \sum \limits_{j = 1}^{n} |a_{ij}|$$
+	
+	\item 2)
+	$\leq$:
+	
+	Sea $A$ sim\'etrica. Existe una B.O.N. de autovectores (norma $\|.\|_{2}$). Sea $\lambda_{1}, \cdots, \lambda_{n}$ los autovalores de $A$ y $v_{1}, \cdots, v_{n}$ los autovectores asociados tales que $\langle v_{i}, v_{j} \rangle = \delta_{ij}$.\\
+	
+	Sea $x \in \mathbb{R}^{n}$. Entonces, $x = \sum \limits_{j = 1}^{n} \alpha_{j}v_{j}$ y $\|x\|_{2}^{2} = \sum \limits_{j = 1}^{n} \alpha_{j}^{2}$. Luego, $Ax = \sum \limits_{j = 1}^{n} \alpha_{j}Av_{j} = \sum \limits_{j = 1}^{n} \alpha_{j}\lambda_{j}v_{j}$:
+	
+	$$\|Ax\|_{2}^{2} = \sum \limits_{j = 1}^{n} (\alpha_{j}\lambda_{j})^{2} \leq \sum \limits_{j = 1}^{n} \alpha_{j}^{2}\lambda_{\max}^{2} = \lambda_{\max}^{2}\sum \limits_{j = 1}^{n} \alpha_{j}^{2} = \lambda_{\max}^{2}\|x\|_{2}^{2}$$
+	
+	$$\Rightarrow \|A\|_{2} = \max \limits_{x \neq 0} \frac{\|Ax\|_{2}}{\|x\|_{2}} \leq \frac{|\lambda_{\max}|\|x\|_{2}^{2}}{\|x\|_{2}} = |\lambda_{\max}| = \rho(A)$$
+	
+	$\geq$:
+	
+	Sea $i_{0}\ / \ \lambda_{\max} = \lambda_{i_{0}}$:
+	
+	$$\frac{\|Av_{i_{0}}\|_{2}}{\|v_{i_{0}}\|_{2}} = \frac{\|\lambda_{i_{0}}v_{i_{0}}\|_{2}}{\|v_{i_{0}}\|_{2}} = |\lambda_{i_{0}}| = \rho(A)$$
+	
+	$$\Rightarrow \|A\|_{2} \geq \rho(A)$$
+	
+	$\leq$:
+	
+	Si $A$ no es sim\'etrica, $B = A^{t}A$ s\'i lo es. Sean $\mu_{1}, \cdots, \mu_{n}$ los autovalores de $B$ (que no son negativos) y $w_{1}, \cdots, w_{n}$ los autovectores asociados que forman una B.O.N.\\
+	
+	Sea $x \in \mathbb{R}^{n}$. Entonces $x = \sum \limits_{j = 1}^{n} \alpha_{j}w_{j}$ y $Bx = \sum \limits_{j = 1}^{n} \alpha_{j}\mu_{j}w_{j}$:
+	
+	$$\|Ax\|_{2}^{2} = \langle Ax, Ax \rangle = x^{t}A^{t}Ax = x^{t}Bx = \langle x, Bx \rangle = \langle \sum \limits_{j = 1}^{n} \alpha_{j}w_{j}, \sum \limits_{j = 1}^{n} \alpha_{j}\mu_{j}w_{j} \rangle = \sum \limits_{j = 1}^{n} \mu_{j}\alpha_{j}^{2} \leq \mu_{\max}\sum \limits_{j = 1}^{n} \alpha_{j}^{2}$$
+	
+	$$\text{Como } \mu_{\max}\sum \limits_{j = 1}^{n} \alpha_{j}^{2} = \mu_{\max}\|x\|_{2}^{2}$$
+	
+	$$\Rightarrow \|A\|_{2} \leq \sqrt{\rho(A^{t}A)}$$
+	
+	$\geq$:
+	
+	Sea $i_{0}$ tal que $\mu_{\max} = \mu_{i_{0}}$:
+	
+	$$\frac{\|Aw_{i_{0}}\|_{2}}{\|w_{i_{0}}\|_{2}} = \sqrt{\langle Aw_{i_{0}}, Aw_{i_{0}} \rangle} = \sqrt{w_{i_{0}}^{t}A^{t}Aw_{i_{0}}} = \sqrt{\mu_{i_{0}}}\|w_{i_{0}}\|_{2} = \sqrt{\mu_{\max}}$$
+	
+	$$\Rightarrow \|A\|_{2} \geq \sqrt{\rho(A^{t}A)}$$
+	
+\end{itemize}

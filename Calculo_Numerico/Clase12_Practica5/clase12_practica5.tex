@@ -1,0 +1,176 @@
+\section{Clase 12 - Pr\'actica 5 (M\'etodos iterativos para sistemas lineales)}
+
+\underline{Teorema}: Si $A$ es sim\'etrica y definida positiva, el m\'etodo de Gauss - Seidel converge.\\
+
+\underline{Demostraci\'on}: Sea $P = A - B_{GS}^{t}AB_{GS}$. Vamos a ver que $P$ es sim\'etrica y definida positiva.
+
+\begin{itemize}
+	\item $P^{t} = A^{t} - B_{GS}^{t}A^{t}B_{GS} =_{A = A^{t}} A - B_{GS}^{t}AB_{GS} = P$ y entonces $P$ es sim\'etrica.
+	
+	\item $B_{GS} = -(D + L)^{-1}U = -(D + L)^{-1}(A - (D + L)) = I - (D + L)^{-1}A = I - M$\\
+\end{itemize}
+	
+$\Rightarrow P = A - (I - M^{t})A(I - M) = A - (A - M^{t}A)(I - M) = A - A + AM + M^{t}A - M^{t}AM$
+	
+$= M^{t}(A + (M^{t})^{-1}AM - AM) = M^{t}(AM^{-1} + (M^{t})^{-1}A - A)M + AM^{-1} = AA^{-1}(D + L) = D + L + (M^{t})^{-1}A = (A^{t}((D + L)^{t})^{-1})^{-1}A =_{A = A^{t}} (D + L)^{t}A^{-1}A = (D + L)^{t}$\\
+	
+$\Rightarrow AM^{-1} + (M^{t})^{-1}A - A = D + L + (D + L)^{t} - A =_{U = L^{t}} = D + L + D^{t} + L^{t} - (D + L + L^{t}) = D^{t} = D$\\
+	
+As\', $P = M^{t}DM$, con $D = \text{diag}(A)$ sim\'etrica y definida positiva:
+
+$$\Vec{y}^{t}P\Vec{y} = \Vec{y}^{t}M^{t}DM\Vec{y} > 0\ \forall \ \Vec{y} \neq \Vec{0}, P\ \text{es definida positiva}$$
+
+Sea $\lambda$ autovalor de $B_{GS}$ y sea $\Vec{v} \neq \Vec{0}$ autovector asociado:\\
+
+$0 < \Vec{v}^{t}P\Vec{v} = \Vec{v}^{t}(A - B_{GS}^{t}AB_{GS})\Vec{v} =  \Vec{v}^{t}A\Vec{v} - \Vec{v}^{t}B_{GS}^{t}AB_{GS}\Vec{v} = \Vec{v}^{t}A\Vec{v} - \lambda \Vec{v}^{t}A\lambda \Vec{v} = (1 - \lambda^{2})\Vec{v}^{t}A\Vec{v} > 0$\\
+
+Luego, $1 - \lambda^{2} > 0$ entonces $\rho(B_{GS}) < 1$.\\
+
+\underline{Lema}: Sean $A \in \mathbb{R}^{n \times n}$ tridiagonal y $\alpha \neq 0,\ \text{det}(D + L + U) = \text{det}\bigg(D + \alpha L  + \frac{1}{\alpha}U \bigg)$.\\
+
+\underline{Demostraci\'on}: Sea $ A = D + L + U = 
+	\begin{pmatrix}
+        d_{1} & u_{1} & \cdots & \cdots & \cdots\\
+        l_{2} & d_{2} & \cdots & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \cdots & \cdots & u_{n - 1}\\
+        \cdots & \cdots & \cdots & l_{n} & d_{n}\\
+	\end{pmatrix}
+$. Llamemos $A_{\alpha} = D + \alpha L  + \frac{1}{\alpha}U$. Para ver que $\text{det}(A) = \text{det}(A_{\alpha})$ vamos a mostrar que $A$ y $A_{\alpha}$ son semejantes:
+
+$$ PAP^{-1} = 
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots\\
+        \cdots & \alpha & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \cdots & \alpha^{n - 1}\\
+	\end{pmatrix}
+	A
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots\\
+        \cdots & \frac{1}{\alpha} & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \cdots & \frac{1}{\alpha^{n - 1}}\\
+	\end{pmatrix}
+$$
+
+$$ =
+	\begin{pmatrix}
+        d_{1} & u_{1} & \cdots & 0\\
+        \alpha l_{2} & \alpha d_{2} & \alpha u_{2} & \cdots\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \alpha^{n - 1}l_{n} & \alpha^{n - 1}d_{n}\\
+	\end{pmatrix}
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots\\
+        \cdots & \frac{1}{\alpha} & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \cdots & \frac{1}{\alpha^{n - 1}}\\
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+        d_{1} & \frac{1}{\alpha}u_{1} & \cdots & \cdots & 0\\
+        \alpha l_{2} & \alpha \frac{d_{2}}{\alpha} & \cdots & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \cdots & \cdots & \frac{1}{\alpha}u_{n - 1}\\
+        \cdots & \cdots & \cdots & \frac{1}{\alpha}l_{n} & d_{n}\\
+	\end{pmatrix}
+$$
+
+$$
+	= D + \alpha L  + \frac{1}{\alpha}U = A_{\alpha}
+$$
+
+como quer\'iamos probar.\\
+
+\underline{Teorema}: Sean $A \in \mathbb{R}^{n \times n}$ tridiagonal. Entonces, $\rho(B_{GS}) = \rho(B_{J})^{2}$.\\
+
+\underline{Demostraci\'on}:
+
+\begin{itemize}
+	\item Sea $\lambda \neq 0$ autovalor de $B_{GS} \Rightarrow \text{det}(\lambda D + \lambda L + U) = 0$.
+	
+	Sea $\alpha \neq 0$, por lema:
+	
+	$$0 = \text{det}(\lambda D + \lambda L + U) = \text{det}(\lambda D + \alpha \lambda L + \frac{1}{\alpha}U) = \frac{1}{\alpha^{n}}\text{det}(\alpha \lambda D + \alpha^{2} \lambda L + U)$$
+	
+	Sea $\alpha \neq 0\ / \ \lambda \alpha^{2} = 1 \Rightarrow 0 = \text{det}(\alpha \lambda D + L + U)$ y por lo tanto $\mu = \lambda \alpha$ es autovalor de $B_{J}$ y $\mu^{2} = \alpha^{2} \lambda^{2} = \lambda$.
+	
+	\item Sea ahora $\mu \neq 0$ autovalor de $B_{J}$. Luego, $0 = \text{det}(\mu D + L + U)$ y $0 = \text{det}(\mu^{2} D + \mu L + \mu U)$. Sea $\alpha \neq 0$, por lema, $0 = \text{det}(\mu^{2} D + \alpha \mu L + \frac{1}{\alpha}\mu U)$. Si $\alpha = \mu$, tenemos entonces:
+	
+	$$0 = \text{det}(\mu^{2} D + \mu^{2} L + U)$$
+	
+	y por lo tanto $\mu^{2}$ es autovalor de $B_{GS}$.\\
+\end{itemize}
+
+\underline{Teorema de Gershgorin}: Sea $A \in \mathbb{C}^{n \times n}$. Sea $R_{i} = \sum \limits_{j = 1, j \neq i}^{n} |a_{ij}|$. Sea $\lambda$ autovalor de $A$, entonces existe $i$ tal que $|\lambda - a_{ii}| \leq R_{i}$.\\
+
+\underline{Demostraci\'on}: Sea $\lambda$ autovalor de $A$ y $\Vec{v} \neq \Vec{0}$ autovector asociado. Sea $i_{0}\ / \ \|\Vec{v}\|_{\infty} = \max \limits_{1 \leq i \leq n} |v_{i}| = |v_{i_{0}}|$.\\
+
+Como $A\Vec{v} = \lambda \Vec{v}$, tenemos que $\sum \limits_{j = 1}^{n} a_{ij}v_{j} = \lambda v_{i}\ \forall \ 1 \leq i \leq n$.\\
+
+Luego, $\sum \limits_{j = 1, j \neq i_{0}}^{n} a_{i_{0}j}v_{j} = (\lambda - a_{i_{0}i_{0}})v_{i_{0}}$. As\'i:
+
+$$|\lambda - a_{i_{0}i_{0}}| = \bigg| \sum \limits_{j = 1, j \neq i_{0}}^{n} a_{i_{0}j}\frac{v_{j}}{v_{i_{0}}} \bigg| \leq \sum \limits_{j = 1, j \neq i_{0}}^{n} |a_{i_{0}j}|\frac{|v_{j}|}{|v_{i_{0}}|} \leq_{|v_{j} \leq |v_{i_{0}}|} \sum \limits_{j = 1, j \neq i_{0}}^{n} |a_{i_{0}j}| = R_{i_{0}}$$
+
+\textit{Python}: M\'etodos iterativos
+
+$$A = 
+	\begin{pmatrix}
+        3 & 1 & 1\\
+        2 & 6 & 1\\
+        1 & 1 & 4\\
+	\end{pmatrix}
+	\ \text{y}\ b =
+	\begin{pmatrix}
+        5\\
+        9\\
+        6\\
+	\end{pmatrix}
+$$
+
+\begin{verbatim}
+	import numpy as np
+	import matplotlib.pyplot as plt
+			
+	def Jacobi(A, b, x0, MaxIter, tol):
+	    D = np.diag(np.diag(A))
+	    L = np.tril(A) - D
+	    U = np.triu(A) - D
+	    
+	    InvD = np.linalg.inv(D)
+	    
+	    BJ = -InvD@(L + U)
+	    CJ = InvD@b
+	    e = np.linalg.eig(BJ)
+	    
+	    x1 = BJ@x0 + CJ
+	    
+	    cont = 1
+	    
+	    while (cont < MaxIter and np.linalg.norm(x1 - x0, 2) > tol):
+	        x0 = x1
+	        x1 = BJ@x0 + CJ
+	        cont = cont + 1
+	        
+	    return (e, cont, x1)
+	    
+	A = np.array(([3, 1, 1], [2, 6, 1], [1, 1, 4]))
+	b = np.array([5, 9, 6])
+	x0 = np.array([0, 0, 0])
+	MaxIter = 100
+	tol = 1 * 10**(-6)
+	
+	e, cont, Sol = Jacobi(A, b, x0, MaxIter, tol)
+	
+	print(cont)
+	print(Sol)
+	print(e)
+	
+	# 27
+	# [1.00000016 1.00000013 1.00000013]
+	# EigResult(eigenvalues=array([-0.55753465,  0.33333333,  0.22420131]), 
+	# eigenvectors=array([[ 6.45637047e-01,  7.07106781e-01,  1.96680360e-01],
+	# [ 5.45697519e-01, -7.07106781e-01, -7.56276871e-01], [ 5.34197549e-01,
+	# 3.94528120e-16,  6.23988886e-01]]))
+\end{verbatim}

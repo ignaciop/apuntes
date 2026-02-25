@@ -1,0 +1,378 @@
+\section{Clase 9 - Pr\'actica 4 (N\'umero de condici\'on)}
+
+\subsection{M\'etodos directos para la resoluci\'on de sistemas lineales}
+
+\underline{En general}:
+
+$$ L_{1} =
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots & \cdots\\
+        -l_{21} & \cdots & \cdots & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots & \vdots\\
+        -l_{n1} & \cdots & \cdots &\cdots & 1\\
+	\end{pmatrix}
+	,\ \text{con}\ l_{i1} = \frac{a_{i1}}{a_{11}}\ \text{si}\ a_{11} \neq 0
+$$
+
+$$ L_{2} =
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots & \vdots\\
+        \cdots & -l_{32} & \cdots & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots & \vdots\\
+        \cdots & -l_{n2} & \cdots & \cdots & 1\\
+	\end{pmatrix}
+	,\ \text{con}\ l_{i2} = \frac{a_{i2}^{(2)}}{a_{22}^{(2)}}\ \text{si}\ a_{22}^{(2)} \neq 0
+$$
+
+Notemos que $a_{22}^{(2)} = -l_{21}a_{12} + a_{22} \neq 0 \iff a_{11}a_{22} - a_{21}a_{12} \neq 0$.\\
+
+Si $ A_{k}^{(k)} =
+	\begin{pmatrix}
+        a_{1k}^{(k)}\\
+        \vdots\\
+        a_{kk}^{(k)}\\
+        a_{k + 1, k}^{(k)}\\
+        a_{nk}^{(k)}\\
+	\end{pmatrix}
+$, buscamos $L_{k}$ tal que $ L_{k}A_{k}^{(k)} =
+	\begin{pmatrix}
+        a_{1k}^{(k + 1)}\\
+        \vdots\\
+        a_{kk}^{(k + 1)}\\
+        0\\
+        0\\
+	\end{pmatrix}
+$. Luego $l_{ik} = \frac{a_{ik}^{(k)}}{a_{kk}^{(k)}}$ para $k \leq i \leq n$.
+
+$$ L_{k} =
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots & \cdots\\
+        \vdots & 1 & \vdots & \vdots & \vdots\\
+        \cdots & -l_{k + 1, k} & \cdots & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots & \vdots\\
+        \cdots & -l_{nk} & \cdots & \cdots & 1\\
+	\end{pmatrix}
+	=
+	I -
+	\begin{pmatrix}
+        0\\
+        \vdots\\
+        0\\
+        l_{k + 1, k}\\
+        l_{nk}\\
+	\end{pmatrix}
+	\begin{pmatrix}
+        0, & \cdots, & 1, & \cdots, & 0\\
+	\end{pmatrix}
+	= I - l_{k}e_{k}^{t}
+$$
+
+$$(I - l_{k}e_{k}^{t})(I + l_{k}e_{k}^{t}) = I - l_{k}e_{k}^{t}l_{k}e_{k}^{t} = I \Rightarrow L_{k}^{t} = I + l_{k}e_{k}^{t}$$
+
+Adem\'as, $L_{k}^{-1}L_{k + 1}^{-1} = (I + l_{k}e_{k}^{t})(I + l_{k + 1}e_{k + 1}^{t}) = I + l_{k + 1}e_{k + 1}^{t} + l_{k}e_{k}^{t} + l_{k}e_{k}^{t}l_{k + 1}e_{k + 1}^{t}$, entonces:
+
+$$ L_{k}^{-1}L_{k + 1}^{-1} =
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots & \cdots\\
+        \vdots & 1 & \vdots & \vdots & \vdots\\
+        \cdots & l_{k + 1, k} & 1 & \cdots & \cdots\\
+        \vdots & \vdots & l_{k + 1, k + 1} & \vdots & \vdots\\
+        \cdots & l_{nk} & l_{n,k + 1} & \cdots & 1\\
+	\end{pmatrix}
+$$
+
+Luego,
+
+$$ L =
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots & \cdots\\
+        l_{21} & \cdots & \cdots & \cdots & \cdots\\
+        \vdots & l_{32} & \vdots & \vdots & \vdots\\
+        l_{n1} & l_{n2} & \cdots & l_{n, n - 1} & 1\\
+	\end{pmatrix}
+$$\\
+
+\underline{Algoritmo de eliminaci\'on gaussiana sin pivoteo}\\
+
+\begin{verbatim}
+    U = A, L = I
+
+    para k = 1 hasta n - 1:
+       para i = k + 1 hasta n:
+           L[i, k] = U[i, k] / U[k, k]
+           U[i, k:n] = U[i, k:n] - L[i, k] * U[k, k:n]
+\end{verbatim}
+
+Son aproximadamente $\frac{2}{3}n^{3}$ operaciones (Trefethen \& Bau, p. 152).\\
+
+\underline{Teorema}: Sea $A \in \mathbb{R}^{n \times n}$ tal que en el procedimiento de eliminaci\'on gaussiana no aparecen pivotes nulos ($a_{kk}^{(k)} \neq 0,\ k = 1, \cdots, n$). Entonces existen matrices \'unicas $L$ y $U$, $L$ triangular inferior con unos en la diagonal y $U$ triangular superior tal que $A = LU$.\\
+
+\underline{Demostraci\'on}: Veamos la unicidad: $\sup A = LU = \tilde{L}\tilde{U}$:
+
+$$\text{det}(A) = \text{det}(L) = \text{det}(U) = \text{det}(\tilde{L})\text{det}(\tilde{U}) = \prod \limits_{k = 1}^{n} a_{kk}^{(k)} \neq 0$$
+
+Luego, $U$ y $\tilde{U}$ (y $L$ y $\tilde{L}$) son inversibles. Tenemos:
+
+$$\tilde{L}^{-1}LUU^{-1} = \tilde{L}^{-1}\tilde{L}\tilde{U}U^{-1} \Rightarrow \tilde{L}^{-1}L = D = \tilde{U}U^{-1} \Rightarrow D = I \Rightarrow L = \tilde{L}\ \text{y}\ U = \tilde{U}$$
+
+con $\tilde{L}^{-1}L$ matriz triangular inferior con unos en la diagonal, $D$ diagonal y $\tilde{U}U^{-1}$ triangular superior.\\
+
+Si $ A =
+	\begin{pmatrix}
+        0 & 2 & 1\\
+        3 & -4 & 1\\
+        -1 & 1 & 1\\
+	\end{pmatrix}
+$, como $a_{11} = 0$, no puedo hacer eliminaci\'on gaussiana. Permuto filas $P = P_{12}$ y obtengo $ PA =
+	\begin{pmatrix}
+        3 & -4 & 1\\
+        0 & 2 & 1\\
+        -1 & 1 & 1\\
+	\end{pmatrix}
+$, y ahora s\'i.\\
+
+\underline{Teorema}: Sea $A \in \mathbb{R}^{n \times n}$ inversible, existen una matriz de permutaci\'on $P$, una matriz $L$ triangular inferior con unos en la diagonal y una matriz $U$ triangular superior tales que $PA = LU$.\\
+
+\textit{Ejemplo con permutaci\'on}:
+
+$$
+	\begin{pmatrix}
+        1 & 2 & 0\\
+        2 & 4 & 3\\
+        0 & 5 & 6\\
+	\end{pmatrix}
+	\rightarrow_{
+	\tilde{F}_{2} = F_{2} - 2F_{1}}
+    \begin{pmatrix}
+        1 & 2 & 0\\
+        0 & 0 & 3\\
+        0 & 5 & 6\\
+	\end{pmatrix}
+$$
+
+No podemos seguir con la permutaci\'on. Permutamos fila 2 y fila 3:
+
+$$
+	\begin{pmatrix}
+        1 & 2 & 0\\
+        2 & 4 & 3\\
+        0 & 5 & 6\\
+	\end{pmatrix}
+	\rightarrow_{
+	F_{2} \leftrightarrow F_{3}}
+    \begin{pmatrix}
+        1 & 2 & 0\\
+        0 & 5 & 6\\
+        2 & 4 & 3\\
+	\end{pmatrix}
+	\rightarrow_{
+	\tilde{\tilde{F}}_{2} = \tilde{F}_{3} - 2\tilde{F}_{1}}
+	\begin{pmatrix}
+        1 & 2 & 0\\
+        0 & 5 & 6\\
+        0 & 0 & 3\\
+	\end{pmatrix} = U
+$$
+
+$$ P_{1} = 
+	\begin{pmatrix}
+        1 & 2 & 0\\
+        0 & 0 & 1\\
+        0 & 1 & 0\\
+	\end{pmatrix}
+	,\ L_{1} = 
+    \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        -2 & 0 & 1\\
+	\end{pmatrix}
+	\Rightarrow L_{1}P_{1}A = U \Rightarrow P_{1}A = L_{1}^{-1}U \Rightarrow PA = LU,\ \text{con}\ P = P_{1}\ \text{y}\ L = L_{1}^{-1}
+$$
+
+Si tenemos por ejemplo:
+
+$$L_{3}P_{3}L_{2}P_{2}L_{1}P_{1}A = U$$
+
+podemos reescribir::
+
+$$L_{3}P_{3}L_{2}P_{2}L_{1}P_{1} = L_{3}'L_{2}'L_{1}P_{3}'P_{2}'P_{1}'$$
+
+con $L'_{3} = L_{3},\ L'_{2} = P_{3}L_{2}P_{3}^{-1},\ L_{1}' = P_{3}P_{2}L_{1}P_{2}^{-1}P_{3}^{-1}$. Y as\'i:
+
+$$P_{3}P_{2}P_{1}A = (L'_{3}L'_{2}L'_{1})^{-1}U \Rightarrow PA = LU$$
+
+con $P = P_{3}P_{2}P_{1}$ y $ L = (L'_{3}L'_{2}L'_{1})^{-1}$.
+
+\subsubsection{Cholesky}
+
+\underline{Definici\'on}: $A$ se dice definida positiva si $x^{t}Ax = \langle x, Ax \rangle > 0\ \forall \ x \neq 0$.\\
+
+\underline{Observaci\'on}: Si $A = LL^{t}$ es inversible, entonces $A$ es sim\'etrica y definida positiva:
+
+$$(LL^{t})^{t} = (L^{t})^{t}L^{t} = LL^{t}$$
+
+$$\langle x, LL^{t}x \rangle = \langle L^{t}x, L^{t}x \rangle = \|L^{t}x\|^{2} > 0$$
+
+\underline{Teorema (Cholesky)}: Sea $A \in \mathbb{R}^{n \times n}$ sim\'etrica y definida positiva, entonces existe una \'unica matriz $L$ triangular inferior con $l_{ii} > 0$ para $i = 1, \cdots, n\ / \ A = LL^{t}$.\\
+
+\underline{Teorema 1}: Si $A \in \mathbb{R}^{n \times n}$. Sea $ M_{k} =
+	\begin{pmatrix}
+        a_{11} & \cdots & a_{1k}\\
+        \vdots & \vdots & \vdots\\
+        a_{k1} & \cdots & a_{kk}\\
+	\end{pmatrix}
+$. Si $\text{det}(M_{k}) \neq 0$ para $k = 1, \cdots, n$ entonces todos los pivotes de $A$ son no nulos ($a_{kk}^{(k)} \neq 0$ para $k = 1, \cdots, n$).\\
+
+\underline{Demostraci\'on}: $\text{det}(M_{1}) = a_{11} \neq 0$. Supongamos que se puede construir $L_{1}, \cdots, L_{k - 1}$, queremos ver que puedo construir $L_{k}$ (con $a_{kk}^{(k)} \neq 0$):
+
+$$M_{k} =
+	\begin{pmatrix}
+        a_{11} & \cdots & a_{1k}\\
+        \vdots & \vdots & \vdots\\
+        a_{k1} & \cdots & a_{kk}\\
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+        1 & \cdots & \cdots & \cdots\\
+        l_{21} & \cdots & \cdots & \cdots\\
+        \vdots & \vdots & \vdots & \vdots\\
+        l_{k1} & \cdots & l_{k, k - 1} & 1\\
+	\end{pmatrix}
+	\begin{pmatrix}
+        a_{11} & \cdots & \cdots & a_{1k}\\
+        0 & a_{22}^{2} & \cdots & a_{2k}^{(2)}\\
+        \vdots & \vdots & \vdots & \vdots\\
+        0 & \cdots & 0 & a_{kk}^{(k)}\\
+	\end{pmatrix}
+$$
+
+Luego, $\text{det}(M_{k}) = \prod \limits_{j = 1}^{k} a_{jj}^{(j)}$ y deducimos que $a_{kk}^{(k)} \neq 0$.\\
+
+\underline{Teorema 2}: Sea $A$ definida positiva, entonces $M_{k}$ es definida positiva ($1 \leq k \leq n$).\\
+
+\underline{Demostraci\'on}: $x \in \mathbb{R}^{k} - \{\Vec{0}\},\ x^{t}M_{k}x = \begin{pmatrix}
+        x^{t}, & \Vec{0}\\
+       	\end{pmatrix}A\begin{pmatrix}
+        x\\
+        \Vec{0}\\
+       	\end{pmatrix} > 0$.\\
+
+\underline{Lema 3}: Si $A$ es definida positiva, entonces $a_{jj} > 0 (1 \leq j \leq n)$.\\
+
+\underline{Demostraci\'on}: $0 < e_{j}^{t}Ae_{j} = a_{jj}$.\\
+
+\underline{Demostraci\'on (Cholesky)}: Por los teoremas 1 y 2, como los pivotes son no nulos, existen matrices \'unicas $L$ y $U$, $L$ triangular inferior con unos en la diagonal y $U$ triangular superior tales que $A = LU$.\\
+
+Como $A$ es sim\'etrica, $A = LU = A^{t} = U^{t}L^{t}$ y por lo tanto:
+
+$$LU = U^{t}L^{t} \Rightarrow L^{-1}LU(L^{t})^{-1} = L^{-1}U^{t}L^{t}(L^{t})^{-1} \Rightarrow L^{-1}U^{t} = U(L^{t})^{-1} = D$$
+
+$$\Rightarrow U = DL^{t} \Rightarrow A = LDL^{t}$$
+
+con $L^{-1}U^{t}$ triangular inferior, $U(L^{t})^{-1}$ triangular superior y $D$ diagonal.\\
+
+Veamos que $D$ es definida positiva: sea $x \in \mathbb{R}^{n} - \{\Vec{0}\}$, como $L^{t}$ es inversible, $\exists\ \tilde{x} \in \mathbb{R}^{n} - \{\Vec{0}\}\ / \ L^{t}\tilde{x} = x \Rightarrow x^{t}Dx = \tilde{x}^{t}LDL^{t}\tilde{x} = \tilde{x}^{t}A\tilde{x} > 0$.\\
+
+Luego por Lema 3, $d_{jj} > 0 (1 \leq j \leq n)$. Sea $ D^{\frac{1}{2}} =
+	\begin{pmatrix}
+        \sqrt{a_{11}} & \cdots & \cdots\\
+        \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \sqrt{a_{nn}}\\
+	\end{pmatrix}
+\Rightarrow A = LDL^{t} = LD^{\frac{1}{2}}D^{\frac{1}{2}}L^{t}$.\\
+
+Si $\tilde{L} = LD^{\frac{1}{2}} \Rightarrow A = \tilde{L}\tilde{L}^{t}$ y vale que $\tilde{L}_{ii} = \sqrt{d_{ii}} > 0$ para $1 \leq i \leq n$.\\
+
+Veamos la unicidad: supongamos que existen $\tilde{L}_{1}$ y $\tilde{L}_{2}$ con $(\tilde{L}_{1})_{ii} > 0$, $(\tilde{L}_{2})_{ii} > 0$ para $1 \leq i \leq n$, tales que $A = \tilde{L}_{1}\tilde{L}_{1}^{t} = \tilde{L}_{2}\tilde{L}_{2}^{t}$:
+
+$$\tilde{L}_{2}^{-1}\tilde{L}_{1} = \tilde{L}_{2}^{t}(\tilde{L}_{1}^{t})^{-1} = \tilde{D}$$
+
+con $\tilde{L}_{2}^{-1}\tilde{L}_{1}$ triangular inferior, $\tilde{L}_{2}^{t}(\tilde{L}_{1}^{t})^{-1}$ triangular superior y $\tilde{D}$ diagonal con $d_{ii} > 0$ para $1 \leq i \leq n$.
+
+$$\tilde{D} = \tilde{L}_{2}^{-1}\tilde{L}_{1} = (\tilde{L}_{1}^{-1}\tilde{L}_{2})^{-1} = ((\tilde{L}_{2}^{t}(\tilde{L}_{1}^{t})^{-1})^{t})^{-1} = (\tilde{D}^{t})^{-1} = \tilde{D}^{-1}$$
+
+y por lo tanto, $\tilde{D} = I$ y $\tilde{L}_{1} = \tilde{L}_{2}$.\\
+
+\underline{Algoritmo de Cholesky}
+
+\begin{verbatim}
+    L = I
+    L[1, 1] = sqrt(A[1, 1])
+
+    para t = 2 hasta n:
+        # llenamos la primer columna
+        L[t, 1] = A[t, 1] / L[1, 1]
+        
+    para j = 2 hasta n:
+        # llenamos las otras columnas de arriba hacia abajo
+        L[j, j] = sqrt(A[j, j] - sum((L[j, 1:j - 1])**2))
+        
+        para i = j + 1 hasta n:
+            L[i, j] = (A[i, j] - sum(L[i, 1: j - 1].L[j, 1: j - 1])) / L[j, j]
+\end{verbatim}
+
+\underline{Observaci\'on}: El n\'umero de operaciones es $\frac{n^{3}}{6}$ (la mitad de Gauss).\\
+
+\textit{Ejemplo}:
+
+$$A =
+	\begin{pmatrix}
+        4 & 12 & -16\\
+        12 & 37 & -43\\
+        -16 & -43 & 98\\
+	\end{pmatrix}
+$$
+
+\begin{itemize}
+	\item Sim\'etrica \checkmark
+	
+	\item Definida positiva: $A$ es definida positiva $\iff$ todos sus menores principales son positivos
+	
+	$$4\ \checkmark$$
+	$$4\cdot37 - 12\cdot12 = 4 > 0\ \checkmark$$
+	$$\text{det}(A) = 36 > 0\ \checkmark$$
+\end{itemize}
+
+Busquemos la descomposici\'on:
+
+$$A =
+	\begin{pmatrix}
+        4 & 12 & -16\\
+        12 & 37 & -43\\
+        -16 & -43 & 98\\
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+        l_{11} & 0 & 0\\
+        l_{21} & l_{22} & 0\\
+        l_{31} & l_{32} & l_{33}\\
+	\end{pmatrix}
+	\begin{pmatrix}
+        l_{11} & l_{21} & l_{31}\\
+        0 & l_{22} & l_{32}\\
+        0 & 0 & l_{33}\\
+	\end{pmatrix}
+	= LL^{t}
+$$
+
+$$ 
+	\begin{cases}
+		l_{11}^{2} = 4 \Rightarrow l_{11} = 2\\
+		l_{11}l_{21} = 12 \Rightarrow l_{21} = 6\\
+		l_{11}l_{31} = -16 \Rightarrow l_{31} = -8\\
+		36 + l_{22} = 37 \Rightarrow l_{22} = 1\\
+		-48 + l_{22}l_{32} = -43 \Rightarrow l_{22}l_{32} = 5 \Rightarrow l_{32} = 5\\
+		64 + l_{32}^{2} + l_{33}^{2} = 98 \Rightarrow 5^{2} + l_{33}^{2} = 34 \Rightarrow l_{33}^{2} = 9 \Rightarrow l_{33} = 3\\
+    \end{cases}
+$$
+
+Luego,
+
+$$L =
+	\begin{pmatrix}
+        2 & 0 & 0\\
+        6 & 1 & 0\\
+        -8 & 5 & 3\\
+	\end{pmatrix}
+$$

@@ -1,0 +1,161 @@
+\section{Clase 1 - Pr\'actica 1 (Aritm\'etica de punto flotante)}
+
+Si $x \in \mathbb{R},\ x \neq 0$, se puede escribir como:
+
+$$x = \pm \ 0.a_{1}a_{2}...a_{m + 1}\cdot10^{l},\ a_{1} \neq 0,\ 0 \leq a_{j} \leq 9$$
+
+En otra base $\beta$:
+
+$$x = \pm \ 0.d_{1}d_{2}...\cdot\beta^{k},\ d_{1} \neq 0,\ 0 \leq d_{j} \leq \beta - 1$$
+
+Si la m\'aquina trabaja con $m$ d\'igitos en la mantisa:
+
+$$x = \pm \ 0.c_{1}c_{2}...c_{m}\cdot 10^{q},\ c_{1} \neq 0,\ -q_{1} \leq q \leq q_{2}$$
+
+$x \in \mathbb{R},\ x \neq 0$, supongo $x > 0$:
+
+$$x = \pm \ 0.a_{1}...a_{m}a_{m + 1}\cdot 10^{q},\ a_{m} \neq q,\ -q_{1} \leq q \leq q_{2}$$
+
+Los $x \in \mathbb{R}$ que est\'an en el rango de la m\'aquina
+
+$$x' = \pm \ 0.a_{1}...a_{m}\cdot 10^{q}$$
+$$x'' = \pm \ 0.a_{1}...a_{m} + 1\cdot 10^{q}$$
+
+son n\'umeros de m\'aquina.\\
+
+Llamamos flotante($x$) = $fl(x)$ al n\'umero de m\'aquina m\'as cercano a $x$.\\
+
+Cuando tengo una situaci\'on de overflow, asigna $\pm \ \infty$; si tengo underflow asigna 0.\\
+
+\textit{Ejemplo}: $x = 0.123456...\cdot 10^{q},\ m = 4$.
+
+$$
+    \begin{cases}
+        x' = 0.1234\cdot 10^{q}\ \text{por truncamiento asigna } x'\\
+        x'' = 0.1235\cdot 10^{q}\ \text{por redondeo}\\
+    \end{cases}
+$$\\
+
+\underline{Lema}: Dado $x \neq 0$ en el rango de la m\'aquina que trabaja con $m$ d\'igitos en la mantisa, el error al representar a $x$ por $fl(x)$ est\'a acotado por:
+
+$$\text{Error absoluto: }\ |x - fl(x)| \leq \frac{1}{2}\cdot 10^{q - m}$$
+
+$$\text{Error relativo: }\ \frac{|x - fl(x)|}{|x|} \leq \frac{1}{2}\cdot 10^{1 - m}$$
+
+\underline{Demostraci\'on}: $x > 0$,
+
+$$x = 0.a_{1}...a_{m}a_{m + 1}\cdot 10^{q},\ a_{1} \neq 0,\ a_{m} \neq 9,\ -q_{1} \leq q \leq q_{2}$$\\
+
+\underline{Redondeo}: $fl(x)$ es $x'$ o $x''$ dependiendo del valor $a_{m + 1}$ de $x$:
+
+$$|x - fl(x)| \leq \frac{\text{dist}(x', x'')}{2} = \frac{|x' - x''|}{2} = \frac{0.0...1\cdot 10^{q}}{2} = \frac{1}{2}\cdot 10^{-m}\cdot 10^{q} = \frac{1}{2}\cdot 10^{q - m}$$
+
+$$\frac{|x - fl(x)|}{|x|} \leq \frac{\text{dist}(x', x'')}{2|x|} \leq \frac{10^{q - m}}{2\cdot 10^{q - 1}} = \frac{1}{2}\cdot 10^{1 - m}$$
+
+pues $|x| = x \geq 0.10...0\cdot 10^{q} = 1\cdot 10^{-1}\cdot 10^{q} = 10^{q - 1}$.\\
+
+Si fuese por truncamiento, entonces $|x - fl(x)| \leq \text{dist}(x', x'')$ (sin el $\frac{1}{2}$).\\
+
+En base $\beta$:
+
+$$\text{ERROR ABSOLUTO: }\ |x - fl(x)| \leq 
+	\begin{cases}
+        \frac{1}{2}\beta^{q - m}\ (\text{redondeo})\\
+        \beta^{q - m}\ (\text{truncamiento})\\
+    \end{cases}
+$$
+
+$$\text{ERROR RELATIVO: }\ \frac{|x - fl(x)|}{|x|} \leq 
+	\begin{cases}
+        \frac{1}{2}\beta^{1 - m}\ (\text{redondeo})\\
+        \beta^{1 - m}\ (\text{truncamiento})\\
+    \end{cases}
+$$\\
+
+\underline{Lema}: $x \neq 0,\ x \in \mathbb{R}$:
+
+$$fl(x) = x(1 + \delta) \Rightarrow \delta = \frac{fl(x) - x}{x}$$
+
+$x \rightarrow fl(x) = x(1 + \delta)$, donde
+
+$$\delta \leq \epsilon =
+	\begin{cases}
+        \frac{1}{2}\beta^{1 - m}\ (\text{redondeo})\\
+        \beta^{1 - m}\ (\text{truncamiento})\\
+    \end{cases}
+$$
+
+El $\epsilon$ de m\'aquina es el menor n\'umero positivo tal que $1 + \epsilon > 1$.\\
+
+\textit{Ejemplo}: redondeo, $\beta = 10,\ \epsilon = \frac{1}{2}\cdot 10^{1 - m} = 5 \cdot 10^{-m} = 0.0\cdots5_{m}$.\\
+
+Notemos que si considero $0 < \mu < \epsilon$:\\
+
+$\mu = 0.0\cdots4_{m}9\cdots9\ \text{(truncamiento)}$\\
+
+$1 + \mu = 0.1\cdot 10 + 0.4 \cdot 10^{1 - m} = 0.1\cdot 10 + 0.0\cdots0_{m}4_{m + 1} \cdot 10\ \text{(para sumarlos, los llevo al de mayor exponente)}$\\
+
+$ = 0.10\cdots 04_{m + 1}\cdot 10 = 0.10\cdots0\cdot 10 = 0.1\cdot 10 = 1$\\
+
+\textit{Ejemplo}: redondeo, $m = 4,\ x = 1532 = 0.1532\cdot10^{4},\ y = 0.2 = 0.2\cdot10^{0},\ z = 0.4 = 0.4\cdot10^{0}$\\
+
+$$fl(x) = x,\ fl(y) = y,\ fl(z) = z$$
+
+A mano, $x + y + z = 1532.6$.\\
+
+$fl(x + y) = fl(0.1532\cdot10^{4} + 0.2\cdot10^{0}) = fl(0.1532\cdot10^{4} + 0.2\cdot10^{-4}\cdot10^{4}) = fl(0.1532\cdot10^{4} + 0.000002\cdot10^{4}) = 0.1532\cdot10^{4}$\\
+
+$fl(fl(x + y) + fl(z)) = fl(0.1532\cdot10^{4} + 0.4\cdot10^{0}) = fl(0.1532\cdot10^{4} + 0.4\cdot10^{-4}\cdot10^{4}) = fl(0.1532\cdot10^{4} + 0.00004\cdot10^{4}) = fl(0.1532\cdot10^{4}) = 0.1532\cdot10^{4}$\\
+
+Por otro lado, $y + z + x$:\\
+
+$fl(y + z) = 0.6\cdot10^{0}$\\
+
+$fl(fl(y + z) + fl(x)) = fl(0.6\cdot10^{0} + 0.1532\cdot10^{4}) = fl(0.6\cdot10^{-4}\cdot10^{4} + 0.1532\cdot10^{4}) = fl(0.00006\cdot10^{4} + 0.1532\cdot10^{4}) = fl(0.1533\cdot10^{4}) = 0.1533\cdot10^{4}$\\
+
+\underline{Cancelaci\'on catastr\'ofica}: se produce la p\'erdida de d\'igitos significativos.\\
+
+$m = 5,\ x = 0.765454218,\ y = 0.76544304$. Con 5 d\'igitos significativos:\\
+
+$fl(x) = 0.76545,\ fl(y) = 0.76544$\\
+
+$fl(x) - fl(y) = 0.00001 = 1\cdot10^{-5} = 0.1\cdot10^{-4}\ \text{(s\'olo 1 d\'igito significativo)}$\\
+
+A mano, $x - y = 0.000011178$\\
+
+\textit{Ejemplo}: $x^{2} - 20x + 1 = 0$, por redondeo, $m = 2,\ \beta = 10$\\
+
+$x_{1} = 10 + \sqrt{99} = 19.94987\cdots$
+$x_{2} = 10 - \sqrt{99} = 0.050125\cdots = 0.50125\cdot10^{-1}$\\
+
+$\sqrt{99} = 9.94987\cdots = 0.994987\cdots \cdot 10^{1}$\\
+
+$fl(\sqrt{99}) = 0.99\cdot10$\\
+
+$fl(10) = 0.1\cdot10^{2}$\\
+
+$x_{1}^{*} = 0.1\cdot10^{2} + 0.99\cdot10 = 0.1\cdot10^{2} + 0.099\cdot10^{2} = 0.199\cdot10^{2} = 0.2\cdot10^{2} \Rightarrow x_{1}^{*} = 20$\\
+
+$x_{2}^{*} = 0.1\cdot10^{2} - 0.099\cdot10^{2} = 0.001\cdot10^{2} \Rightarrow x_{1}^{*} = 0.1$\\
+
+Error relativo para $x_{2} \rightarrow \frac{|x_{2} - x_{2}^{*}|}{|x_{2}|} \approx 1$\\
+
+$x_{2} = 10 - \sqrt{99} \frac{10 + \sqrt{99}}{10 + \sqrt{99}} = \frac{1}{10 + \sqrt{99}}$\\
+
+$\frac{1}{fl(10 + fl(\sqrt{99}))} = \frac{0.1\cdot10^{1}}{0.2\cdot10^{2}} \rightarrow x_{2}^{**} = 0.5\cdot10^{-1}$\\
+
+
+\textit{Python}: $\epsilon$ de la m\'aquina, m\'inimo y m\'aximo n\'umero flotante que representa:\\
+
+\begin{verbatim}
+	import numpy as np
+	
+	eps = np.finfo(float).eps
+	# eps = 2,2204460.e^(-16)
+	
+	min = np.finfo(float).min
+	# min = -1,7976.e^(+308)
+	
+	max = np.finfo(float).max
+	# max = 1,7976.e^(+308)
+\end{verbatim}

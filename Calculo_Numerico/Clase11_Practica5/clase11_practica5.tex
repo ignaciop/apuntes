@@ -1,0 +1,194 @@
+\section{Clase 11 - Pr\'actica 5 (M\'etodos iterativos para sistemas lineales)}
+
+\underline{Teorema}: Sea $B \in \mathbb{R}^{n \times n},\ B^{k} \rightarrow_{k \rightarrow \infty} 0 \iff \rho(B) < 1$.\\
+
+\underline{Demostraci\'on}:\\
+
+$\Leftarrow$) Como $\rho(B) < 1$, tomo $\epsilon\ / \ 0 < \epsilon < 1 - \rho(B)$. Puedo hallar una norma $\|.\|_{\epsilon}\ / \ \|B\|_{\epsilon} < \rho(B) + \epsilon < 1$ y vale:
+
+$$\|B^{k}\|_{\epsilon} \leq (\|B\|_{\epsilon})^{k} \rightarrow_{k \rightarrow \infty} 0 \Rightarrow B^{k} \rightarrow 0$$
+
+$\Rightarrow$) Lo probamos por el absurdo. Supongamos que $B^{k} \rightarrow_{k \rightarrow \infty} 0$ y $\rho(B) \geq 1$. Entonces existe $\lambda$ autovalor de $B$ con $|\lambda| \geq 1$. Sea $z \neq \Vec{0}$ autovector asociado a $\lambda$. Tenemos, para cualquier norma $\|.\|$:
+
+$$0 \leq \|B^{k}z\| \leq \|B^{k}\|\|z\| \rightarrow 0$$
+
+Pero $B^{k}z = \lambda^{k}z$ y entonces:
+
+$$0 \leftarrow \|B^{k}z\| = \|\lambda^{k}z\| = |\lambda|^{k}\|z\| \neq \rightarrow 0$$
+
+y esto es absurdo. El absurdo provino de suponer que $\rho(B) \geq 1$. Tenemos que si $B^{k} \rightarrow_{k \rightarrow \infty} 0$, necesariamente $\rho(B) < 1$.\\
+
+De esta forma, cualquier m\'etodo iterativo converge si y solo si su matriz de iteraci\'on $B$ cumple $\rho(B) < 1$.\\
+
+\underline{Observaci\'on}:
+
+\begin{itemize}
+	\item $\lambda$ autovalor de $B_{J} \iff \text{det}(\lambda I - B_{J}) = 0 \iff \text{det}(\lambda I + D^{-1}(L + U)) = 0 \iff \text{det}(D^{-1})\text{det}(\lambda D + L + U) = 0 \iff_{\text{det}(D^{-1}) \neq 0} \ \text{det}(\lambda D + L + U) = 0$
+	
+	\item $\lambda$ autovalor de $B_{GS} \iff \text{det}(\lambda I - B_{GS}) = 0 \iff \text{det}(\lambda I + (D + L)^{-1}U) = 0 \iff \text{det}((D + L)^{-1})\text{det}(\lambda D + \lambda L + U) = 0 \iff_{\text{det}((D + L)^{-1}) \neq 0} \ \text{det}(\lambda D + \lambda L + U) = 0$
+\end{itemize}
+
+\underline{Proposici\'on}: En $\mathbb{R}^{2 \times 2}$, Jacobi converge si y solo si Gauss - Seidel converge.\\
+
+\underline{Demostraci\'on}: $ B_{GS} = -(D + L)^{-1}U = -
+	\begin{pmatrix}
+        a_{11} & a_{12}\\
+        a_{21} & a_{22}\\
+	\end{pmatrix}
+$. Si $A$ es inversible, puedo suponer $a_{11}a_{22} \neq 0$.\\
+
+\begin{itemize}
+	\item $\lambda$ autovalor de $B_{J} \iff \text{det}\begin{pmatrix}
+        \lambda a_{11} & a_{12}\\
+        a_{21} & \lambda a_{22}\\
+	\end{pmatrix} = \lambda^{2}a_{11}a_{22} - a_{12}a_{21} = 0 \iff \lambda^{2} = \frac{a_{12}a_{21}}{a_{11}a_{22}} \iff |\lambda| = \sqrt{\frac{a_{12}a_{21}}{a_{11}a_{22}}}$
+	
+	\item $\lambda$ autovalor de $B_{GS} \iff \text{det}\begin{pmatrix}
+        \lambda a_{11} & \lambda a_{12}\\
+        a_{21} & \lambda a_{22}\\
+	\end{pmatrix} = \lambda^{2}a_{11}a_{22} - \lambda a_{12}a_{21} = 0 \iff \lambda(\lambda a_{11}a_{22} - a_{12}a_{21}) = 0 \iff \lambda = 0\ \text{o}\ \lambda = \frac{a_{12}a_{21}}{a_{11}a_{22}}$
+\end{itemize}
+
+Luego, $\rho(B_{GS}) = \rho(B_{J})^{2}$ y vale que $\rho(B_{GS}) < 1 \iff \rho(B_{J}) < 1$.\\
+
+\underline{Teorema}: Sea $B \in \mathbb{R}^{n \times n}$, sea $\|.\|'$ una norma matricial subordinada a una norma vectorial. Entonces:
+
+$$\lim \limits_{k \rightarrow \infty} (\|B^{k}\|')^{\frac{1}{k}} = \rho(B)$$
+
+\underline{Lema}: $\rho(B^{k}) = (\rho(B))^{k}$\\
+
+\underline{Demostraci\'on}: Por Schur, $\exists \ Q\ \text{unitaria}\ / \ Q^{*}BQ = T$ y $\rho(B) = \rho(T)$. Tenemos $B = QTQ^{*} \Rightarrow B^{k} = QT^{k}Q^{*}$. Esto implica $\rho(B^{k}) = \rho(T^{k})$, pero:
+
+$$T =
+	\begin{pmatrix}
+        \lambda_{1} & t_{12} & \cdots & t_{1n}\\
+        \cdots & \cdots & \cdots & t_{2n}\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \cdots &\lambda_{n}\\
+	\end{pmatrix}
+	\Rightarrow T^{k} = 
+	\begin{pmatrix}
+        \lambda_{1}^{k} & * & \cdots & *\\
+        \cdots & \cdots & \cdots & *\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \cdots & \cdots & \cdots &\lambda_{n}^{k}\\
+	\end{pmatrix}
+	,\ \text{y}\ \rho(T^{k}) = (\rho(T))^{k}
+$$
+
+De \'esto se deduce $\rho(B^{k}) = (\rho(B))^{k}$.\\
+
+\underline{Demostraci\'on del Teorema}: $(\rho(B))^{k} = \rho(B^{k}) \leq \|B^{k}\|'$, por ser $\rho(B^{k})$ un \'infimo. De esta forma, $\rho(B)\leq \|B^{k}\|'^{\frac{1}{k}}$.\\
+
+Sea $\epsilon > 0$, queremos ver que existe $k_{0} \in \mathbb{N}\ / \ \forall \ k \geq k_{0}$ vale $|\rho(B) - (\|B^{k}\|')^{\frac{1}{k}}| =  (\|B^{k}\|')^{\frac{1}{k}} - \rho(B) < \epsilon$.\\
+
+Sea $B_{\epsilon} = \frac{1}{\rho(B) + \epsilon}B$, entonces $\rho(B_{\epsilon}) = \frac{1}{\rho(B) + \epsilon}\rho(B) < 1$. Por el teorema anterior, $B_{\epsilon}^{k} \rightarrow_{k \rightarrow \infty} 0$, y entonces $\|B_{\epsilon}^{k}\|' \rightarrow_{k \rightarrow \infty} 0$.\\
+
+Por lo tanto, $\exists \ k_{0} \in \mathbb{N}\ / \ \forall \ k \geq k_{0}, \|B_{\epsilon}^{k}\|' = \|\frac{1}{(\rho(B) + \epsilon)^{k}}B^{k}\|' < 1$. Es decir, $\forall \ k \geq k_{0}, \|B^{k}\|' < (\rho(B) + \epsilon)^{k}$, y as\'i $(\|B^{k}\|'^{\frac{1}{k}}) < \rho(B) + \epsilon$.\\
+
+\textit{Ejemplo}: Jacobi converge y Gauss - Seidel no converge (Collatz - 1942).\\
+
+$$A =
+	\begin{pmatrix}
+        1 & 2 & -2\\
+		1 & 1 & 1\\
+		2 & 2 & 1\\        
+	\end{pmatrix}
+$$
+
+\begin{itemize}
+	\item $\text{det}
+	\begin{pmatrix}
+        \lambda & 2 & -2\\
+		1 & \lambda & 1\\
+		2 & 2 & \lambda\\        
+	\end{pmatrix}
+	= \lambda^{3} - 4 + 4 + 4\lambda - 2\lambda - 2\lambda = \lambda^{3} = 0$
+	
+	$\Rightarrow \lambda = 0\ (\text{triple}),\ \text{luego,}\ \rho(B_{J}) = 0$
+	
+	\item $\text{det}
+	\begin{pmatrix}
+        \lambda & 2 & -2\\
+		\lambda & \lambda & 1\\
+		2\lambda & 2\lambda & \lambda\\        
+	\end{pmatrix}
+	= \lambda^{3} - 4\lambda^{2} + 4\lambda + 4\lambda^{2} - 2\lambda^{2} - 2\lambda^{2} = \lambda(\lambda^{2} - 4\lambda + 4) = 0 $
+	
+$\Rightarrow \lambda = 0\ \text{o}\ \lambda = 2\ (\text{doble}),\ \text{luego,}\ \rho(B_{GS}) = 2 > 1,\ \text{Gauss - Seidel no converge.}$\\
+\end{itemize}
+
+\textit{Ejemplo}: Gauss - Seidel converge y Jacobi no converge.\\
+
+$$A =
+	\begin{pmatrix}
+        1 & \frac{1}{2} & \frac{1}{2}\\
+		\frac{1}{2} & 1 & \frac{1}{2}\\
+		\frac{1}{2} & \frac{1}{2} & 1\\        
+	\end{pmatrix}
+$$
+
+\begin{itemize}
+	\item $\text{det}
+	\begin{pmatrix}
+        \lambda & \frac{1}{2} & \frac{1}{2}\\
+		\frac{1}{2} & \lambda & \frac{1}{2}\\
+		\frac{1}{2} & \frac{1}{2} & \lambda\\        
+	\end{pmatrix}
+	= \lambda^{3} + \frac{1}{8} + \frac{1}{8} - \frac{1}{4}\lambda - \frac{1}{4}\lambda - \frac{1}{4}\lambda = \lambda^{3} - \frac{3}{4}\lambda + \frac{1}{4} = 0$
+	
+	$ \Rightarrow \lambda = -1\ \text{o}\ \lambda = \frac{1}{2}\ (\text{doble}),\ \text{luego,}\ \rho(B_{J}) = 1,\ \text{no converge.}$
+	
+	\item $\text{det}
+	\begin{pmatrix}
+        \lambda & \frac{1}{2} & \frac{1}{2}\\
+		\frac{1}{2}\lambda & \lambda & \frac{1}{2}\\
+		\frac{1}{2}\lambda & \frac{1}{2}\lambda & \lambda\\        
+	\end{pmatrix}
+	= \lambda^{3} + \frac{1}{8}\lambda^{2} + \frac{1}{8}\lambda - \frac{1}{4}\lambda^{2} - \frac{1}{4}\lambda^{2} - \frac{1}{4}\lambda^{2} = \lambda^{3} - \frac{5}{8}\lambda^{2} + \frac{1}{8}\lambda = \lambda\bigg(\lambda^{2} - \frac{5}{8}\lambda + \frac{1}{8} \bigg)= 0$
+	
+	$ \Rightarrow \lambda = 0\ \text{o}\ \lambda = \frac{5 \pm \sqrt{7}i}{16}\ \text{luego,}\ \rho(B_{GS}) = \sqrt{\frac{5^{2}}{16^{2}} + \frac{\sqrt{7}^{2}}{16^{2}}} = \frac{\sqrt{32}}{16} = \frac{\sqrt{2}}{4} < 1,\ \text{Gauss - Seidel converge.}$\\
+\end{itemize}
+
+\underline{Definici\'on}: Decimos que $A$ es estrictamente diagonal dominante si $|a_{ij}| > \sum \limits_{j = 1,\ j \neq i}^{n} |a_{ij}|,\ 1 \leq i \leq n$.\\
+
+\underline{Teorema}: Si $A$ es estrictamente diagonal dominante, el m\'etodo de Jacobi converge.\\
+
+\underline{Demostraci\'on}: Para ver que Jacobi converge alcanza con ver que $\|B_{J}\| < 1$ para alguna norma matricial.
+
+$$B_{J} = -D^{-1}(L + U) = -
+	\begin{pmatrix}
+        0 & \frac{a_{12}}{a_{11}} & \cdots & \frac{a_{1n}}{a_{11}}\\
+		\vdots & \vdots & \vdots & \vdots\\
+		\vdots & \vdots & \vdots & \vdots\\
+		\frac{a_{n1}}{a_{nn}} & \cdots & \frac{a_{n, n - 1}}{a_{nn}} & 0\\
+	\end{pmatrix}
+$$
+
+$$\|B_{J}\|_{\infty} = \max \limits_{1 \leq i \leq n} \sum \limits_{j = 1}^{n} |b_{ij}| = \max \limits_{1 \leq i \leq n} \sum \limits_{j = 1, j \neq i}^{n} \bigg|\frac{a_{ij}}{a_{ii}}\bigg| = \max \limits_{1 \leq i \leq n} \frac{1}{|a_{ii}|} \sum \limits_{j = 1, j \neq i}^{n} |a_{ij}| < 1$$
+
+En conclusi\'on, Jacobi converge.\\
+
+\underline{Teorema}: Si $A$ es estrictamente diagonal dominante, el m\'etodo de Gauss - Seidel converge.\\
+
+\underline{Demostraci\'on}: $B_{GS} = -(D + L)^{-1}U$. Sea $\lambda$ autovalor de $B_{GS}$ y $\Vec{v} \neq \Vec{0}$ un autovector asociado, tenemos:
+
+$$B_{GS}\Vec{v} = \lambda \Vec{v} \Rightarrow -U\Vec{v} = \lambda(D + L)\Vec{v} \Rightarrow - \sum \limits_{j = i + 1}^{n} a_{ij}v_{j} = \lambda \sum \limits_{j = 1}^{i} a_{ij}v_{j},\ 1 \leq i \leq n$$
+
+Por lo tanto,
+
+$$\lambda a_{ii}v_{i} = -\lambda \sum \limits_{j = 1}^{i} a_{ij}v_{j} - \sum \limits_{j = i + 1}^{n} a_{ij}v_{j}\ (1 \leq i \leq n)$$
+
+Sea $i_{0}\ / \ \|\Vec{v}\|_{\infty} = \max \limits_{1 \leq i \leq n} |v_{i}| = |v_{i_{0}}|$, vale entonces:
+
+$$\lambda a_{i_{0}i_{0}}v_{i_{0}} = -\lambda \sum \limits_{j = 1}^{i_{0} - 1} a_{i_{0}j}v_{j} - \sum \limits_{j = i_{0} + 1}^{n} a_{i_{0}j}v_{j}$$
+
+y tenemos,
+
+$$|\lambda||a_{i_{0}i_{0}}||v_{i_{0}}| \leq |\lambda| \sum \limits_{j = 1}^{i_{0} - 1} |a_{i_{0}j}||v_{j}| + \sum \limits_{j = i_{0} + 1}^{n} |a_{i_{0}j}||v_{j}|$$
+
+$$|\lambda||a_{i_{0}i_{0}}| \leq |\lambda| \sum \limits_{j = 1}^{i_{0} - 1} |a_{i_{0}j}|\frac{|v_{j}|}{|v_{i_{0}}|} + \sum \limits_{j = i_{0} + 1}^{n} |a_{i_{0}j}|\frac{|v_{j}|}{|v_{i_{0}}|} \leq_{|v_{i_{0}}| \leq 1} |\lambda|\sum \limits_{j = 1}^{i_{0} - 1} |a_{i_{0}j}| + \sum \limits_{j = i_{0} + 1}^{n} |a_{i_{0}j}|$$
+
+$$\Rightarrow |\lambda| \bigg(|a_{i_{0}i_{0}}| - \sum \limits_{j = 1}^{i_{0} - 1} |a_{i_{0}j}| \bigg) \leq \sum \limits_{j = 1}^{i_{0} - 1} |a_{i_{0}j}| \leq \frac{\sum \limits_{j = i_{0} + 1}^{n} |a_{i_{0}j}|}{|a_{i_{0}i_{0}}| - \sum \limits_{j = 1}^{i_{0} - 1} |a_{i_{0}j}|} < 1$$
+
+Luego, $\rho(B_{GS}) < 1$, y Gauss - Seidel converge.

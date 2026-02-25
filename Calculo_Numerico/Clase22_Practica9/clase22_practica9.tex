@@ -1,0 +1,134 @@
+\section{Clase 22 - Pr\'actica 9 (Integraci\'on num\'erica)}
+
+\subsection{Cuadratura gaussiana}
+
+Vamos a elegir los puntos para optimizar el grado de precisi\'on. Tendremos que determinar, $n + 1$ puntos $x_{0}, \cdots, x_{n}$ y $n + 1$ pesos $A_{0}, \cdots, A_{n}$ a partir de ecuaciones no lineales de la forma
+
+$$\int \limits_{a}^{b} x^{k}w(x)dx = \sum \limits_{j = 0}^{n}A_{j}x_{j}^{k}$$
+
+Parece natural pedir $0 \leq k \leq 2n + 1$.\\
+
+\underline{Polinomios ortogonales}\\
+
+Consideramos $C([a, b])$ con el producto interno $\langle f, g \rangle = \int \limits_{a}^{b} f(x)g(x)w(x)dx$ para cierta funci\'on $w \in C([a, b]),\ w > 0$. Al aplicar el proceso de ortogonalizaci\'on de Gram-Schmidt a la base de $\mathcal{P}_{n}$, $\{1, \cdots, x^{n}\}$ se obtienen los polinomios ortogonales $\tilde{q}_{k}$ y los correspondientes polinomios ortonormales $q_{k}$. Notamos que:
+
+\begin{itemize}
+	\item $\{\tilde{q}_{k}\}$ es un polinomio m\'onico de grado $k$.
+	
+	\item $\{\tilde{q}_{0}, \cdots, \tilde{q}_{k}\}$ es una base ortogonal de $\mathcal{P}_{k}$.
+	
+	\item $\{\tilde{q}_{k}\}$ es ortogonal a todo polinomio de grado $\leq k$.\\
+\end{itemize}
+
+\underline{Recordamos: polinomios de Legendre}\\
+
+$V = C([-1, 1])$ con producto interno $\langle f, g \rangle = \int \limits_{-1}^{1} f(x)g(x)dx$. Base ortonormal de $\mathcal{P}_{2}$, $\{1, x, x^{2}\}$
+
+$$q_{0} = \frac{1}{\sqrt{2}},\ q_{1} = \sqrt{\frac{3}{2}}x,\ q_{2} = \sqrt{\frac{45}{8}}\bigg(x^{2} - \frac{1}{3}\bigg)$$\\
+
+\underline{Teorema}: Las ra\'ices de $q_{n}$ ($n \geq 1$) son distintas entre s\'i y pertenecen al intervalo $(a, b)$.\\
+
+\underline{Demostraci\'on}: Sea $n \geq 1$ fijo. Veamos que $q_{n}$ tiene al menos una ra\'iz en $(a, b)$. Si no, tendr\'a signo constante. Supongamos que $q_{n} > 0$ en $(a, b)$. Como $q_{n}$ y $\tilde{q}_{0} = 1$ son ortogonales, tenemos que $0 = \langle q_{n}, 1 \rangle = \int \limits_{a}^{b} q_{n}(x)w(x)dx > 0$ y esto es una contradicci\'on. Luego, $q_{n}$ debe tener al menos una ra\'iz en $(a, b)$.\\
+
+Si $x_{0}$ es una ra\'iz m\'ultiple de $q_{n}$, entonces $P(x) = \frac{q_{n}(x)}{(x - x_{0})^{2}}$ es un polinomio de grado $n - 2$ y por lo tanto es una combinaci\'on lineal de $\{\tilde{q}_{0}, \cdots, \tilde{q}_{n - 2}\}$ y resulta ser ortogonal a $q_{n}$:
+
+$$0 = \langle q_{n}, P \rangle = \int \limits_{a}^{b} q_{n}(x)\frac{q_{n}(x)}{(x - x_{0})^{2}}w(x)dx = \int \limits_{a}^{b}\frac{q_{n}^{2}(x)}{(x - x_{0})^{2}}w(x)dx > 0$$
+
+que tambi\'en es una contradicci\'on, y por lo tanto todos los ceros de $q_{n}$ son simples.\\
+
+Finalmente, veamos que todas las ra\'ices de $q_{n}$ pertenecen a $(a, b)$. Supongamos que $x_{0}, \cdots, x_{k}$ son los ceros de $q_{n}$ en $(a, b)$ y $k < n - 1$. Como $x_{0}, \cdots, x_{k}$ son simples, $r(x) = \frac{q(x)}{(x - x_{0})...(x - x_{k})}$ es un polinomio de grado $n - (k + 1)$, que es ortogonal a $q_{n}$ y con signo constante en $(a, b)$. Supongamos que $r > 0$ en $(a, b)$:
+
+$$0 = \langle q_{n}, (x - x_{0})...(x - x_{k}) \rangle = \int \limits_{a}^{b} q_{n}(x)(x - x_{0})...(x - x_{k})w(x)dx = \int \limits_{a}^{b} r(x)(x - x_{0})...(x - x_{k})^{2}w(x)dx > 0$$
+
+que nuevamente es una contradicci\'on. Luego, todos los ceros de $q_{n}$ est\'an en $(a, b)$.\\
+
+\underline{Teorema}: La f\'ormula $\int \limits_{a}^{b} P(x)w(x)dx = \sum \limits_{j = 0}^{n}A_{j}P(x_{j})$ vale para cualquier $P \in \mathcal{P}_{2n + 1}$ si y s\'olo si los puntos $x_{0}, \cdots, x_{n}$ son los ceros de $q_{n + 1}$.\\
+
+\underline{Demostraci\'on}: Sea $P \in \mathcal{P}_{2n + 1}$ y supongamos que los puntos $x_{j}$ est\'an dados por $q_{n + 1}(x_{j}) = 0,\ 0 \leq j \leq n$.\\
+
+Por el algoritmo de divisi\'on para polinomios se puede escribir $P(x) = q_{n + 1}g(x) + r(x)$ con $g, r \in \mathcal{P}_{n}$. Por la definici\'on de los pesos $A_{j}$, tenemos
+
+$$\int \limits_{a}^{b} r(x)w(x)dx = \sum \limits_{j = 0}^{n}A_{j}r(x_{j})$$
+
+$$\Rightarrow \int \limits_{a}^{b} P(x)w(x)dx = \int \limits_{a}^{b} (q_{n + 1}g(x) + r(x))w(x)dx = \langle q_{n + 1}, g \rangle + \int \limits_{a}^{b} r(x)w(x)dx = 0 + \sum \limits_{j = 0}^{n}A_{j}r(x_{j}) = \sum \limits_{j = 0}^{n}A_{j}P(x_{j})$$
+
+Ahora supongamos que $x_{0}, \cdots, x_{n}$ son puntos distintos y que verifica $\int \limits_{a}^{b} P(x)w(x)dx = \sum \limits_{j = 0}^{n} A_{j}P(x_{j})$ para cualquier $P \in \mathcal{P}_{2n + 1}$.\\
+
+Dado $h \in \mathcal{P}_{n}$ y sea $W(x) = \prod \limits_{j = 0}^{n} (x - x_{j}) \Rightarrow hw \in \mathcal{P}_{2n + 1}$. Luego,
+
+$$ \langle h, w \rangle = \int \limits_{a}^{b} h(x)W(x)w(x)dx = \sum \limits_{j = 0}^{n} A_{j}h(x_{j})W(x_{j}) = 0$$
+
+Como $W$ es un polinomio m\'onico de grado $n + 1$ que resulta ortogonal a cualquier polinomio en $\mathcal{P}_{n}$ debe ser $W = \tilde{q}_{n + 1}$ y por lo tanto los puntos $x_{j}$ son los ceros de $q_{n + 1}$.\\
+
+Puede dar $\geq 2n + 2$?. Consideremos $P(x) = \prod \limits_{j = 0}^{n} (x - x_{j})^{2} \Rightarrow \int \limits_{a}^{b} P(x)w(x)dx > 0$ pero $\sum \limits_{j = 0}^{n} A_{j}P(x_{j}) = 0$.\\
+
+\underline{Corolario}: Sea $Q_{n}(f) = \sum \limits_{j = 0}^{n} A_{j}f(x_{j})$ una f\'ormula de cuadratura gaussiana, entonces $A_{j} > 0\ \forall \ j = 0, \cdots, n$.\\
+
+\underline{Demostraci\'on}: Consideremos los polinomios de la base de Lagrange. Cada $l_{k},\ k = 0, \cdots, n$ verifica que $l_{k}^{2} \in \mathcal{P}_{2n}$ y entonces $I(l_{k}^{2}) = Q_{n}(l_{k}^{2})$. Como $l_{k}(x_{j}) = \delta_{kj}$,
+
+$$0 < \int \limits_{a}^{b} l_{k}^{2}(x)w(x)dx = \sum \limits_{j = 0}^{n} A_{j}(l_{k}(x_{j}))^{2} = A_{k}$$.\\
+
+\underline{Error en cuadratura gaussiana}\\
+
+\underline{Teorema}: Si $f \in C^{2n + 2}([a, b])$ se tiene
+
+$$I(f) - Q_{n}(f) = \frac{f^{2n + 2}(\eta)}{(2n + 2)!} \int \limits_{a}^{b} (\tilde{q}_{n + 1}(x))^{2}w(x)dx$$
+
+para alg\'un $\eta \in [a, b]$.\\
+
+\underline{Demostraci\'on}: Sea $P \in \mathcal{P}_{2n + 1}$ el polinomio tal que $P(x_{j}) = f(x_{j})$ y $P'(x_{j}) = f'(x_{j})$ para $j = 0, \cdots, n$. Vale por el error de Hermite:
+
+$$f(x) - P(x) = \frac{f^{2n + 2}(\zeta_{x})}{(2n + 2)!}(\tilde{q}_{n + 1}(x))^{2}$$
+
+Como $Q_{n}$ tiene grado de precisi\'on $2n + 1$, $I(P) = Q_{n}(P)$ y como $P(x_{j}) = f(x_{j})$ vale adem\'as $Q_{n}(P) = Q_{n}(f)$. Por lo tanto:
+
+$$I(f) - Q(f) = I(f - P) = \int \limits_{a}^{b} \frac{f^{2n + 2}(\zeta_{x})}{(2n + 2)!}(\tilde{q}_{n + 1}(x))^{2}w(x)dx$$
+
+por el teorema del valor medio,
+
+$$I(f) - Q(f) = \frac{f^{2n + 2}(\eta)}{(2n + 2)!}\int \limits_{a}^{b} (\tilde{q}_{n + 1}(x))^{2}w(x)dx$$\\
+
+\underline{\textit{Receta}}: Si tenemos que $I(f) = \int \limits_{a}^{b}
+ f(x)w(x)dx$, hacemos:
+ 
+\begin{itemize}
+	\item 1) Consideramos $\langle f, g \rangle = \int \limits_{a}^{b} f(x)g(x)w(x)dx$ (es un producto interno).
+	
+	\item 2) Definimos $S$, el subespacio generado por $\{1, x, \cdots, x^{n + 1}\}$.
+	
+	\item 3) Buscamos una B.O.N. de $S,\ \{q_{0}, \cdots, q_{n + 1}\}$ tal que el subespacio generado por $\{1, x, \cdots, x^{n + 1}\}$ coincida con el generado por $\{q_{0}, \cdots, q_{i}\}$ (Gram-Schmidt).
+	
+	\item 4) Determinamos $x_{0}, \cdots, x_{n}$ como las ra\'ices de $q_{n + 1}$ (no necesitamos normalizar el \'ultimo polinomio).
+	
+	\item 5) Calculamos los pesos $A_{0}, \cdots, A_{n}$ como antes.\\
+\end{itemize}
+
+\underline{Observaci\'on}: Si $w \equiv 1$ la f\'ormula se llama de Gauss-Legendre.\\
+
+\textit{Ejemplo}: Buscamos una f\'ormula de cuadratura gaussiana $Q$ tal que:
+
+$$I(f) = \int \limits_{-\frac{\pi}{2}}^{\frac{\pi}{2}}f(x)\cos(x)dx \approx Q(f) = A_{0}f(x_{0}) + A_{1}f(x_{1})$$
+
+\begin{itemize}
+	\item 1) Consideramos $\int \limits_{-\frac{\pi}{2}}^{\frac{\pi}{2}}f(x)g(x)\cos(x)dx $.
+	
+	\item 2) Definimos $S$, el subespacio generado por $\{1, x, x^{2}\}$, ($n + 1 = 1 + 1 = 2$).
+	
+	\item 3) Aplico el proceso de ortonormal de Gram-Schmidt a la base:
+	
+	$$q_{0} = \frac{1}{\sqrt{2}},\ q_{1} = \sqrt{\frac{2}{\pi^{2} - 8}}x,\ \tilde{q}_{2} = x^{2} - \frac{\pi^{2} - 8}{4}$$
+	
+	y busco las ra\'ices de este \'ultimo polinomio	(no hace falta normalizar).
+	
+	\item 4) $x_{0} =  -\frac{\pi^{2} - 8}{2},\ x_{0} = \frac{\pi^{2} - 8}{2}$
+	
+	\item 5) $$I(1) = \int \limits_{-\frac{\pi}{2}}^{\frac{\pi}{2}}\cos(x)dx = 2 = Q(1) = A_{0} + A_{1}$$
+	
+	$$I(x) = \int \limits_{-\frac{\pi}{2}}^{\frac{\pi}{2}}x\cos(x)dx = 0 = Q(x) = \frac{\pi^{2} - 8}{2}(-A_{0} + A_{1})$$
+	
+	Luego, $A_{0} = A_{1} = 1$ y
+	
+	$$Q(f) = f\bigg(-\frac{\pi^{2} - 8}{2}\bigg) + f\bigg(\frac{\pi^{2} - 8}{2}\bigg)$$\\
+\end{itemize}
+
+Verificar que realmente tiene grado de precisi\'on $2n + 1 = 3$. Es decir, $I(x^{2}) = Q(x^{2})$ y $I(x^{3}) = Q(x^{3})$.

@@ -1,0 +1,237 @@
+\section{Clase 8 - Pr\'actica 4 (N\'umero de condici\'on)}
+
+\underline{Demostraci\'on}:
+
+\begin{itemize}
+	\item 3)
+	$\leq$:
+
+	$\|Ax\|_{1} = \sum \limits_{i = 1}^{n} \bigg|\sum \limits_{l = 1}^{n} a_{il}x_{l}\bigg|  \leq \sum \limits_{i = 1}^{n} \sum \limits_{l = 1}^{n} |a_{il}||x_{l}| = \sum \limits_{l = 1}^{n} |x_{l}|\bigg(\sum \limits_{i = 1}^{n}|a_{il}|\bigg) \leq \sum \limits_{l = 1}^{n} |x_{l}|\bigg(\max \limits_{1 \leq j \leq n} \sum \limits_{i = 1}^{n}|a_{il}|\bigg) = \max \limits_{1 \leq j \leq n} \sum \limits_{i = 1}^{n}|a_{ij}|\|x\|_{1}$
+
+	$$\Rightarrow \|A\|_{1} = \max \limits_{x \neq 0} \frac{\|Ax\|_{1}}{\|x\|_{1}} \leq \max \limits_{x \neq 0} \frac{\max \limits_{1 \leq j \leq n} \|x\|_{1} \sum \limits_{i = 1}^{n} |a_{ij}|}{\|x\|_{1}} = \max \limits_{1 \leq j \leq n} \sum \limits_{i = 1}^{n} |a_{ij}|$$
+	
+	$\geq$:
+	
+	Sea $j_{0}$ el \'indice donde se alcanza el m\'aximo. Es decir:
+	
+	$$\max \limits_{1 \leq j \leq n} \sum \limits_{i = 1}^{n} |a_{ij}| = \sum \limits_{i = 1}^{n} |a_{ij_{0}}|$$
+	
+	Sea $\tilde{x} = e_{j_{0}}$. Vale $\|\tilde{x}\|_{1} = 1$ y $A\tilde{x} = (a_{1j_{0}}, \cdots, a_{nj_{0}})$.
+	
+	$$\|A\tilde{x}\|_{1} = \sum \limits_{i = 1}^{n} |a_{ij_{0}}| = \max \limits_{1 \leq j \leq n} \sum \limits_{i = 1}^{n} |a_{ij}|$$
+	
+	$$\Rightarrow \|A\|_{1} = \max \limits_{x \neq 0} \frac{\|Ax\|_{1}}{\|x\|_{1}} \geq \frac{\|A\tilde{x}\|_{1}}{\|\tilde{x}\|_{1}} = \max \limits_{1 \leq j \leq n} \sum \limits_{i = 1}^{n} |a_{ij}|$$
+\end{itemize}
+
+\underline{Teorema}: Sea $A \in \mathbb{R}^{n \times n}$, $A$ inversible. Sea $b \in \mathbb{R}^{n} - \{0\}$ y $x \ / \ Ax = b$. Sean $\tilde{b}$ y $\tilde{x} \ / \ A\tilde{x} = \tilde{b}$. Sea $\|.\|'$ norma vectorial:
+
+$$\frac{1}{\|A\|'\|A^{-1}\|'}\frac{\|b - \tilde{b}\|'}{\|b\|'} \leq \frac{\|x - \tilde{x}\|'}{\|x\|'} \leq  \|A\|'\|A^{-1}\|'\frac{\|b - \tilde{b}\|'}{\|b\|'}$$
+
+\underline{Demostraci\'on}:
+
+$$\|b - \tilde{b}\|' = \|A(x - \tilde{x})\|' \leq \|A\|'\|x - \tilde{x}\|'$$
+
+$$\|x\|' = \|A^{-1}b\|' \leq \|A^{-1}\|'\|b\|'$$
+
+Luego,
+
+$$\frac{\|x - \tilde{x}\|'}{\|x\|'} \geq \frac{1}{\|A\|'\|A^{-1}\|'}\frac{\|b - \tilde{b}\|'}{\|b\|'}$$
+
+Por otro lado:
+
+$$\|x - \tilde{x}\|' = \|A^{-1}(b - \tilde{b})\|' \leq \|A\|'\|b - \tilde{b}\|'$$
+
+$$\|b\|' = \|Ax\|' \leq \|A\|'\|x\|'$$
+
+Luego,
+
+$$\frac{\|x - \tilde{x}\|'}{\|x\|'} \leq \|A\|'\|A^{-1}\|'\frac{\|b - \tilde{b}\|'}{\|b\|'}$$
+
+
+\underline{Definici\'on}: Llamamos n\'umero de condici\'on de la matriz $A$ en norma $\|.\|'$ al n\'umero: 
+
+$$\text{cond}_{\|.\|'}(A) =  \|A\|'\|A^{-1}\|'$$
+
+\underline{Observaci\'on}:
+
+\begin{itemize}
+	\item $\text{cond}_{\|.\|'}(A) =  \text{cond}_{\|.\|'}(A^{-1})$
+	
+	\item $\|I\|' = 1\ \forall \ \|.\|'$ subordinada a una norma vectorial
+	
+	$$1 = \|I\|' = \|AA^{-1}\|' \leq \|A\|'\|A^{-1}\|' = \text{cond}_{\|.\|'}(A)$$
+\end{itemize}
+
+Una matriz se dice MAL CONDICIONADA cuando su condici\'on es mucho mayor que 1.\\
+
+\textit{Ejemplo}: $A$ sim\'etrica e inversible, sean $\lambda_{1}, \cdots, \lambda_{n}$ los autovalores de $A$ y $v_{1}, \cdots, v_{n}$ los autovectores asociados que forman una B.O.N. Llamemos:
+
+\begin{itemize}
+	\item $\lambda_{\max}$ a un autovalor de $A \ / \ |\lambda_{\max}| \geq |\lambda_{i}|\ \forall \ i$ y sea $v_{\max}$ su autovector asociado.
+	
+	\item $\lambda_{\min}$ a un autovalor de $A \ / \ |\lambda_{\min}| \leq |\lambda_{i}|\ \forall \ i$ y sea $v_{\min}$ su autovector asociado.
+\end{itemize}
+
+Sea $b \neq 0$ en el autoespacio de $\lambda_{\max}$, entonces $Ab = \lambda_{\max}b$ y $x = A^{-1}b = \frac{1}{\lambda_{\max}}b$. Sea $\tilde{b} = b + \epsilon v_{\min}$, entonces:
+
+$$x - \tilde{x} = A^{-1}b - A^{-1}(b + \epsilon v_{\min}) = -A^{-1}\epsilon v_{\min} = \frac{-\epsilon}{\lambda_{\min}}v_{\min}$$
+
+$$\frac{\|x - \tilde{x}\|_{2}}{\|x\|_{2}} = \frac{\|\frac{-\epsilon}{\lambda_{\min}}v_{\min}\|_{2}}{\|\frac{1}{\lambda_{\max}}b\|_{2}} = \frac{|\lambda_{\max}|}{|\lambda_{\min}|} = \frac{\|-\epsilon v_{\min}\|_{2}}{\|b\|_{2}} = \frac{|\lambda_{\max}|}{|\lambda_{\min}|}\frac{\|b - \tilde{b}\|_{2}}{\|b\|_{2}}$$
+
+Pero $|\lambda_{\max}| = \rho(A) = \|A\|_{2}$ y $|\frac{1}{|\lambda_{\min}|} = \rho(A^{-1}) = \|A^{-1}\|_{2}$. Luego,
+
+$$\frac{\|x - \tilde{x}\|_{2}}{\|x\|_{2}} = \text{cond}_{\|.\|'}(A)\frac{\|b - \tilde{b}\|_{2}}{\|b\|_{2}}$$
+
+Y si tomamos $b$ en la direcci\'on de $v_{\min}$ y $b - \tilde{b}$ en la direcci\'on $v_{\max}$?\\
+
+\underline{Teorema}: Sea $A \in \mathbb{R}^{n \times n}$, $\|.\|'$ norma vectorial, entonces:
+
+$$\frac{1}{\text{cond}_{\|.\|'}(A)} = \inf \limits_{B\  \text{singular}} \frac{\|A - B\|'}{\|A\|'}$$
+
+\underline{Demostraci\'on}:\\
+
+$\leq$) Sea $B$ singular, entonces $\exists \ \hat{x} \neq 0\ / \ B\hat{x} = 0$.
+
+$$\|\hat{x}\|' = \|A^{-1}A\hat{x}\|' = \|A^{-1}(A\hat{x} - B\hat{x})\|' \leq \|A^{-1}\|'\|A - B\|'\|\hat{x}\|'$$
+
+Como $\|\hat{x}\|' \neq 0,\ 1 \leq \|A^{-1}\|'\|A - B\|'$ y por lo tanto
+
+$$\frac{1}{\text{cond}_{\|.\|'}(A)} = \frac{1}{\|A\|'\|A^{-1}\|'} \leq \frac{\|A - B\|'}{\|A\|'}$$
+
+$\geq$) Sea $y \neq 0\ / \ \|y\|' = \frac{1}{\|A^{-1}\|'}$ y tal que $\|A^{-1}y\|' = \|A^{-1}\|'\|y\|'$.\\
+
+Sea $x\ / \ Ax = y$, luego $\|x\|' = \|A^{-1}y\|' = \|A^{-1}\|'\|y\|' = I$.\\
+
+Sea $z\ / \ z^{t}x = 1,\ z^{t}u \leq 1\ \forall \ u \in \mathbb{R}^{n},\ \|u\|' = 1$.\\
+
+Sea $B = A - yz^{t}$, vale que $Bx = Ax - yz^{t}x = y - y = 0$, y por lo tanto, $B$ es singular y $\|A - B\|' = \|yz^{t}\|'$.\\
+
+Si $\|u\|' = 1$, se tiene que $\|-u\|' = 1$ y entonces $z^{t}u \leq 1$ y $z^{t}(-u) \leq 1 \Rightarrow |z^{t}u| \leq 1$:
+
+$$\|yz^{t}u\|' = \|y\|'|z^{t}u| \leq \|y\|' = \frac{1}{\|A^{-1}\|'}\ \forall \ \|u\|' = 1$$
+
+$$\|(A - B)u\|' = \|yz^{t}u\|' \leq \frac{1}{\|A^{-1}\|'}$$
+
+y esto implica:
+
+$$\frac{\|A - B\|'}{\|A\|'} \leq \frac{1}{\|A\|'\|A^{-1}\|'} = \frac{1}{\text{cond}_{\|.\|'}(A)}$$
+
+\subsection{M\'etodos directos para la resoluci\'on de sistemas lineales}
+
+\subsubsection{Eliminaci\'on gaussiana (sin pivoteo)}
+
+$$ A = 
+	\begin{pmatrix}
+       -1 & 2 & 1\\
+        3 & -4 & 1\\
+       -1 & 1 & 1\\
+	\end{pmatrix}
+	\rightarrow_{
+	\tilde{F}_{2} = F_{2} + 3F_{1},\ 
+	\tilde{F}_{3} = F_{3} - F_{1}}
+    \begin{pmatrix}
+       -1 & 2 & 1\\
+        0 & 2 & 4\\
+        0 & -1 & 0\\
+	\end{pmatrix}
+	\rightarrow_{
+	\tilde{\tilde{F}}_{3} = \tilde{F}_{3} - \frac{1}{2}\tilde{F}_{2}} 
+    \begin{pmatrix}
+       -1 & 2 & 1\\
+        0 & 2 & 4\\
+        0 & 0 & 2\\
+	\end{pmatrix}
+$$
+
+$$ L_{1}A =
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        3 & 1 & 0\\
+        -1 & 0 & 1\\
+	\end{pmatrix}
+	\begin{pmatrix}
+       -1 & 2 & 1\\
+        3 & -4 & 1\\
+       -1 & 1 & 1\\
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+       -1 & 2 & 0\\
+        0 & 2 & 4\\
+       0 & -1 & 0\\
+	\end{pmatrix}
+	=
+	A^{(2)}
+$$
+
+$$ L_{2}(L_{1}A) =
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & \frac{1}{2} & 1\\
+	\end{pmatrix}
+	\begin{pmatrix}
+       -1 & 2 & 0\\
+        0 & 2 & 4\\
+        0 & -1 & 0\\
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+       -1 & 2 & 0\\
+        0 & 2 & 4\\
+        0 & 0 & 2\\
+	\end{pmatrix}
+	=
+	A^{(3)} = U
+$$
+
+\subsubsection{Descomposici\'on LU}
+
+$$L_{2}L_{1}A = U \Rightarrow A = L_{1}^{-1}L_{2}^{-1}U = LU$$
+
+$$ L_{1} =
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        3 & 1 & 0\\
+        -1 & 0 & 1\\
+	\end{pmatrix}
+	,\ L_{2} = 
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & \frac{1}{2} & 1\\
+	\end{pmatrix}
+	\Rightarrow L_{1}^{-1} = 
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        -3 & 1 & 0\\
+       1 & 0 & 1\\
+	\end{pmatrix}
+	,\ L_{2}^{-1} =
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & -\frac{1}{2} & 1\\
+	\end{pmatrix}
+$$
+
+$$\Rightarrow L = L_{1}^{-1}L_{2}^{-1} =
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        -3 & 1 & 0\\
+       1 & 0 & 1\\
+	\end{pmatrix}
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & -\frac{1}{2} & 1\\
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+        1 & 0 & 0\\
+        -3 & 1 & 0\\
+       1 & -\frac{1}{2} & 1\\
+	\end{pmatrix}
+$$
+
+es triangular inferior, con unos en la diagonal.

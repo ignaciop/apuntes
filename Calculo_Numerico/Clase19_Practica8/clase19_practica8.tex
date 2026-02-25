@@ -1,0 +1,184 @@
+\section{Clase 19 - Pr\'actica 8 (Cuadrados m\'inimos)}
+
+\underline{Teorema}: Dados $S$ un subespacio de un espacio vectorial con producto interno $V,\ y \in V,\ v \in S$, son equivalentes:
+
+\begin{itemize}
+	\item 1) $\|y - v\| = \min \limits_{s \in S} \{ \|y - s\| \}$
+	\item 2) $\langle y - v, s \rangle = 0\ \forall \ s \in S$
+\end{itemize}
+
+Adem\'as, un elemento $v \in S$ que verifique alguna de las propiedades anteriores es \'unico y se denomina la proyecci\'on ortogonal de $y$ sobre $S$: $P_{S}(y)$.\\
+
+\underline{Demostraci\'on}:\\
+
+$1 \Rightarrow 2$: Si $v \in S,\ v + s \in S\ \forall \ s \in S$, luego, $\|y - v\|^{2} \leq \|y - (v + s)\|^{2} = \|(y - v) - s\|^{2} = \langle (y - v) - s, (y - v) - s \rangle = \|y - v\|^{2} - 2 \langle y - v, s \rangle + \|s\|^{2}$.\\
+
+As\'i, $2 \langle y - v, s \rangle \leq \|s\|^{2}\ \forall \ s \in S$. En particular, si $t \in \mathbb{R},\ s \in S$, se tiene $ts \in S$ y
+
+$$2 \langle y - v, ts \rangle \leq \|ts\|^{2} \Rightarrow 2t \langle y - v, s \rangle \leq t^{2}\|s\|^{2}$$
+
+Si $t > 0,\ 2 \langle y - v, s \rangle \leq t^{2}\|s\|^{2}$ y si $t \rightarrow 0^{+}$ tenemos $2 \langle y - v, s \rangle \leq 0$.\\
+
+Si $t < 0,\ 2 \langle y - v, s \rangle \geq t^{2}\|s\|^{2}$ y si $t \rightarrow 0^{+}$ tenemos $2 \langle y - v, s \rangle \geq 0$.\\
+
+Luego, $\langle y - v, s \rangle = 0$.\\
+
+$2 \Rightarrow 1$: Si $y - v \perp S\ \forall \ s \in S$, como $v \in S,\ y - v \perp v - s$.
+
+$$\|y - s\|^{2} = \|(y - v) + (v - s)\|^{2} = \langle (y - v) + (v - s), (y - v) + (v - s) \rangle = \|y - v\|^{2} + 2 \langle y - v, v - s \rangle + \|v - s\|^{2} \geq \|y - v\|^{2}$$
+
+y por lo tanto, $\|y - s\| \geq \|y - v\|\ \forall \ s \in S$.\\
+
+Si $v,\ \tilde{v} \in S$ verifican 2: $\langle y - v, s \rangle - \langle y - \tilde{v}, s \rangle = 0 - 0 = \langle \tilde{v} - v, s \rangle = 0,\ \forall \ s \in S$. En particular, $\langle \tilde{v} - v, \tilde{v} - v \rangle = \|\tilde{v} - v\|^{2} = 0$ y $\tilde{v} = v$.\\
+
+\newpage
+\underline{Problema D}: Partimos de una tabla de datos
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $x$ & $x_{0}$ & $x_{1}$ & $...$ & $x_{n}$\\ \hline
+        $y$ & $y_{0}$ & $y_{1}$ & $...$ & $y_{n}$\\ \hline
+    \end{tabular}
+\end{table}
+
+Tenemos pesos positivos $w_{0}, \cdots, w_{n}$ y buscamos una funci\'on $\phi = \sum \limits_{j = 1}^{m} \alpha_{j}\phi_{j}(x)\ / \ \sum \limits_{i = 0}^{n} w_{i}(y_{i} - \phi(x_{j}))^{2}$ sea m\'inima.\\
+
+\underline{Problema C}: Tenemos una funci\'on positiva $w$ y buscamos una funci\'on $\phi$ con alguna caracter\'istica tal que $\int_{a}^{b} w(x)(f(x) - \phi(x))^{2} dx$ sea m\'inima.\\
+
+\underline{Veamos como resolver el Problema D}:\\
+
+Supongamos primero $w_{i} = 1$ ($i = 0, \cdots, n$) y $\phi_{1}(x) = 1,\ \phi_{2}(x) = x,\ \phi_{3}(x) = x^{2}, \cdots, \phi_{m}(x) = x^{m - 1}$. De esta forma, $\phi(x) = \sum \limits_{j = 1}^{m} \alpha_{j}x^{j - 1}$ y tenemos
+
+$$
+	\begin{pmatrix}
+        \phi(x_{0})\\
+        \vdots\\
+        \phi(x_{n})\\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        1 & x_{0} & x_{0}^{2} & \cdots & x_{0}^{m - 1}\\
+        \vdots & \vdots & \vdots & \cdots & \vdots\\
+        \vdots & \vdots & \vdots & \cdots & \vdots\\
+        1 & x_{n} & x_{n}^{2} & \cdots & x_{n}^{m - 1}\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        \alpha_{1}\\
+        \vdots\\
+        \alpha_{m}\\
+    \end{pmatrix}
+$$\\
+
+Sea $\Vec{y} = (y_{0}, \cdots, y_{n})^{t}$, buscamos $\Vec{\alpha}\ / \ \|\Vec{y} - A\Vec{\alpha}\|_{2}^{2}$ sea m\'inima. Sea $S = \{\Vec{v} \in \mathbb{R}^{n}\ / \ \Vec{v} = A\Vec{\beta}\ \text{para alg\'un}\ \Vec{\beta} \in \mathbb{R}^{m}\}$ el espacio generado por las columnas de $A$, buscamos $\Vec{v} \in S$ que minimice $\|\Vec{y} - \Vec{v}\|_{2}^{2}$.\\
+
+Por el teorema, sabemos que $\langle \Vec{y} - \Vec{v}, \Vec{s} \rangle = 0\ \forall \ s \in S$. Si $m \leq n$ y $x_{0}, \cdots, x_{n}$ puntos distintos, sabemos que las columnas de $A$ son linealmente independientes (Vandermonde). Luego
+
+$$ \langle \Vec{y} - \Vec{v}, \Vec{s} \rangle = 0\ \forall \ s \in S \iff$$
+$$\langle \Vec{y} - \Vec{v}, (x_{0}^{j}, \cdots, x_{n}^{j}) \rangle = 0\ \forall \ j = 0, \cdots, m \iff$$
+$$A^{t}(\Vec{y} - \Vec{v}) = 0 \iff A^{t}\Vec{y} - A^{t}A\Vec{\alpha} = 0 \iff A^{t}A\Vec{\alpha} = A^{t}\Vec{y}$$
+
+\subsection{Ecuaciones normales}
+
+$$  A^{t}A
+	\begin{pmatrix}
+        \alpha_{1}\\
+        \vdots\\
+        \alpha_{m}\\
+    \end{pmatrix}
+    =
+    A^{t}\Vec{y}
+$$\\
+
+La soluci\'on $(\alpha_{1}^{*}, \cdots, \alpha_{m}^{*})$ nos da los par\'ametros de la funci\'on $\phi$ que mejor ajusta en el sentido de cuadrados m\'inimos.\\
+
+\begin{itemize}
+	\item Si $\phi_{1}, \cdots, \phi_{m}$ son funciones tales que las columnas de
+	
+	$$
+	A = 
+	\begin{pmatrix}
+        \phi_{1}(x_{0}) & \cdots & \phi_{m}(x_{0})\\
+        \vdots & \vdots & \vdots\\
+        \vdots & \vdots & \vdots\\
+        \phi_{1}(x_{n}) & \cdots & \phi_{m}(x_{n})\\
+    \end{pmatrix}
+	$$
+	
+	 son linealmente independientes, vale el mismo argumento.
+	 
+	\item Si $w_{i} > 0\ \forall \ i = 0, \cdots, n$ consideramos el producto interno
+	
+	$$\langle u, v \rangle = \sum \limits_{i = 0}^{n} w_{i}u_{i}v_{i} = u^{t}\begin{pmatrix}
+        w_{0} & \cdots & \cdots\\
+        \vdots & \vdots & \vdots\\
+        \vdots & \vdots & \vdots\\
+        \cdots & \cdots & w_{n}\\
+    \end{pmatrix}v$$
+	
+	donde nos queda $\|u\|^{2} = \sum \limits_{i = 0}^{n} w_{i}u_{i}^{2}$ y buscamos resolver el sistema $A^{t}w(\Vec{y} - A\Vec{\alpha}) = 0$ y llegamos a las ecuaciones normales $A^{t}wA\Vec{\alpha} = A^{t}w\Vec{y}$.\\
+\end{itemize}
+
+\underline{Por qu\'e aparecen los pesos $w_{i}$?}\\
+
+Supongamos que queremos ajustar una funci\'on de la forma $\phi(x) = Ke^{bx}$ con los datos de la tabla 
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $x$ & $x_{0}$ & $x_{1}$ & $...$ & $x_{n}$\\ \hline
+        $y$ & $y_{0}$ & $y_{1}$ & $...$ & $y_{n}$\\ \hline
+    \end{tabular}
+\end{table}
+
+Si tomamos logaritmo obtenemos $\ln \phi(x) = \ln(K) + bx = \alpha + bx$, y buscar\'iamos ajustar una funci\'on lineal con la tabla
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $x$ & $x_{0}$ & $x_{1}$ & $...$ & $x_{n}$\\ \hline
+        $z = \ln(y)$ & $z_{0}$ & $z_{1}$ & $...$ & $z_{n}$\\ \hline
+    \end{tabular}
+\end{table}
+
+Intentar\'iamos minimizar entonces 
+
+$$\sum \limits_{i = 0}^{n} (z_{i} - (\alpha + \beta x_{i}))^{2} = \sum \limits_{i = 0}^{n} (z_{i} - \tilde{\phi}(x_{i}))^{2}$$
+
+cuando en verdad queremos minimizar
+
+$$\sum \limits_{i = 0}^{n} (y_{i} - Ke^{bx_{i}})^{2}$$
+
+Pero,
+
+$$z_{i} - \tilde{\phi}(x_{i}) = \ln(y_{i}) - \ln(\phi(x_{i})) = \frac{1}{\zeta_{i}}(y_{i} - \phi(x_{i})) \approx \frac{1}{y_{i}}(y_{i} - \phi(x_{i}))$$\\
+
+\underline{Un poco m\'as general}: Si $z = h(y)$
+
+$$z_{i} - \tilde{\phi}(x_{i}) = h(y_{i}) - h(\phi(x_{i})) = h'(\zeta_{i})(y_{i} - \phi(x_{i})) \approx h'(y_{i})(y_{i} - \phi(x_{i}))$$
+
+y por lo tanto,
+
+$$\sum \limits_{i = 0}^{n} (y_{i} - \phi(x_{i}))^{2} \approx \sum \limits_{i = 0}^{n} \bigg(\frac{1}{h'(y_{i})}\bigg)^{2}(z_{i} - \tilde{\phi}(x_{i}))^{2} = \sum \limits_{i = 0}^{n} w_{i}(z_{i} - \tilde{\phi}(x_{i}))^{2}$$\\
+
+\underline{Analizaremos el Problema C}:\\
+
+\underline{Definici\'on}: $\langle ., . \rangle$ es un producto interno en $V (\mathbb{R} \text{- e.v.})$ si
+
+\begin{itemize}
+	\item 1) $\langle f, f \rangle \geq 0$ y $\langle f, f \rangle = 0 \iff f \equiv 0$
+	\item 2) $\langle f, g \rangle = \langle g, f \rangle$
+	\item 3) $\langle f, \alpha g + h \rangle = \alpha \langle f, g \rangle + \langle f, h \rangle$
+\end{itemize}
+
+\textit{Ejemplo}: $\langle f, g \rangle = \int_{a}^{b} w(x)f(x)g(x) dx$ es un producto interno en $C([a, b])\ \forall \ w > 0$.\\
+
+\underline{Definici\'on}: $\|f\|^{2} = \langle f, f \rangle$
+
+\begin{itemize}
+	\item $p, q \in V$ se dicen ortogonales si $\langle p, q \rangle = 0$
+	\item $\{q_{j}\}_{j = 0}^{m}$ es ortonormal si $\langle q_{i}, q_{j} \rangle = \delta_{ij}$
+\end{itemize}

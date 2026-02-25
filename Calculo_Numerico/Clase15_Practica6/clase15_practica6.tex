@@ -1,0 +1,109 @@
+\section{Clase 15 - Pr\'actica 6 (Resoluci\'on num\'erica de ecuaciones no lineales)}
+
+\subsection{M\'etodo de la secante}
+
+Comenzamos con dos valores $x_{0}$ y $x_{1}$ cercanos a la ra\'iz (podr\'ian estar los dos a la izquierda o a la derecha de la ra\'iz) y construimos $x_{2}$ como la ra\'iz de la recta secante que pasa por $(x_{0}, f(x_{0}))$ y $(x_{1}, f(x_{1}))$.
+
+$$\frac{f(x_{1}) - f(x_{0})}{x_{1} - x_{0}}(x - x_{1}) + f(x_{1}) = 0$$
+
+$$\Rightarrow x_{2} = x_{1} - \frac{f(x_{1})}{\frac{f(x_{1}) - f(x_{0})}{x_{1} - x_{0}}}$$
+
+\begin{itemize}
+    \item Tomo $x_{0}$ y $x_{1}$ dos valores aproximados de $r$, la ra\'iz de $f$.\\
+
+    \item Para $n = 1, 2, ..., x_{n + 1} = x_{n} - \frac{f(x_{n})}{\frac{f(x_{n}) - f(x_{n - 1})}{x_{n} - x_{n - 1}}}$
+\end{itemize}
+
+\underline{Error en el m\'etodo de la secante}
+
+$$e_{n + 1} = \frac{f''(\eta_{n})}{2f'(\theta_{n})} = e_{n}e_{n - 1}$$
+
+con $\eta_{n}, \theta_{n} \in [a, b]$.\\
+
+\textit{Idea sobre el orden de convergencia}: si $p$ es tal que $e_{n + 1} \sim C|e_{n}|^{p} \Rightarrow |e_{n + 1}| \sim C|e_{n}|^{p} \sim C(C|e_{n - 1}|^{p})^{p} \sim C^{p + 1}|e_{n - 1}|^{p^{2}}$.\\
+
+Por la f\'ormula del error sabemos que $|e_{n + 1}| \sim K|e_{n}||e_{n - 1}|$ y reemplazando en lo anterior nos queda
+
+$$K|e_{n}||e_{n - 1}| \sim C^{p + 1}|e_{n - 1}|^{p^{2}}$$
+
+y de aqu\'i
+
+$$KC|e_{n - 1}|^{p}|e_{n - 1}| \sim C^{p + 1}|e_{n - 1}|^{p^{2}}$$
+
+Entonces
+
+$$\frac{K}{C^{p}}|e_{n - 1}|^{p + 1} \sim |e_{n - 1}|^{p^{2}} \Rightarrow |e_{n - 1}|^{p^{2} - p - 1} \sim cte$$\\
+
+Deber\'ia ser entonces $p^{2} - p - 1 = 0$ y la soluci\'on positiva de esta ecuaci\'on en $p = \frac{1 + \sqrt{5}}{2}$ (el n\'umero de oro).
+
+\subsection{M\'etodo de punto fijo}
+
+La idea ahora es reformular el problema de "hallar $x$ tal que $f(x) = 0$" en otro equivalente de la forma "hallar $x$ tal que $x = g(x)$".\\
+
+\textit{Ejemplo}: $4x^{3} - 2x - 5 = 0$ es equivalente a
+
+\begin{itemize}
+    \item $x = \frac{4x^{3} - 5}{2}$, donde $g_{1}(x) = \frac{4x^{3} - 5}{2}$
+    
+    \item $x = \sqrt[3]{\frac{2x + 5}{4}}$, donde $g_{2}(x) = \sqrt[3]{\frac{2x + 5}{4}}$
+    
+    \item $x = \frac{2x + 5}{4x^{2}}$, donde $g_{3}(x) = \frac{2x + 5}{4x^{2}}$
+\end{itemize}
+
+\textit{Cuidado}: No cualquier reformulaci\'on va a servir.\\
+
+\underline{Definici\'on}: Decimos que $r$ es punto fijo de $g$ si $g(r) = r$.\\
+
+\begin{itemize}
+    \item Tomo $x_{0}$ una aproximaci\'on de $r$.
+
+    \item Para $n = 0, 1, 2, ...$, $x_{n + 1} = g(x_{n})$ .
+\end{itemize}
+
+\textit{Observaci\'on}: el m\'etodo de Newton-Raphson se puede ver como un m\'etodo de punto fijo para el problema $x = g(x)$ con $g(x) = x - \frac{f(x)}{f'(x)}$\\
+
+¿Bajo que condiciones converge el m\'etodo de punto fijo?\\
+
+\underline{Definici\'on}: Decimos que una funci\'on $g: [a, b] \rightarrow \mathbb{R}$ es contractiva (o es una contracci\'on) en el intervalo $[a, b]$ si existe una constante $L, 0 \leq L < 1$ tal que $|g(x) - g(y)| \leq L|x - y|$ para cualquiera $x, y \in [a, b]$\\
+
+\underline{Teorema}: Sea $g: [a, b] \rightarrow \mathbb{R}$ continua tal que
+
+\begin{itemize}
+    \item $g([a, b]) \subseteq [a, b]$
+    
+    \item $g$ es contractiva en $[a, b]$ con cte $0 \leq L < 1$, entonces el m\'etodo de punto fijo $x_{n + 1} = g(x_{n})$ converge al (\'unico) punto fijo $r \in [a, b]$. Es decir, $\lim_{n \to \infty} x_{n} = r$ con $g(r) = r$.
+\end{itemize}
+
+¿C\'omo verifico que $g$ es contractiva?\\
+
+Por el Teorema de Valor Medio de Lagrange, si $g$ es derivable podemos escribir para cualesquiera $x, y \in [a, b]$:\\
+
+$$|g(x) - g(y)| = |g'(\theta)||x - y| \leq \max_{\theta \in [a, b]} |g'(\theta)||x - y|$$
+
+Luego, para ver que $g$ es contractiva, basta con encontrar $0 \leq L < 1$ tal que $\max_{\theta \in [a, b]} |g'(\theta)| \leq L$.\\
+
+¿Por qu\'e converge el m\'etodo?\\
+
+Al pedir $g([a, b]) \subseteq [a, b]$ garantizamos que si $x_{0} \in [a, b]$ entonces toda la sucesi\'on quedar\'a en $[a, b]$:
+
+$$x_{0} \in [a, b] \Rightarrow x_{1} = g(x_{0}) \in [a, b] \Rightarrow x_{2} = g(x_{1}) \in [a, b]\ ...$$
+
+Como $g$ es contractiva,
+
+$$|e_{n + 1}| = |x_{n + 1} - r| = |g(x_{n}) - g(r)| \leq L|x_{n} - r| = L|e_{n}|$$
+
+y con este razonamiento se obtiene
+
+$$|e_{n + 1}| \leq L|e_{n}| \leq L^{2}|e_{n - 1}| \leq ... \leq L^{n + 1}|e_{0}| \rightarrow_{n \to +\infty} 0$$
+
+pues $L < 1$.\\
+
+\underline{Error de punto fijo}
+
+\begin{itemize}
+    \item $|x_{n} - r| \leq L^{n}|x_{0} - r|$
+
+    \item $|x_{n} - r| \leq \frac{L^{n}}{1 - L}|x_{1} - x_{0}|$
+
+    \item $|x_{n} - r| \leq \frac{L}{1 - L}|x_{n} - x_{n - 1}|$
+\end{itemize}

@@ -1,0 +1,75 @@
+\section{Clase 20 - Pr\'actica 8 (Cuadrados m\'inimos)}
+
+\underline{Teorema}: Sea $\{q_{j}\}_{j = 0}^{m}$ una base ortonormal de $S$ subespacio de $V$. Sea $f \in V$, la proyecci\'on ortogonal de $f$ sobre $S$ est\'a dada por:
+
+$$P^{*} = \sum \limits_{j = 0}^{m} \langle f, q_{j} \rangle q_{j}$$
+
+\underline{Demostraci\'on}: Como $P^{*} \in S$, entonces existen coeficientes $\alpha_{j}\ / \ P^{*} = \sum \limits_{j = 0}^{m} \alpha_{j}q_{j}$. Por el primer teorema, sabemos que $\langle f - P^{*}, q \rangle = 0\ \forall \ q \in S$. En particular:
+
+$$0 = \langle f - P^{*}, q_{i} \rangle = \langle f - \sum \limits_{j = 0}^{m} \alpha_{j}q_{j}, q_{i} \rangle = \langle f, q_{i} \rangle - \sum \limits_{j = 0}^{m} \alpha_{j} \langle q_{j}, q_{i} \rangle = \langle f, q_{i} \rangle - \sum \limits_{j = 0}^{m} \alpha_{j} \delta_{ji} =\langle f, q_{i} \rangle - \alpha_{i}$$
+
+$$\Rightarrow \alpha_{i} = \langle f, q_{i} \rangle$$\\
+
+\underline{C\'omo obtenemos una B.O.N.?}
+
+\subsection{Proceso de Gram-Schmidt}
+
+Sea $\{p_{j}\}_{j = 1}^{m}$ una base de $S$, construimos:
+
+$$\tilde{q}_{1} = p_{1} \rightarrow q_{1} = \frac{\tilde{q}_{1}}{\|\tilde{q}_{1}\|}$$
+
+$$\tilde{q}_{k + 1} = p_{k + 1} - \sum \limits_{j = 1}^{k} \langle q_{j}, p_{k + 1} \rangle q_{j} \rightarrow q_{k + 1} = \frac{\tilde{q}_{k + 1}}{\|\tilde{q}_{k + 1}\|}$$
+
+y obtenemos $\{q_{j}\}_{j = 1}^{m}$ B.O.N. de $S$.\\
+
+Notar que
+
+$$\sum \limits_{j = 1}^{k} \langle q_{j}, p_{k + 1} \rangle q_{j} = \sum \limits_{j = 1}^{k} \langle \frac{\tilde{q}_{j}}{\|\tilde{q}_{j}\|}, p_{k + 1} \rangle \frac{\tilde{q}_{j}}{\|\tilde{q}_{j}\|} = \sum \limits_{j = 1}^{k} \langle \tilde{q}_{j}, p_{k + 1} \rangle \frac{\tilde{q}_{j}}{\|\tilde{q}_{j}\|^{2}}$$\\
+
+\textit{Ejemplo}: Consideremos $V = C([-1, 1])$ con el producto interno $\langle f, g \rangle = \int \limits_{-1}^{1} f(x)g(x) dx$.\\
+
+Sea $S = \mathcal{P}_{2}$ el subespacio de los polinomios de grado $\leq 2$. Busquemos una B.O.N. de $S$. Partimos de la base $\{1, x, x^{2}\}$
+
+\begin{itemize}
+	\item $\tilde{q}_{0} = 1 \Rightarrow q_{0} = \frac{\tilde{q}_{0}}{\|\tilde{q}_{0}\|} = \frac{1}{\sqrt{\int \limits_{-1}^{1} 1 dx}} = \frac{1}{\sqrt{2}}$
+	
+	\item $\tilde{q}_{1} = x - \langle \tilde{q}_{0}, x \rangle \frac{\tilde{q}_{0}}{\|\tilde{q}_{0}\|^{2}} = x - \bigg(\int \limits_{-1}^{1} x dx \bigg)\frac{1}{2} = x - 0 = x$
+	
+	$\|\tilde{q}_{1}\|^{2} = \int \limits_{-1}^{1} x^{2} dx = \frac{2}{3} \Rightarrow q_{1} = \sqrt{\frac{3}{2}}x$
+	
+	\item $\tilde{q}_{2} = x^{2} - \langle \tilde{q}_{0}, x^{2} \rangle \frac{\tilde{q}_{0}}{\|\tilde{q}_{0}\|^{2}} -  \langle \tilde{q}_{1}, x^{2} \rangle \frac{\tilde{q}_{1}}{\|\tilde{q}_{1}\|^{2}} = x^{2} - \bigg(\int \limits_{-1}^{1} x^{2} dx \bigg)\frac{1}{2} - \bigg(\int \limits_{-1}^{1} x^{3} dx \bigg)\frac{\tilde{q}_{1}}{\|\tilde{q}_{1}\|^{2}}= x^{2} - \frac{1}{3}$
+	
+	$\|\tilde{q}_{2}\|^{2} = \int \limits_{-1}^{1} (x^{4} - \frac{2}{3}x^{2} + \frac{1}{9}) dx = \frac{8}{45} \Rightarrow q_{2} = \sqrt{\frac{45}{8}}\bigg(x^{2} - \frac{1}{3} \bigg)$
+\end{itemize}
+
+Sea $f \in V,\ f(x) = x^{3}$, la proyecci\'on ortogonal de $f$ sobre $S = \mathcal{P}_{2}$ viene dada por
+
+$$P^{*} = \langle f, q_{0} \rangle q_{0} + \langle f, q_{1} \rangle q_{1} + \langle f, q_{2} \rangle q_{2} = \langle f, \tilde{q}_{0} \rangle \frac{\tilde{q}_{0}}{\| \tilde{q}_{0}\|^{2}} + \langle f, \tilde{q}_{1} \rangle \frac{\tilde{q}_{1}}{\| \tilde{q}_{1}\|^{2}} + \langle f, \tilde{q}_{2} \rangle \frac{\tilde{q}_{2}}{\| \tilde{q}_{2}\|^{2}}$$
+
+$$= \int \limits_{-1}^{1} x^{3} dx \frac{\tilde{q}_{0}}{\| \tilde{q}_{0}\|^{2}}+ \int \limits_{-1}^{1} x^{4} dx  \frac{\tilde{q}_{1}}{\| \tilde{q}_{1}\|^{2}}+ \int \limits_{-1}^{1} (x^{5} - \frac{1}{3}x^{3}) dx \frac{\tilde{q}_{2}}{\| \tilde{q}_{2}\|^{2}} = 0 + \frac{2}{5}\frac{3}{2}x + 0 = \frac{3}{5}x$$\\
+
+\underline{Observaci\'on 1}:
+
+\begin{itemize}
+	\item Los polinomios ortogonales que se obtienen en $C([-1, 1])$ con el producto interno anterior, a partir de $\{1, \cdots, x^{n}\}$ se llaman polinomios de Legendre.
+	
+	\item En $(0, +\infty)$ con la funci\'on de peso $w(x) = e^{-x}$ se llaman polinomios de Laguerre.
+	
+	\item En $(-1, 1)$ con la funci\'on de peso $w(x) = \frac{1}{\sqrt{1 - x^{2}}}$ son los polinomios de Tchebyshev.\\
+\end{itemize}
+
+\underline{Observaci\'on 2}:
+
+$$\int \limits_{-1}^{1} \sin(2\pi kx) \cos(2\pi jx) dx = 0$$
+
+$$\int \limits_{-1}^{1} \cos(2\pi kx) \cos(2\pi jx) dx = \frac{1}{2} \int \limits_{-1}^{1} \cos(2\pi (k - j)x) + \cos(2\pi (k + j)x) dx = \delta_{kj}$$
+$$\int \limits_{-1}^{1} \sin(2\pi kx) \sin(2\pi jx) dx = \frac{1}{2} \int \limits_{-1}^{1} \cos(2\pi (k - j)x) - \cos(2\pi (k + j)x) dx = \delta_{kj}$$
+$$\int \limits_{-1}^{1} \cos(2\pi kx) dx = \frac{\sin(2\pi kx)}{2\pi k}\bigg|_{-1}^{1} = 0$$
+$$\int \limits_{-1}^{1} \sin(2\pi kx) dx = 0$$
+$$\int \limits_{-1}^{1} 1 dx = 2$$\\
+
+y por lo tanto
+
+$$\bigg\{\frac{1}{\sqrt{2}},\ \cos(2\pi x),\ \sin(2\pi x),\ \cos(2\pi 2x),\ \sin(2\pi 2x),\ \cos(2\pi 3x),\ \sin(2\pi 3x), \cdots, \cos(2\pi mx),\ \sin(2\pi mx)\bigg\}$$
+
+es una B.O.N. del subespacio que genera.
