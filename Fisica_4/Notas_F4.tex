@@ -1,0 +1,1271 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper]{article}
+
+\usepackage{mhchem}
+
+\usepackage{gensymb}
+
+%\usepackage[super]{natbib}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+
+\usepackage{lmodern}
+
+\usepackage[hyphenbreaks]{breakurl}
+
+\usepackage[hyphens]{url}
+
+%\usepackage[super,sort&compress]{natbib}
+%\usepackage{natbib}
+%\setlength{\bibsep}{0.0pt}
+
+\usepackage{subcaption}
+
+\usepackage{graphicx}
+
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[spanish]{babel} % Language hyphenation and typographical rules
+
+\usepackage[numbib,notlof,notlot,nottoc]{tocbibind} % Shows bibliography as a section
+
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+
+
+
+\usepackage[section]{placeins}
+
+\usepackage{float}
+
+\usepackage{booktabs} % Horizontal rules in tables
+
+\usepackage{enumitem} % Customized lists
+
+
+\usepackage{abstract} % Allows abstract customization
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\fancyhead[C]{Notas de F\'isica 4 $\bullet$ Ignacio Poggi} % Custom header text
+\fancyfoot[C]{\thepage} % Custom footer text
+
+\usepackage{titling} % Customizing the title section
+
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\setlength{\droptitle}{-4\baselineskip} % Move the title up
+
+\pretitle{\begin{center}\LARGE\bfseries} % Article title formatting
+\posttitle{\end{center}} % Article title closing formatting
+\title{Notas de F\'isica 4} % Article title
+\author{%
+\textsc{Ignacio Poggi} \\[1ex] % Your name
+\normalsize \href{mailto:ignaciop.3@gmail.com}{ignaciop.3@gmail.com} % Your email address
+}
+
+
+
+\date{\today} % Leave empty to omit a date
+\renewcommand{\maketitlehookd}{%
+\begin{abstract}
+\noindent Notas para el final de F\'isica 4. Basadas en algunos apuntes encontrados de la te\'orica de Claudia Giribet.
+\end{abstract}
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+
+% Print the title
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\section{Termodin\'amica}
+
+La termodin\'amica es el estudio de las transformaciones entre calor y trabajo mec\'anico, en particular en sistemas con un gran n\'umero de part\'iculas.\newline
+
+Definiremos \textit{estado termodin\'amico} del sistema a un conjunto de propiedades que lo caracterizan, a saber:
+
+\underline{Propiedades macrosc\'opicas}: volumen \textit{V}, presi\'on \textit{p}, temperatura \textit{T}, energ\'ia \textit{E}, etc. \'Estas determinan un \textbf{macroestado}.
+
+\underline{Propiedades microsc\'opicas}: promedios tales como energ\'ia media por part\'icula \textit{<E>}, velocidad media por part\'icula \textit{<v>}, etc. Analogamente, estas propiedades determinan un \textbf{microestado}.\newline
+
+Estas propiedades est\'an relacionadas y son dos maneras de caracterizar a un sistema, sabiendo que para un dado macroestado pueden corresponderse muchos microestados, con lo que definiremos \textbf{multiplicidad del macroestado} al n\'umero de microestados que corresponden a un dado macroestado.\newline
+
+Tambi\'en definimos el \textbf{equilibrio} como el estado tal que los valores medios de todos los valores macrosc\'opicos como microsc\'opicos no var\'ian con el tiempo, m\'as all\'a de peque\~nas fluctuaciones; o como el estado del sistema m\'as desordenado compatible con los v\'inculos.\newline
+
+\underline{Reversibilidad}: un proceso es reversible o cuasiest\a'tico cuando el sistema evoluciona de tal manera que todos los estados intermedios son de equilibrio. Es decir, el tiempo que debe durar el proceso para permitir que el sistema alcance el equilibrio en cada paso debe ser mucho mayor al tiempo de relajaci\'on $\tau$ del sistema.
+
+\subsection{Leyes termodin\'amicas}
+
+\underline{Ley cero de la Termodin\'amica}: si dos sistemas est\'an en equilibrio t\'ermico con un tercero, tambi\'en lo estar\'an entre s\'i: $T_{a} = T_{c}$ y $T_{b} = T_{c} \Rightarrow T_{a} = T_{b}$.
+
+\subsection{Presi\'on de un gas ideal}
+
+Al confinar un gas en un recipiente, las colisiones de las mol\'eculas de gas sobre las paredes generan una fuerza neta sobre cada elemento de \'area en la direcci\'on normal $\hat{n}$ exterior a la pared, originando la \textbf{presi\'on del gas}:
+
+$$p = -\frac{d\vec{F}}{dA} \cdot \hat{n}$$
+
+Si $p > 0$, el medio est\'a siendo comprimido; si no est\'a tensionado.\newline
+
+Ahora veamos como es la presi\'on de un gas ideal mediante una aproximaci\'on muy grosera. Sea un gas de $N$ mol\'eculas de masa $m$ en un recipiente de volumen $V$ en equilibrio, con $\rho = \frac{N}{V}$ la densidad del gas.
+Supongamos que las mol\'eculas se mueven todas con velocidad media $\langle \vec{v} \rangle$. En un $\Delta t$ solo van a llegar al \'area $A$ de la pared aquellas mol\'eculas que se encuentren suficientemente cerca de ella, contenidas en un volumen de \'area $A$ y altura $\Delta x = \langle v_{x} \rangle \Delta t$.
+
+De todas \'estas, nos quedamos con las que se mueven en $\hat{x}$, por lo tanto el numero de choques en $\Delta t$ ser\'a:
+
+$$n = \frac{1}{2}\rho V_{s} = \frac{1}{2}\frac{N}{V}A \langle v_{x}\rangle \Delta t$$
+
+Si suponemos que estos choques son el\'asticos, existe una transferencia de impulso normal $g_{\bot} = 2m \langle v_{x} \rangle$ a la pared, con lo cual la presi\'on media nos queda:
+
+$$\langle p \rangle = \frac{F_{\bot}}{A} = \frac{ng_{\bot}}{A\Delta t} = \frac{1}{2}\frac{N}{V} \langle v_{x} \rangle 2m \langle v_{x}\rangle = \frac{N}{V}m \langle v_{x} \rangle ^{2}$$ \newline
+
+Sabemos que dentro del gas no hay direcciones privilegiadas, por lo tanto los valores medios de las tres componentes de la velocidad deben ser iguales, luego $\langle v^{2} \rangle = \langle v_{x}^{2} \rangle + \langle v_{y}^{2} \rangle + \langle v_{z}^{2} \rangle = 3\langle v_{x}^{2} \rangle$. \'Esto, sumado a la aproximaci\'on horrible $\langle v_{x}^{2} \rangle = \langle v_{x} \rangle^{2}$, obtenemos finalmente la presi\'on como:
+
+\begin{equation}
+\label{eq:presion}
+\langle p \rangle = p = \frac{1}{3}\frac{N}{V} m \langle v^{2} \rangle
+\end{equation}
+
+
+\subsection{Ecuaci\'on de estado de un gas ideal}
+
+La ecuaci\'on de estado es una relaci\'on que liga los par\'ametros termodin\'amicos del sistema en equilibrio. Podemos notar que hay un par\'ametro que es dependiente de los otros independientes, es decir, dicha ecuaci\'on ser\'a una funci\'on del tipo:
+
+$$ f(p, T, V, N) = 0$$
+
+Si introducimos el valor medio de la energ\'ia cin\'etica en (\ref{eq:presion}), obtenemos:
+
+\begin{equation}
+\label{eq:presion2}
+p = \frac{1}{3}\frac{N}{V} m \langle v^{2} \rangle = \frac{2}{3}\frac{N}{V} \langle \frac{1}{2}mv^{2} \rangle = \frac{2}{3}\frac{N}{V}\langle \epsilon \rangle
+\end{equation}
+
+Ahora, relacionamos el valor medio de la energ\'ia $\langle \epsilon \rangle$ (par\'ametro microsc\'opico) con la temperatura, $\langle \epsilon \rangle = cT = \frac{3}{2}kT$, por lo tanto la ecuaci\'on (\ref{eq:presion2}) nos queda finalmente la de estado del gas ideal:
+
+\begin{equation}
+\label{eq:ecestado}
+p = \frac{N}{V}kT
+\end{equation}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{isobaras.jpg}
+     \caption{Procesos isob\'aricos (P = cte).\\ $P_{1} < P_{2} < P_{3}$ }
+  \end{subfigure}
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{isocoras.jpg}
+    \caption{Procesos isoc\'oricos (V = cte). \\$V_{1} < V_{2} < V_{3}$}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{isotermas.jpg}
+    \caption{Procesos isot\'ermicos (T = cte). \\$T_{1} > T_{2} > T_{3}$}
+  \end{subfigure}
+  \caption{Procesos reversibles de un gas ideal.}
+  \label{fig:procesos}
+\end{figure}
+
+\subsection{Primer principio de la termodin\'amica}
+
+Supongamos que tenemos un gas dentro de un recipiente que puede variar su volumen. La fuerza debida a la presi\'on externa al recipiente vale sobre cada elemento de \'area $dA$: $d\vec{F}_{ext} = -p_{ext}dA \hat{n}$.\\
+
+El trabajo externo sobre el sistema ser\'a:
+
+\begin{equation}
+\label{eq:trabajo}
+dW_{ext} = d\vec{F}_{ext} \cdot d\vec{n} = -p_{ext}dA\hat{n} \cdot d\vec{n} = -p_{ext}dAdn = -p_{ext}dV_{int} = -p_{ext}dV
+\end{equation}
+
+Si el proceso es reversible, entonces $p_{ext} = p_{int} = p$, por lo tanto:
+
+\begin{equation}
+\label{eq:trabajo2}
+dW_{ext} = -pdV
+\end{equation}
+
+Notemos que solo en el caso que el proceso sea reversible, puede expresarse el trabajo termodin\'amico con la presi\'on interna (dado que la presi\'on est\'a bien definida punto a punto por que el proceso es una sucesi\'on de estados de equilibrio). Si el proceso es irreversible, solo puede calcularse el trabajo externo. \\
+
+Veamos un ejemplo: consideremos el trabajo realizado por un gas realizando una expansi\'on isot\'ermica reversible a $T_{0}$ desde $V_{1}$ a $V_{2}$:
+
+$$ W_{1 \rightarrow 2} = \int_{V_{1}}^{V_{2}} pdV = \int_{V_{1}}^{V_{2}} \frac{NkT_{0}}{V} dV = NkT_{0} ln \frac{V_{2}}{V_{1}}$$
+
+La energ\'ia del gas solo va a depender de la temperatura (energ\'ia cin\'etica). Por lo tanto, si el proceso es isot\'ermico, la energ\'ia interna va a ser constante y el sistema puede interactuar t\'ermicamente con el exterior. A esta transferencia de energ\'ia la llamamos \textbf{calor $Q$}.\newline
+
+Teniendo esto en cuenta, el primer principio en su forma diferencial resulta:
+
+\begin{equation}
+\label{eq:primerprincipio}
+dE = dW_{ext} + dQ = -dW + dQ = -pdV + dQ
+\end{equation}
+
+Integrando (\ref{eq:primerprincipio}) tenemos
+
+\begin{equation}
+\label{eq:primerprincipio2}
+\Delta E = W_{ext} + Q = -W + Q
+\end{equation}
+
+donde $W$ es el trabajo del sistema y $Q$ es el calor absorbido o cedido por el sistema.
+
+\subsection{Capacidad t\'ermica o calor\'ifica}
+
+Definimos \textit{capacidad t\'ermica o calor\'ifica} de una sustancia a la cantidad
+
+$$C_{X} = \frac{dQ}{dT}\bigg|_{X}$$
+
+Esto nos da la relaci\'on entre la cantidad infinitesimal de calor absorbido por una sustancia en un proceso reversible $X$ y el incremento infinitesimal de temperatura que sufre. Las cantidades m\'as comunes son $C_{V}$ (a $V = cte$) y $C_{P}$ (a $P = cte$):\\
+
+\begin{itemize}
+\item \underline{C\'alculo de $C_{V}$}: Elegimos $T$ y $V$ como variables independientes, entonces:
+
+$$dE = \frac{\partial E}{\partial T}\bigg|_{V}dT + \frac{\partial E}{\partial V}\bigg|_{T}dV $$
+
+Sabemos que $dQ = dE + pdV$, luego $$dQ = \frac{\partial E}{\partial T}\bigg|_{V}dT + \frac{\partial E}{\partial V}\bigg|_{T}dV + pdV \Rightarrow \frac{\partial E}{\partial T}\bigg|_{V}dT + \bigg(\frac{\partial E}{\partial V}\bigg|_{T} + p\bigg)dV$$.
+
+Como $V = cte \Rightarrow dV = 0$, por lo tanto $dQ = \frac{\partial E}{\partial T}\bigg|_{V}dT$. Finalmente:
+
+\begin{equation}
+\label{eq:cv}
+C_{V} = \frac{dQ}{dT}\bigg|_{V} = \frac{\partial E}{\partial T}\bigg|_{V}
+\end{equation}
+
+\item \underline{C\'alculo de $C_{P}$}: Elegimos $T$ y $P$ como variables independientes, entonces:
+
+$$dE = \frac{\partial E}{\partial T}\bigg|_{P}dT + \frac{\partial E}{\partial p}\bigg|_{T}dp $$
+
+Luego $$dQ = \frac{\partial E}{\partial T}\bigg|_{P}dT + \frac{\partial E}{\partial p}\bigg|_{T}dp + pdV \Rightarrow \frac{\partial E}{\partial T}\bigg|_{P}dT + \frac{\partial E}{\partial p}\bigg|_{T}dp + p\bigg(\frac{\partial V}{\partial T}\bigg|_{P}dT + \frac{\partial V}{\partial p}\bigg|_{T}dp\bigg)$$.
+
+Como $P = cte \Rightarrow dp = 0$, por lo tanto $dQ = \bigg(\frac{\partial E}{\partial T}\bigg|_{P} + p \frac{\partial V}{\partial T}\bigg|_{P} \bigg)dT$. Finalmente:
+
+\begin{equation}
+\label{eq:cp}
+C_{P} = \frac{dQ}{dT}\bigg|_{P} = \frac{\partial E}{\partial T}\bigg|_{P} + p \frac{\partial V}{\partial T}\bigg|_{P}
+\end{equation}
+\end{itemize}
+
+A modo de ejemplo, veamos $C_{V}$ y $C_{P}$ para un gas ideal. De los apartados anteriores, $E = N\langle \epsilon \rangle = \frac{1}{2}Nm\langle v^{2} \rangle = \frac{3}{2}NkT$.\\
+
+Consideramos la expansi\'on libre del gas muy diluido hacia una c\'amara donde hay vac\'io, lo suficientemente lento como para que $Q = 0 = \Delta E + W$. Como el gas se expande contra presi\'on nula, el trabajo sobre el mismo es 0, por lo tanto $\Delta E = 0 \Rightarrow E = E(T) = \frac{3}{2}NkT$. \\
+
+Aplicando (\ref{eq:cv}) y (\ref{eq:cp}) para las capacidades calor\'ificas:
+
+
+\begin{equation}
+\label{eq:cvideal}
+C_{V} = \frac{\partial E}{\partial T}\bigg|_{V} = \frac{3}{2}Nk
+\end{equation}
+
+\begin{equation}
+\label{eq:cpideal}
+C_{P} = \frac{\partial E}{\partial T}\bigg|_{P} + p \frac{\partial V}{\partial T}\bigg|_{P} = C_{V} + Nk = \frac{5}{2}Nk
+\end{equation}
+
+\subsection{Segundo principio de la termodin\'amica}
+
+No es posible convertir calor en trabajo ($Q \rightarrow W$) a una determinada $T$ sin otro cambio en el sistema o en el medio ambiente. En t\'erminos de Lord Kelvin: \\
+
+\textit{Es imposible efectuar una transformaci\'on cuyo \'unico resultado final sea transformar en trabajo el calor extra\'ido de una \'unica fuente con la misma temperatura en todos sus puntos.}\\
+
+
+Un enunciado an\'alogo lo da Clausius:
+
+\textit{Es imposible efectuar una transformaci\'on cuyo \'unico resultado final sea transferir calor de un cuerpo fr\'io a otro m\'as caliente.}\\
+
+Para demostrar que son equivalentes, primero consideremos un ciclo de Carnot mediante un esquema de una m\'aquina t\'ermica:
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\linewidth,height=0.4\linewidth]{carnot.jpg}
+  \caption{El sistema que realiza el ciclo reversible o irreversible (c\'irculo) absorbe calor $Q_{1}$ de la fuente a $T_{1}$, cede calor $Q_{2}$ a la fuente m\'as fr\'ia a $T_{2}$ y entrega trabajo $W$.}
+  \label{fig:carnot}
+\end{figure}
+
+Supongamos que el enunciado de Clausius fuera falso, entonces ser\'ia posible que una cantidad de calor $Q_{2}$ pase de la fuente m\'as fr\'ia $T_{2}$ a la m\'as caliente $T_{1}$. Como todo lo que entra a $T_{2}$ tambi\'en sale, esta fuente es irrelevante y podr\'ia reemplazarse por un conductor t\'ermico. Con esto el sistema tomar\'ia calor de una \'unica fuente y producir\'ia trabajo, luego el enunciado de Kelvin ser\'ia falso.\\
+
+Si Kelvin fuera falso, la m\'aquina $M$ podr\'ia tomar calor de una \'unica fuente a $T_{1}$ y producir trabajo y transformarlo nuevamente en calor. Ese calor puede utilizarse para elevar la temperatura de un segundo cuerpo que inicialmente se encontrase a $T_{2} > T_{1}$; resultando que se transfiera calor de un cuerpo m\'as fr\'io a otro m\'as caliente, por lo tanto el enunciado de Clausius resultar\'ia falso.\\
+
+
+Por el segundo principio, no todo el calor puede transformarse en trabajo, existir\'an m\'aquinas t\'ermicas m\'as eficientes que otras, para lo cual definimos \textbf{eficiencia} como la raz\'on entre beneficio ($W$ obtenido) y costo ($Q$ absorbido):
+
+$$ \eta = \frac{W}{Q_{1}} = \frac{Q_{1} + Q_{2}}{Q_{1}} = 1 + \frac{Q_{2}}{Q_{1}} < 1$$
+
+Si la m\'aquina es reversible, se obtiene una m\'aquina frigor\'ifica (se entrega trabajo y extrae calor de una fuente fr\'ia, cedi\'endolo a la fuente caliente). En este caso:
+
+$$ \eta_{F} = \frac{Q_{2}}{W} = \frac{Q_{2}}{Q_{1} + Q_{2}}$$
+
+\subsection{Entrop\'ia}
+
+Existe una relaci\'on entre los calores absorbidos y cedidos, y las temperaturas de las fuentes para una m\'aquina t\'ermica reversible trabajando entre dos fuentes (calculando la eficiencia de una m\'aquina de Carnot para un gas ideal):
+
+$$ \frac{Q_{1}}{T_{1}} = -\frac{Q_{2}}{T_{2}}$$
+
+En lo que sigue de esta secci\'on, vamos a buscar una relaci\'on m\'as general.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{carnots.jpg}
+  \label{fig:carnots}
+\end{figure}
+
+La l\'inea roja representa al sistema $M$ en contacto con las fuentes discretas $T_{i}$. Las l\'ineas representan los intercambios de calor (absorbido o cedido) entre $M$ y las fuentes; y la que sale de $M$ indica el trabajo cedido o entregado. \\
+
+Adem\'as, en el diagrama se ven las m\'aquinas t\'ermicas reversibles $C_{i}$, que trabajan entre una \'unica fuente $T_{0}$ y las $T_{i}$. Estas m\'aquinas trabajan de tal manera que el ciclo $C_{i}$ (entre $T_{0}$ y $T_{i}$) entrega $Q_{ic}$ a $T_{i}$ y $M$ recibe $Q_{i}$ de $T_{i}$ tal que $|Q_{i}| = |Q_{ic}|$.\\
+
+Usando la relaci\'on que vimos al principio de esta secci\'on, la cantidad de calor que absorbe $C_{i}$ de $T_{0}$ es:
+
+$$ Q_{i0} = -\frac{T_{0}}{T_{i}}Q_{ic} = \frac{T_{0}}{T_{i}}Q_{i} $$
+
+Por lo tanto, la fuente $T_{0}$ entrega una cantidad de calor $Q_{0}$:
+
+$$Q_{0} = \sum_{i = 1}^{N} Q_{i0} = T_{0} \sum_{i = 1}^{N}\frac{Q_{i}}{T_{i}}$$
+
+Como es un ciclo, el trabajo total $W$ tiene que ser igual a $Q_{0}$. Por el postulado de Kelvin, $Q_{0} \leq 0$. Si $M$ fuera reversible, las $Q_{i}$ cambiar\'ian de signo, entonces $Q_{0} \geq 0$, por lo tanto la \'unica posibilidad ser\'ia $Q_{0} = 0$.\\
+
+Si el intercambia de calor se realiza con una distribuci\'on continua de fuentes, el resultado anterior nos queda:
+
+\begin{equation}
+\label{eq:clausius}
+\oint \frac{dQ}{T_{F}} \leq 0
+\end{equation}
+
+que se conoce como \textbf{desigualdad de Clausius}.\\
+
+Notemos que la igualdad vale para un ciclo que sea reversible, la temperatura del sistema es la temperatura de la fuente, y se define $\oint \frac{dQ}{T} = 0 \Rightarrow \oint dS = 0$. La cantidad $dS = \frac{dQ}{T}\bigg|_{R}$ es un diferencial exacto, por lo tanto la entrop\'ia $S$ es una funci\'on de estado.\\
+
+A partir del diferencial de entrop\'ia, podemos calcular el diferencial de calor en un proceso reversible como $dQ|_{R} = TdS$. Esto es muy importante para los potenciales termodin\'amicos que veremos m\'as adelante.\\
+
+Por \'ultimo, veamos una propiedad muy importante de la entrop\'ia. SUpongamos que vamos de un estado A a uno B siguiendo un camino irreversible I, y regresamos de B a A por uno reversible R. Usando (\ref{eq:clausius}):
+
+\begin{equation}
+\label{eq:entropia}
+\int_{A}^{B} \frac{dQ}{T_{F}}\bigg|_{I} +  \int_{A}^{B} \frac{dQ}{T}\bigg|_{R} \leq 0 \Rightarrow \int_{A}^{B} \frac{dQ}{T_{F}}\bigg|_{I} + (S(A) - S(B)) \leq 0 \Rightarrow \int_{A}^{B} \frac{dQ}{T_{F}}\bigg|_{I} \leq S(B) - S(A)
+\end{equation}
+
+Si el sistema evoluciona de A a B adiab\'aticamente, $dQ = 0$ y la ecuaci\'on (\ref{eq:entropia}) resulta:
+
+\begin{itemize}
+\item $S(B) > S(A)$ sii la transformaci\'on es irreversible
+\item $S(B) = S(A)$ sii la transformaci\'on es reversible
+\end{itemize}
+
+\subsection{Potenciales termodin\'amicos}
+
+Con lo visto anteriormente, podemos escribir el primer principio en su forma diferencial de la siguiente manera:
+
+\begin{equation}
+\label{eq:pt_energia}
+dE = TdS - pdV
+\end{equation}
+
+Y definiremos los potenciales termodin\'amicos a partir de \'este.\\
+
+\underline{\textbf{Entalp\'ia H}}:\\
+
+Sus variables naturales son $S$ y $P$. Se define como $H = E + pV$, por lo tanto su diferencial es $$dH = dE + pdV + Vdp = TdS - pdV + pdV + Vdp = TdS + Vdp$$
+
+\underline{\textbf{Energ\'ia libre de Helmholtz F}}:\\
+
+Sus variables naturales son $T$ y $V$. La definimos como $F = E - TS$, por lo tanto su diferencial es $$dF = dE - TdS - SdT = TdS - pdV - TdS - SdT = -pdV - SdT$$
+
+\underline{\textbf{Energ\'ia libre de Gibbs G}}:\\
+
+Sus variables naturales son $P$ y $T$. La definimos como $G = E + pV - TS$, por lo tanto su diferencial es $$dG = dE + pdV + Vdp - TdS - SdT = TdS - pdV + pdV + Vdp - TdS - SdT = Vdp - SdT$$
+
+Con estas definiciones, podemos hallar relaciones diferenciales entre los potenciales, denominadas \textbf{relaciones de Maxwell}. \'Estas se derivan a partir de que para una funci\'on de estado $f(x,y)$ se cumple:
+
+$$ \frac{\partial^{2} f}{\partial x \partial y} =  \frac{\partial^{2} f}{\partial y \partial x}$$
+
+\begin{itemize}
+\item \underline{Primera relaci\'on}:\\
+
+Para derivarla, utilizamos $E = E(V, S)$. Diferenciamos:
+
+$$dE = TdS - pdV = \frac{\partial E}{\partial S}\bigg|_{V}dS + \frac{\partial E}{\partial V}\bigg|_{S}dV$$
+
+de donde $$\frac{\partial E}{\partial S}\bigg|_{V} = T$$ $$\frac{\partial E}{\partial V}\bigg|_{S} = -p$$
+
+Tomando las derivadas cruzadas de estos resultados, obtenemos:
+
+\begin{equation}
+\label{maxwell1}
+\frac{\partial T}{\partial V}\bigg|_{S} = -\frac{\partial p}{\partial S}\bigg|_{V}
+\end{equation}
+
+\item \underline{Segunda relaci\'on}:\\
+
+Usamos la entalp\'ia $H = H(p, S)$. Entonces:
+
+$$dH = TdS + Vdp = \frac{\partial H}{\partial S}\bigg|_{p}dS + \frac{\partial H}{\partial p}\bigg|_{S}dp$$
+
+de donde $$\frac{\partial H}{\partial S}\bigg|_{p} = T$$ $$\frac{\partial H}{\partial p}\bigg|_{S} = V$$
+
+Tomando las derivadas cruzadas de estos resultados, obtenemos:
+
+\begin{equation}
+\label{maxwell2}
+\frac{\partial T}{\partial p}\bigg|_{S} = \frac{\partial V}{\partial S}\bigg|_{p}
+\end{equation}
+
+\item \underline{Tercera relaci\'on}:\\
+
+Para derivarla, utilizamos $F = F(T, V)$. Diferenciamos:
+
+$$dF = -SdT - pdV = \frac{\partial F}{\partial T}\bigg|_{V}dT + \frac{\partial F}{\partial V}\bigg|_{T}dV$$
+
+de donde $$\frac{\partial F}{\partial T}\bigg|_{V} = -S$$ $$\frac{\partial F}{\partial V}\bigg|_{T} = -p$$
+
+Tomando las derivadas cruzadas de estos resultados, obtenemos:
+
+\begin{equation}
+\label{maxwell3}
+\frac{\partial S}{\partial V}\bigg|_{T} = \frac{\partial p}{\partial T}\bigg|_{V}
+\end{equation}
+
+\item \underline{Cuarta relaci\'on}:\\
+
+Utilizamos $G = G(p, T)$. Diferenciamos:
+
+$$dG = -SdT + Vdp = \frac{\partial G}{\partial T}\bigg|_{p}dT + \frac{\partial G}{\partial p}\bigg|_{T}dp$$
+
+de donde $$\frac{\partial G}{\partial T}\bigg|_{p} = -S$$ $$\frac{\partial G}{\partial p}\bigg|_{T} = V$$
+
+Tomando las derivadas cruzadas de estos resultados, obtenemos:
+
+\begin{equation}
+\label{maxwell4}
+\frac{\partial S}{\partial p}\bigg|_{T} = -\frac{\partial V}{\partial T}\bigg|_{p}
+\end{equation}
+\end{itemize}
+
+\subsection{Tercer principio de la termodin\'amica}
+
+En el cero absoluto, la entrop\'ia de un sistema puede siempre considerarse igual a cero.
+
+
+\subsection{Teor\'ia cin\'etica de Maxwell - Boltzmann}
+
+Dado un sistema sometido a ciertas interacciones externas, queremos encontrar la distribuci\'on m\'as probable de una configuraci\'on general y maximizar dicha probabilidad, sujeta a las condiciones de v\'inculo del sistema.\\
+
+Supongamos un sistema de $N$ part\'iculas y energ\'ia total $E$ en equilibrio a una temperatura $T$, sometido a potenciales externos que act\'uan sobre cada part\'icula individualmente.\\
+
+Las energ\'ias posibles de cada part\'icula toman valores discretos $\epsilon_{i}$. El estado de cada una de estas part\'iculas no queda especificado solo por la energ\'ia; por lo tanto tenemos que tener en cuenta que puede haber diferentes estados que se correspondan con el mismo nivel de energ\'ia, que denominaremos \textbf{degeneraci\'on del nivel} $g_{S}$.\\
+
+Como en nuestro sistema hay $N$ part\'iculas, queremos determinar cu\'antas part\'iculas van a estar en cada uno de esos estados. Si llamamos $n_{S}$ al n\'umero de part\'iculas que tienen energ\'ia $\epsilon_{S}$, los v\'inculos del sistema ser\'an:
+
+$$ N = \sum_{S} n_{S}$$
+$$ E = \sum_{S} n_{S}\epsilon_{S}$$
+
+Utilizando diversas aproximaciones (Stirling, bolitas en cajas, etc), llegamos a la distribuci\'on de Boltzmann para el caso discreto:
+
+\begin{equation}
+\label{eq:boltzmannd}
+n_{S}(\epsilon_{S}) = N\frac{g_{S}e^{-\beta \epsilon_{S}}}{\sum_{S} g_{S}e^{-\beta \epsilon_{S}}} 
+\end{equation}
+
+La probabilidad de que una part\'icula vaya al nivel $\epsilon_{S}$ es:
+
+\begin{equation}
+\label{eq:probaboltzmannd}
+P(\epsilon_{S}) = \frac{n_{S}(\epsilon_{S})}{N} =\frac{g_{S}e^{-\beta \epsilon_{S}}}{\sum_{S} g_{S}e^{-\beta \epsilon_{S}}} 
+\end{equation}
+
+Si el espectro de energ\'ias es continuo, el n\'umero de part\'iculas estar\'a en un rango de energ\'ias $(\epsilon, \epsilon + d\epsilon)$, entonces $n_{S}(\epsilon_{S}) \rightarrow dn_{\epsilon}$.\\
+
+En la teor\'ia cl\'asica, la energ\'ia es funci\'on de las coordenadas y los impulsos, es decir, $\epsilon = \epsilon(q, p)$. Es posible entonces representar un estado posible de la part\'icula como un punto en el espacio de fases (en 1D para simplificar):
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\linewidth,height=0.5\linewidth]{espaciofases.jpg}
+  \caption{Espacio de fases de una part\'icula.}
+  \label{fig:espaciofases}
+\end{figure}
+
+Al pasar al continuo, la degeneraci\'on es el n\'umero de estados con su impulso en $(p, p + dp)$ y coordenada en $(q, q + dq)$, es decir, $g_{S} \rightarrow dqdp$. Si adem\'as la part\'icula tiene $f$ grados de libertad, la energ\'ia es funci\'on de las f coordenadas e impulsos, por lo tanto el espacio de fases tiene dimensi\'on $2f$.\\
+
+Luego, el n\'umero de estados con energ\'ias en $(\epsilon, \epsilon + d\epsilon)$ ser\'a $g_{S} \rightarrow d^{f}qd^{f}p$. Teniendo en cuenta todo lo visto, la distribuci\'on de Boltzmann continua nos queda:
+
+\begin{equation}
+\label{eq:boltzmannc}
+dn_{\epsilon} = N\frac{e^{-\beta \epsilon(q_{1},..., q_{f},p_{1},...,p_{f})}d^{f}qd^{f}p}{\int_{\forall q, p}e^{-\beta \epsilon(q_{1},..., q_{f},p_{1},...,p_{f})}d^{f}qd^{f}p}
+\end{equation}
+
+Y la probabilidad de que una part\'icula tenga el nivel de energ\'ia en el rango $(\epsilon, \epsilon + d\epsilon)$ es:
+
+\begin{equation}
+\label{eq:probaboltzmannc}
+\frac{dn_{\epsilon}}{N} = \frac{e^{-\beta \epsilon(q_{1},..., q_{f},p_{1},...,p_{f})}d^{f}qd^{f}p}{\int_{\forall q, p}e^{-\beta \epsilon(q_{1},..., q_{f},p_{1},...,p_{f})}d^{f}qd^{f}p} 
+\end{equation}
+
+Para finalizar con la primera parte de la materia, calculemos la distribuci\'on de Boltzmann para un gas ideal.\\
+
+En este caso, solo tenemos energ\'ia cin\'etica $\epsilon = \frac{1}{2}mv^{2} = \frac{1}{2}m(v_{x}^{2} + v_{y}^{2} + v_{z}^{2})$. Con estas energ\'ias, la funci\'on de distribuci\'on depender\'a de las componentes de la velocidad:
+
+$$\frac{d^{3}N_{v_{x}v_{y}v_{z}}}{Ndv_{x}dv_{y}dv_{z}} = \frac{d^{3}N_{v_{x}v_{y}v_{z}}}{Nd^{3}v} = F(v_{x},v_{y},v_{z}) = Ae^{-\beta \frac{1}{2}m(v_{x}^{2} + v_{y}^{2} + v_{z}^{2})}$$
+
+Para encontrar la constante $A$, normalizamos:
+
+$$\int_{\forall v_{x},v_{y},v_{z}} F(v_{x},v_{y},v_{z})d^{3}v = 1$$
+
+$$A\int_{-\infty}^{\infty}e^{-\beta \frac{m}{2}v_{x}^{2}}dv_{x}\int_{-\infty}^{\infty}e^{-\beta \frac{m}{2}v_{y}^{2}}dv_{y}\int_{-\infty}^{\infty}e^{-\beta \frac{m}{2}v_{z}^{2}}dv_{z} = 1$$
+
+Como $\int_{-\infty}^{\infty}e^{-\beta \frac{m}{2}v_{j}^{2}}dv_{j} = \bigg(\frac{2\pi}{\beta m}\bigg)^{\frac{1}{2}}$, para $j = x, y, x$, entonces:
+
+$$A = \bigg(\frac{m\beta}{2\pi}\bigg)^{\frac{3}{2}}$$
+
+Finalmente, la funci\'on de distribuci\'on para un gas ideal nos queda:
+
+\begin{equation}
+\label{eq:boltzgasideal}
+F(v_{x},v_{y},v_{z}) =  \bigg(\frac{m\beta}{2\pi}\bigg)^{\frac{3}{2}}e^{-\beta \frac{m}{2}(v_{x}^{2} + v_{y}^{2} + v_{z}^{2})}
+\end{equation}
+
+\subsubsection{C\'alculo del par\'ametro $\beta$}
+
+Partimos de la expresi\'on de la entrop\'ia estad\'istica $S = k ln (\Omega(E))$, donde $\Omega(E)$ es la multiplicidad del microestado compatible con la energ\'ia $E$. Adem\'as, sabemos que $\frac{\partial S}{\partial E}|_{V} = \frac{1}{T}$.\\
+
+Comencemos:
+
+$$ln(\Omega) = N ln(N) + \sum_{S} n_{S} ln \frac{g_{S}}{n_{S}} = N ln(N) + \sum_{S} n_{S}ln(g_{S}) - \sum_{S} n_{S}ln(n_{S})$$
+
+$$d(ln(\Omega)) = \sum_{S} ln(g_{S})dn_{S} - \sum_{S} ln(n_{S})dn_{S} - \sum_{S} ln \frac{n_{S}}{n_{S}}dn_{S}$$
+
+$$d(ln(\Omega)) = \sum_{S} ln \frac{g_{S}}{n_{S}}dn_{S} - d(\sum_{S} n_{S}) = \sum_{S} ln (\frac{g_{S}}{n_{S}})dn_{S}$$
+
+Pero $n_{S} = Ag_{S}e^{-\beta \epsilon_{S}} \Rightarrow \frac{g_{S}}{n_{S}} = \frac{1}{A}e^{\beta \epsilon_{S}} \Rightarrow ln \frac{g_{S}}{n_{S}} = -ln(A) + \beta \epsilon_{S}$.\\
+
+Entonces:
+
+$$d(ln(\Omega)) = -ln(A)\sum_{S} dn_{S} + \sum_{S} \beta \epsilon_{S}dn_{S} = \beta d (\sum_{S} \epsilon_{S}n_{S}) = \beta dE$$
+
+Por lo tanto:
+
+$$ \frac{d(ln(\Omega))}{dE} = \beta \Rightarrow k\frac{d(ln(\Omega))}{dE} = \frac{dS}{dE} = \frac{1}{T} = k\beta \Rightarrow \beta = \frac{1}{kT}$$
+
+\newpage
+
+\section{Mec\'anica cu\'antica}
+
+\subsection{Radiaci\'on de cuerpo negro}
+
+La radiac\'on electromagn\'etica se debe a cargas aceleradas (por ejemplo, las vibraciones de los \'atomos en un s\'olido). Es de esperar que la emisi\'on de energ\'ia depende de la temperatura del cuerpo emisor.\\
+
+La ley experimental de Stefan-Boltzmann establece que la energ\'ia emitida por unidad de \'area y por unidad de tiempo es proporcional a $T^{4}$:
+
+\begin{equation}
+\label{eq:sb}
+W = \sigma e T^{4}
+\end{equation}
+
+donde $W$ es la energ\'ia emitida por unidad de \'area y de tiempo, $e$ es la emisividad del cuerpo y $\sigma$ la constante de Stefan-Boltzmann.\\
+
+En general, un cuerpo a cierta temperatura no solo va a emitir radiac\'on sino que tambi\'en va a absorberla y reflejarla, por lo que definiremos \textit{absorbancia} $a$ y \textit{reflectancia} $r$ de la siguiente manera:
+
+$$ a = \frac{E_{absorbida}}{E_{incidente}}$$
+$$ r = \frac{E_{reflejada}}{E_{incidente}}$$
+
+de manera tal que $a + r = 1$, y a su vez dependen de la longitud de onda. Veamos cual es la relaci\'on entre $W$ y $a$.\\
+
+Supongamos varios cuerpos en equilibrio t\'ermico entre ellos y su entorno. Cada cuerpo est\'a ba\~nado en radiaci\'on de intensidad uniforme $I = \frac{E}{\Delta A \Delta t}$. La radiaci\'on total emitida en un cierto $\Delta t$ por el cuerpo $s$ de \'area $\Delta A_{s}$ y emitancia $W_{s}$ es $W_{s}\Delta A_{s} \Delta t$.\\
+
+Esto debe ser igual a la energ\'ia absorbida del ba\~no t\'ermico en ese $\Delta t$, es decir:
+
+$$W_{s}\Delta A_{s} \Delta t = a_{s}I\Delta A_{s}\Delta t \Rightarrow W_{s} = a_{s}I \Rightarrow I = \frac{W_{s}}{a_{s}}$$
+
+Como este balance debe ser el mismo para todos los cuerpos en equilibrio, llegamos a la \textbf{ley de Kirchhoff}:
+
+\begin{equation}
+\label{eq:kirchof}
+\frac{W_{1}}{a_{1}} = \frac{W_{2}}{a_{2}} = ... = \frac{W_{s}}{a_{s}} = \frac{W_{n}}{a_{n}} = cte
+\end{equation}
+
+Podemos notar que depende de la temperatura y del rango de $\lambda$. Adem\'as, un cuerpo que es buen emisor, tambi\'en es buen absorbedor, y $e = a$. Un cuerpo que tiene la propiedad de absorber toda la radiaci\'on incidente ($a = 1$) se denomina \textbf{cuerpo negro}, por lo que la ecuaci\'on (\ref{eq:sb}) para el mismo nos queda $W_{b} = \sigma T^{4}$.\\
+
+La radiaci\'on espectral para un cuerpo negro se especifica por la densidad de energ\'ia espectral $u_{\lambda}$, definida como:
+
+$$ u_{\lambda}d\lambda = \frac{E_{emitida\, entre\, (\lambda, \lambda + d\lambda)}}{V\Delta t}$$
+
+Por lo tanto, podemos redefinir (\ref{eq:sb}) para un cuerpo negro como:
+
+\begin{equation}
+\label{eq:blackbodyW}
+W_{b} = \int_{0}^{\infty} u_{\lambda}d\lambda
+\end{equation}
+
+para una dada temperatura $T$. De manera experimental se encontr\'o lo siguiente:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\linewidth,height=0.4\linewidth]{cuerponegro.jpg}
+  \caption{Radiaci\'on espectral $u_{\lambda}$ de un cuerpo negro}
+  \label{fig:cuerponegro}
+\end{figure}
+
+\begin{itemize}
+\item $\lambda_{m}T = cte \Rightarrow$ el m\'aximo se corre hacia $\lambda$ mayores al disminuir la temperatura (\textbf{ley de corrimientos de Wien}).
+
+\item El \'area bajo cada curva es $W_{b}$. Los cuerpos emiten m\'as a medida que aumenta la temperatura.
+
+\item $u_{\lambda}$ no depende de la forma de la cavidad.
+
+\item El campo de radiaci\'on es homog\'eneo e is\'otropo. Si esto no fuera as\'i dos cuerpos en diferentes posiciones absorber\'ian distintas cantidades de energ\'ia y tendr\'ian diferentes temperaturas, por lo tanto no existir\'ia el equilibrio.
+
+\item La semejanza entre la densidad espectral $u_{\lambda}$ y la distribuci\'on de Maxwell, hallada por Wien y descripta por la relaci\'on:
+
+$$u_{\lambda} d\lambda = \frac{c_{1}\lambda^{-5}}{e^{\frac{c_{2}}{\lambda T}}}d\lambda$$
+
+donde $c_{1}$ y $c_{2}$ son dos constantes de ajuste.
+\end{itemize}
+
+\subsection{Teor\'ia de Rayleigh-Jeans}
+
+Jeans y Lord Rayleigh se propusieron reproducir de manera te\'orica la curva experimental, utilizando tambi\'en el formalismo de Maxwell-Boltzmann, obteniendo la siguiente relaci\'on para $u_{\lambda}$:
+
+\begin{equation}
+\label{eq:rjl}
+u_{\lambda}d\lambda = \frac{8 \pi}{\lambda^{4}}kTd\lambda
+\end{equation}
+
+O en t\'erminos de la frecuencia $\nu = \frac{c}{\lambda}$:
+
+\begin{equation}
+\label{eq:rjv}
+u_{\nu}d\nu = \frac{8 \pi \nu^{2}}{c^{3}}kTd\nu
+\end{equation}
+
+Como se puede ver en la siguiente figura, esta distribuci\'on se comporta razonablemente bien para valores grandes de $\lambda$, pero para $\lambda \rightarrow 0$ diverge y $E \rightarrow \infty$. Esto se conoce como \textit{la cat\'astrofe ultravioleta}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\linewidth,height=0.4\linewidth]{quilombouv.jpg}
+  \caption{Cat\'astrofe ultravioleta!}
+  \label{fig:quilombouv}
+\end{figure}
+
+Para tratar de resolver esto, Planck sugiri\'o el siguiente cambio en la ley de Wien:
+
+$$u_{\lambda} d\lambda = \frac{c_{1}\lambda^{-5}}{e^{\frac{c_{2}}{\lambda T}}-1}d\lambda$$
+
+la cual se reduce a la f\'ormula de Rayleigh-Jeans para valores de $\lambda$ muy grandes y ajustaba bien la curva experimental.\\
+
+El error en la teor\'ia de RJ fue suponer que la energ\'ia contenida en cada modo de oscilaci\'on pod\'ia ser un continuo de estados posibles, y que la probabilidad de encontrar un modo con una determinada energ\'ia estaba dada por la distribuci\'on de Boltzmann. \\
+
+Planck postul\'o que cada modo pod\'ia tener un conjunto discretos de estados energ\'eticos, m\'ultiplos de cierta cantidad $u$, s decir $\epsilon = nu$, entonces:
+
+$$\langle \epsilon \rangle = \frac{\sum_{n = 0}^{\infty} nu e^{-\beta nu}}{\sum_{n = 0}^{\infty} e^{-\beta nu}}$$
+
+Como ya sabemos, el valor medio de la energ\'ia corresponde al multiplicador de Lagrange $\beta$. Llamando $x = e^{-\beta u}$ ($x < 1$), luego:
+
+$$\langle \epsilon \rangle = -\frac{d}{d\beta}\bigg[ln\bigg(\sum_{n = 0}^{\infty} x^{n} \bigg) \bigg] = -\frac{d}{d\beta}\bigg[ln\bigg(\frac{1}{1-x} \bigg) \bigg] = -\frac{d}{d\beta}\bigg[ln\bigg(\frac{1}{1-e^{\beta u}} \bigg) \bigg]$$
+
+$$\Rightarrow \langle \epsilon \rangle = \frac{u}{e^{\frac{u}{kT}} - 1}$$
+
+Con esta expresi\'on para la energ\'ia media y ajustando las constantes $c_{1}$ y $c_{2}$ en la ecuaci\'on de Wien modificada por Planck, resulta $u = h \nu$, donde $h$ es la constante de Planck. La energ\'ia media y la densidad espectral entonces nos quedan de la siguiente manera:
+
+\begin{equation}
+\label{emediaplanck}
+\langle \epsilon \rangle = \frac{h\nu}{e^{\frac{h \nu}{kT}} - 1}
+\end{equation}
+
+\begin{equation}
+\label{densidadplanck}
+u_{\nu}d\nu = \frac{8\pi}{c^{3}}h\nu^{3}\frac{1}{e^{\frac{h \nu}{kT}} - 1}d\nu
+\end{equation}
+
+Llegando al resultado no cl\'asico de que los estados de energ\'ia de un oscilador son discretos y deben ser m\'ultiplos del producto de la constante $h$ por la frecuencia de la radiaci\'on electromagn\'etica que emite.
+
+\subsection{Interacci\'on de la radiaci\'on electromagn\'etica con la materia}
+
+\subsubsection{Efecto fotoel\'ectrico}
+
+En un tubo de rayos cat\'odicos, los electrones son emitidos por el c\'atodo como consecuencia del bombardeo del c\'atodo por iones positivos del gas. Este c\'atodo se carga positivamente cuando se lo ilumina con luz de longitud de onda $\lambda$ chica, este fen\'omeno se denomina \textit{efecto fotoel\'ectrico}.\\
+
+\subsubsection{Efecto Compton}
+
+Cuando un haz de rayos X de longitud de onde $\lambda_{0}$ es dispersado un \'angulo $\theta$ al enviarlo a trav\'es de una l\'amina met\'alica, la radiaci\'on dispersada tiene una longitud de onda $\lambda > \lambda_{0}$, que depende del \'angulo de dispersi\'on, es decir, $\lambda = \lambda(\theta)$.
+
+\subsection{Modelos at\'omicos}
+
+La emisi\'on de electrones por una sustancia mostraba la presencia de part\'iculas cargadas negativamente en los \'atomos. Como la materia es neutra, los \'atomos deb\'ian tener una carga positiva de igual magnitud a la que los electrones poseen; esto sumado a que la masa de los \'atomos es mucho mayor a la de los electrones, se supon\'ia que la mayor parte de la masa estaba asociada a $q > 0$.\\
+
+Uno de los primeros modelos se debe a Thomson, en el cual una esfera de carga positiva, distribuida uniformemente debido a la repulsi\'on entre electrones (modelo del \textit{bud\'in de pasas}). Este modelo fracaso debido a que los experimentos de scattering de Rutherford mostraban que la $q > 0$ deb\'ia estar concentrada en una regi\'on mucho menor.\\
+
+El modelo de Rutherford reproduc\'ia la dispersi\'on de part\'iculas $\alpha$ muy bien, sin embargo hab\'ia dos problemas:\\
+
+\begin{itemize}
+\item Si los electrones est\'an quietos respecto del n\'ucleo, existe una configuraci\'on de equilibrio para un conjunto $Z$ de cargas negativas alrededor de una carga positiva $Ze$. Esto es un equilibrio inestable, pues la m\'as peque\~na perturbaci\'on har\'ia que los electrones colapsen en el n\'ucleo.
+\item Si los electrones acelerados orbitan alrededor del n\'ucleo, irradiar\'ian e ir\'ian perdiendo energ\'ia, eventualmente colapsando en el n\'ucleo.
+\end{itemize}
+
+Estos problemas de estabilidad at\'omica condujeron a la formulaci\'on de la teor\'ia at\'omica de Bohr, explicando entre otras cosas el espectro de la radiaci\'on EM emitida por ciertos \'atomos\\
+
+Al hacer pasar una descarga el\'ectrica por un gas, los \'atomos adquieren una energ\'ia mayor al estado normal. Al regresar al estado normal, los \'atomos ceden ese exceso de energ\'ia emitiendo radiaci\'on electromagn\'etica. Al analizar el espectro, en lugar de una banda continua de colores, aparecen l\'ineas paralelas y aisladas de determinados colores, denominado \textit{espectro at\'omico} y es propio de cada elemento.\\
+
+Como ejemplo, el espectro del Hidr\'ogeno se puede describir con la expresi\'on hallada por Rydberg:
+
+$$k = R_{H}\bigg( \frac{1}{m^{2}} - \frac{1}{n^{2}}\bigg), n > m$$
+
+donde $R_{H}$ es la constante de Rydberg.\\
+
+As\'i, se encontraron las siguientes l\'ineas para el H: Lyman ($m = 1$), Balmer ($m = 2$), Paschen ($m = 3$), Brackett ($m = 4$), Pfund ($m = 5$), etc.
+
+\subsection{Teor\'ia del \'atomo de Bohr}
+
+Las caracter\'isticas del espectro at\'omico condujeron a Bohr a enunciar una nueva teor\'ia para el \'atomo, bas\'andose en el modelo nuclear de Rutherford y los cuantos de radiaci\'on de Planck y Einstein, postulando:
+
+\begin{itemize}
+\item Los electrones se mueven en \'orbitas circulares (estados estacionarios) bajo la influencia de la interacci\'on coulombiana con el n\'ucleo.
+\item En un estado estacionario no hay emisi\'on de radiaci\'on.
+\item Toda emisi\'on o absorci\'on de radiaci\'on corresponde a transiciones entre dos estados estacionarios, de manera tal que la radiaci\'on emitida es igual a $h\nu = E_{2} - E_{1}$.
+\item Los electrones solo pueden moverse en aquellas \'orbitas tal que si impulso angular sea $l_{n} = n \frac{h}{2\pi} = n\hbar$. Esto es una consecuencia de lo que se conoce como \textbf{principio de correspondencia} (si de la teor\'ia cu\'antica voy a vaores macrosc\'opicos, debemos recuperar los resultados cl\'asicos).
+\end{itemize}
+
+\subsection{Principio de incerteza de Heisenberg}
+
+La relaci\'on de incerteza de Heisenberg nos dice que no se puede medir la posici\'on y el impulso de una part\'icula con una precisi\'on mayor que $\hbar$, es decir:
+
+$$\Delta x \Delta p \geq \hbar$$
+
+Esto es un l\'imite absoluto que nos impone la naturaleza y que roviene del comportamiento ondulatorio de las part\'iculas, por lo tanto no podemos hablar de trayectorias, ya que para poder definir una necesitar\'iamos conocer en cada instante la posici\'on y el impulso de la part\'icula, lo que no es posible por el principio de incerteza.\\
+
+Notemos que si conocemos la posici\'on de una part\'icula en un instante, perdemos totalmente la informaci\'on sobre su impulso; y viceversa. Otra relaci\'on de incerteza es la que involucra al tiempo y la energ\'ia de la part\'icula, a saber:
+
+$$\Delta t \Delta E \geq \hbar$$
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth,height=0.5\linewidth]{incertezaET.jpg}
+  \caption{Ejemplo donde se observa que si el estado excitado de una part\'icula tiene un tiempo de vida corto (m\'as certeza sobre el momento), las l\'ineas espectrales son m\'as anchas (menos certeza sobre la frecuencia) y viceversa.}
+  \label{fig:incertezaET}
+\end{figure}
+
+\subsection{Formalismo de Schr\"odinger}
+
+En los siguientes p\'arrafos describiremos una serie de postulados en los cuales se basa este formalismo:
+
+\begin{itemize}
+\item Toda informaci\'on sobre nuestro sistema se describe a trav\'es de una funci\'on de onda $\psi(\vec{x},t)$ (llamado el \textit{estado de un sistema} tal que la densidad de probabilidad de encontrar a dicho sistema en una cierta regi\'on del espacio a un cierto tiempo $t$ est\'a dada por:
+
+$$\frac{dN}{N}(x,y,z,t) = |\psi(x,y,z,t)|^{2}dxdydz$$
+\item La funci\'on de onda $\psi$ puede ser compleja. Como $|\psi|^{2}$ es una densidad de probabilidad, se tiene que cumplir:
+
+$$\int_{\forall \vec{x}} |\psi(x,y,z,t)|^{2}d^{3}x = \int_{\forall \vec{x}} \psi^{*}(x,y,z,t)\psi(x,y,z,t)d^{3}x= 1$$
+
+entonces la funci\'on de onda $\psi$ debe ser de cuadrado integrable y estar normalizada en el espacio de coordenadas.
+
+Esto nos es \'util, por ejemplo, para calcular probabilidades y valores medios, por ejemplo:
+
+$$\langle x \rangle = \int_{\forall x} x|\psi(x)|^{2}dx = \int_{\forall x} \psi^{*}(x)x\psi(x)dx$$
+\end{itemize}
+
+An\'alogamente, se cumplen las mismas ecuaciones en el espacio de momentos $\vec{p}$, en este caso para una funci\'on de onda $\phi$ tal que:
+
+$$\frac{dN}{N}(p_{x},p_{y},p_{z},t) = |\phi(p_{x},p_{y},p_{z},t)|^{2}d^{3}p$$
+
+$$\int_{\forall \vec{p}} |\phi(p_{x},p_{y},p_{z},t)|^{2}d^{3}p = \int_{\forall \vec{x}} \phi^{*}(p_{x},p_{y},p_{z},t)\phi(p_{x},p_{y},p_{z},t)d^{3}p= 1$$
+
+Por el principio de incerteza, las funciones $\psi(x,y,z,t)$ y $\phi(p_{x},p_{y},p_{z},t)$ deben ser funciones inversas de Fourier. Veamos como se relacionan.\\
+
+En principio, la funci\'on de onda $\psi(x)$ es un paquete de ondas que se escribe como una integral de Fourier (para cualquier $t$):
+
+\begin{equation}
+\label{eq:psifourier}
+\psi(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} g(k_{x})e^{ik_{x}x}dk_{x}
+\end{equation}
+
+donde $g(k_{x})$ es la transformada de Fourier de $\psi(x)$. Cabe notar que $g(k_{x})$ NO es la funci\'on de onda en el espacio de momentos debido a que no depende expl\'icitamente del impulso y no est\'a normalizada; pero s\'i estar\'a relacionada con $\psi(p_{x})$.\\
+
+Usando la relaci\'on de de Broglie $p = \hbar k \Rightarrow dk = \frac{dp}{\hbar}$, si cambiamos de variables la ecuaci\'on (\ref{eq:psifourier}) nos queda:
+
+\begin{equation}
+\label{eq:psifourier2}
+\psi(x) = \frac{1}{\hbar\sqrt{2\pi}}\int_{-\infty}^{\infty} g(p)e^{-\frac{ipx}{\hbar}}dp
+\end{equation}
+
+donde $k_{x} = k$ y $p_{x} = p$ por simplicidad. Normalizamos $g(p) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi(x)e^{\frac{ipx}{\hbar}}dx$, entonces:
+
+$$\int_{-\infty}^{\infty} g^{*}(p)g(p)dp = \alpha^{2} \neq 1$$
+
+Por lo tanto, $\phi(p) = \frac{g(p)}{\alpha}$ para cumplir las condiciones de ser la transformada de Fourier de $\psi(x)$ y estar normalizada. Utilizando la ecuaci\'on (\ref{eq:psifourier2}) calculemos el miembro izquierdo de la integral anterior:
+
+$$\int_{-\infty}^{\infty} g^{*}(p)g(p)dp = \frac{1}{2\pi}\int_{-\infty}^{\infty}dp\int_{-\infty}^{\infty}\psi^{*}(x)e^{\frac{ipx}{\hbar}}dx\int_{-\infty}^{\infty}\psi(x')e^{-\frac{ipx'}{\hbar}}dx'$$
+
+$$\int_{-\infty}^{\infty} g^{*}(p)g(p)dp = \frac{1}{2\pi}\int_{-\infty}^{\infty}\psi^{*}(x)dx\int_{-\infty}^{\infty}\psi(x')dx'\int_{-\infty}^{\infty}dpe^{\frac{ip(x-x')}{\hbar}}$$
+
+$$ \Rightarrow \int_{-\infty}^{\infty} g^{*}(p)g(p)dp = \frac{1}{2\pi}\int_{-\infty}^{\infty}\psi^{*}(x)dx\int_{-\infty}^{\infty}\psi(x')dx'2\pi \delta(x-x')$$
+
+Teniendo en cuenta esta \'ultima ecuaci\'on y adem\'as $ \int_{-\infty}^{\infty}\psi^{*}(x)\psi(x)dx = 1$, entonces $\alpha^{2} = \hbar \Rightarrow \phi(p) = \frac{g(p)}{\sqrt{\hbar}}$, por lo tanto la relaci\'on entre ambas funciones de onda ser\'a:
+
+\begin{equation}
+\label{eq:psi}
+\psi(x) = \frac{1}{\sqrt{\hbar}}\int_{-\infty}^{\infty}\phi(p)e^{\frac{ipx}{\hbar}}dp
+\end{equation}
+
+\begin{equation}
+\label{eq:phi}
+\phi(p) = \frac{1}{\sqrt{\hbar}}\int_{-\infty}^{\infty}\psi(x)e^{-\frac{ipx}{\hbar}}dx
+\end{equation}
+
+Con estos resultados y a modo de ejemplo, calculemos $\langle p_{x} \rangle  = \langle p \rangle$ y observemos que no es necesario hacerlo en el espacio de momentos.
+
+$$\langle p \rangle = \int_{-\infty}^{\infty}\phi^{*}(p)p\phi(p)dp = \frac{1}{\sqrt{\hbar}}\int_{-\infty}^{\infty}\phi^{*}(p)p\bigg[\int_{-\infty}^{\infty} \psi(x)e^{-\frac{ipx}{\hbar}}dx \bigg]dp$$
+
+Si integramos por partes la integral entre corchetes:
+
+$$\bigg[\int_{-\infty}^{\infty} \psi(x)e^{-\frac{ipx}{\hbar}}dx \bigg] = -\frac{\hbar}{ip}e^{-\frac{ipx}{\hbar}}\psi(x)\bigg|_{-\infty}^{\infty} + \frac{\hbar}{ip}\int_{-\infty}^{\infty} \frac{\partial \psi(x)}{\partial x}e^{-\frac{ipx}{\hbar}}dx$$
+
+El primer t\'ermino se anula pues $\psi(x)$ debe ser acotada para no diverger, por lo cual $\psi(x \rightarrow \pm \infty) \rightarrow 0$, entonces:
+
+$$\langle p \rangle = \frac{1}{\sqrt{\hbar}}\bigg[ \phi^{*}(p)p\frac{\hbar}{ip}\int_{-\infty}^{\infty} \frac{\partial \psi(x)}{\partial x}e^{-\frac{ipx}{\hbar}}dx\bigg]dp = -i\hbar \int_{-\infty}^{\infty} \bigg[\frac{1}{\sqrt{\hbar}}\int_{-\infty}^{\infty} \phi^{*}(p)e^{-\frac{ipx}{\hbar}}dp \bigg]\frac{\partial \psi(x)}{\partial x}dx$$
+
+\begin{equation}
+\label{eq:pmean}
+\Rightarrow \langle p \rangle = \int_{\infty}^{\infty} \psi^{*}(x)\bigg( -i\hbar \frac{\partial}{\partial x}\bigg)\psi(x)dx
+\end{equation}
+
+Este resultado nos revela que en el espacio de coordenadas a $p$ lo representamos con el operador $-i\hbar \frac{\partial}{\partial x}$ (\textit{representaci\'on en coordenadas de p}).
+
+\subsection{Operadores}
+
+Dentro del formalismo de Schr\"odinger, cualquier magnitud f\'isica tiene asociado un operador, ya sea en la representaci\'on de coordenadas o en la de impulsos, cuyo valor de expectaci\'on real es lo que se puede medir.\\
+
+Para que esto sea posible, se pide que el operador gen\'erico $\hat{F}$ que representa una magnitud f\'isica sea herm\'itico:
+
+$$\hat{F}^{*} = \hat{F}^{\dagger}$$
+
+donde $\hat{F}^{\dagger}$ es el transpuesto conjugado.
+
+Otra propiedad importante es que el conjunto de funciones de onda para los cuales un determinado observable $\hat{F}$ est\'a bien definido son las autofunciones de $\hat{F}$ y sus autovalores son los valores medios del mismo (\'unicos valores posibles que puede tomar $\hat{F}$), es decir:
+
+\begin{equation}
+\label{eq:autofunciones}
+\hat{F}\psi = \langle F \rangle \psi
+\end{equation}
+
+Supongamos que tenemos dos observables $\hat{F}$ y $\hat{G}$ que comparten autofunciones:
+
+$$\hat{F}\psi_{n} = f_{n}\psi_{n}$$
+$$\hat{G}\psi_{n} = g_{n}\psi_{n}$$
+
+Entonces las $\psi_{n}$ tienen bien definidos a ambos observables. Aplicando los operadores $\hat{G}$ y $\hat{F}$ a ambas ecuaciones, respectivamente, obtenemos:
+
+$$\hat{G}\hat{F}\psi_{n} = \hat{G}f_{n}\psi_{n} = f_{n}\hat{G}\psi_{n} = f_{n}g_{n}\psi_{n}$$
+$$\hat{F}\hat{G}\psi_{n} = \hat{F}g_{n}\psi_{n} = g_{n}\hat{F}\psi_{n} = g_{n}f_{n}\psi_{n}$$
+
+$$ \Rightarrow (\hat{G}\hat{F} - \hat{F}\hat{G})\psi_{n} = 0$$
+
+Esto significa que aplicar primero $\hat{F}$ y luego $\hat{G}$ sobre una funci\'on es lo mismo que aplicarlos en el orden inverso. El operador $[\hat{G}, \hat{F}] = \hat{G}\hat{F} - \hat{F}\hat{G}$ se llama \textbf{conmutador} y si adem\'as $[\hat{G}, \hat{F}] = 0$, se dice que ambos operadores conmutan.\\
+
+Por \'ultimo, veamos un ejemplo donde no conmutan. Sean $\hat{x}$ y $\hat{p}$ los operadores posici\'on y momento de una part\'icula y $\phi$ una funci\'on cualquiera, entonces:
+
+$$[\hat{x}, \hat{p}]\phi = (\hat{x}\hat{p} - \hat{p}\hat{x})\phi = -i\hbar \bigg( \hat{x}\frac{\partial}{\partial x} - \frac{\partial}{\partial x} \hat{x}\bigg)\phi = i\hbar \bigg( x\frac{\partial \phi}{\partial x} - \frac{\partial(x\phi)}{\partial x}\bigg) = i\hbar \bigg( x\frac{\partial \phi}{\partial x} - \phi - x\frac{\partial\phi}{\partial x}\bigg) = i\hbar \phi$$
+
+$$ \Rightarrow [\hat{x}, \hat{p}] = i\hbar \neq 0$$
+
+\subsection{Ecuaci\'on de Schr\"odinger}
+
+En las secciones anteriores vimos que la funci\'on de onda $\psi(\vec{x},t)$ contiene informaci\'on sobre el estado del sistema tal que $|\psi(\vec{x},t)|^{2}$ representa la densidad de probabilidad de que el sistema se encuentre en un cierto estado, sin embargo todav\'ia no sabemos como se obtiene dicha funci\'on.\\
+
+Partiremos de la ecuaci\'on de D'Alambert para ondas estacionarias:
+
+\begin{equation}
+\label{eq:dalambert}
+\nabla^{2}\phi(\vec{x}) + k^{2}\phi(\vec{x}) = 0
+\end{equation}
+
+Esta ecuaci\'on admite como soluci\'on:
+
+\begin{equation}
+\label{eq:dalambertsol}
+\phi(\vec{x},t) = e^{-i\omega t}\phi(\vec{x})
+\end{equation}
+
+Si incluimos la relaci\'on de de Broglie $k = \frac{p}{\hbar}$ en (\ref{eq:dalambert}), entonces:
+
+\begin{equation}
+\label{eq:dalambert2}
+\nabla^{2}\phi(\vec{x}) + \frac{p^{2}}{\hbar^{2}}\phi(\vec{x}) = 0
+\end{equation}
+
+Si adem\'as la part\'icula se mueve en un campo conservativo, $E = \frac{p^{2}}{2m} + V(\vec{x}) \Rightarrow p^{2} = 2m(E - V(\vec{x}))$, luego (\ref{eq:dalambert2}) nos queda $\nabla^{2}\phi(\vec{x}) + \frac{2m}{\hbar^{2}}(E - V(\vec{x}))\phi(\vec{x}) = 0$.\\
+
+Reordenando t\'erminos, finalmente obtenemos la \textbf{ecuaci\'on de Schr\"odinger para el caso estacionario}:
+
+\begin{equation}
+\label{eq:schrodinger}
+\hat{H}\phi(\vec{x}) = E\phi(\vec{x})
+\end{equation}
+
+donde $\hat{H} = -\frac{\hbar^{2}}{2m}\nabla^{2} + V(\vec{x})$ es el operador hamiltoniano.\\
+
+En el caso m\'as general, la ecuaci\'on anterior nos queda:
+
+\begin{equation}
+\label{eq:schrodingert}
+-\frac{\hbar^{2}}{2m}\nabla^{2}\psi(\vec{x},t) + V(\vec{x})\psi(\vec{x},t) = i\hbar \frac{\partial}{\partial t}\psi(\vec{x},t)
+\end{equation}
+
+\subsection{Ecuaci\'on de evoluci\'on de $\langle \vec{A} \rangle$ y constantes de movimiento}
+
+Veamos como evoluciona en el tiempo el valor medio de un observable gen\'erico $\hat{A}$:
+
+$$\frac{d\langle \hat{A} \rangle}{dt} = \frac{d}{dt}\int_{\forall \vec{x}} \psi^{*}\hat{A}\psi d^{3}x = \int_{\forall \vec{x}} \frac{\partial \psi^{*}}{\partial t}\hat{A}\psi d^{3}x +  \int_{\forall \vec{x}} \psi^{*}\frac{\partial \hat{A}}{\partial t}\psi d^{3}x +  \int_{\forall \vec{x}} \psi^{*}\hat{A}\frac{\partial \psi}{\partial t} d^{3}x$$
+
+Aplicando la ecuaci\'on de Schr\"odinger $\frac{\partial \psi}{\partial t} = -\frac{i}{\hbar}\hat{H}\psi$ y $\frac{\partial \psi^{*}}{\partial t} = \frac{i}{\hbar}\hat{H}^{*}\psi^{*}$, nos queda que:
+
+$$\frac{d\langle \hat{A} \rangle}{dt} = \frac{i}{\hbar} \int_{\forall \vec{x}}[(\hat{H}^{*}\psi^{*})\hat{A}\psi - \psi^{*}\hat{A}\hat{H}\psi]d^{3}x + \int_{\forall \vec{x}} \psi^{*}\frac{\partial \hat{A}}{\partial t}\psi d^{3}x$$
+
+Como $\hat{H}$ es herm\'itico y est\'a aplicado sobre $\psi^{*}$, lo damos vuelta:
+
+$$\frac{d\langle \hat{A} \rangle}{dt} = \frac{i}{\hbar} \int_{\forall \vec{x}}[\psi^{*}\hat{H}\hat{A}\psi - \psi^{*}\hat{A}\hat{H}\psi]d^{3}x + \int_{\forall \vec{x}} \psi^{*}\frac{\partial \hat{A}}{\partial t}\psi d^{3}x$$
+
+$$ \Rightarrow \frac{d\langle \hat{A} \rangle}{dt} = \frac{i}{\hbar} \int_{\forall \vec{x}}[\psi^{*}(\hat{H}\hat{A} - \hat{A}\hat{H})\psi ]d^{3}x + \int_{\forall \vec{x}} \psi^{*}\frac{\partial \hat{A}}{\partial t}\psi d^{3}x$$
+
+Con lo que finalmente, obtenemos la ecuaci\'on de evoluci\'on de $\hat{A}$:
+
+\begin{equation}
+\label{eq:evola}
+\frac{d\langle \hat{A} \rangle}{dt} = \frac{i}{\hbar}\langle [\hat{H}, \hat{A}]\rangle + \bigg \langle \frac{\partial \hat{A}}{\partial t} \bigg \rangle
+\end{equation}
+
+Notemos que, en mec\'anica cu\'antica, si $\hat{A}$ es una constante de movimiento, entonces $\frac{d\langle \hat{A} \rangle}{dt} = 0$. Luego, $\frac{\partial \hat{A}}{\partial t} = 0$ y $[\hat{H}, \hat{A}] = 0$.\\
+
+De esta \'ultima relaci\'on, diremos que $\hat{A}$ y $\hat{H}$ tiene un conjunto de autofunciones comunes.
+
+\subsection{Potenciales en una dimensi\'on - Oscilador arm\'onico}
+
+En esta secci\'on resolveremos el oscilador arm\'onico dentro del formalismo de Schr\"odinger, asumiendo que la diferencia de energ\'ia entre sus niveles debe ser $\hbar \omega$. En principio, tenemos el potencial continuo:
+
+$$ V(x) = \frac{1}{2}m\omega^{2}x^{2}$$
+
+Notamos que $E > 0$. La ecuaci\'on de Schr\"odinger es v\'alida para todo $x$, entonces:
+
+$$ -\frac{\hbar^{2}}{2m}\frac{d^{2}}{dx^{2}} \phi(x) + V(x)\phi(x) = E\phi(x)$$
+
+$$ \frac{d^{2}}{dx^{2}} \phi(x) + \frac{2m}{\hbar^{2}}(E - V(x))\phi(x) = 0 \Rightarrow \frac{d^{2}}{dx^{2}} \phi(x) + \frac{2m}{\hbar^{2}}(E - \frac{1}{2}m\omega^{2}x^{2})\phi(x) = 0$$
+
+Si definimos las constantes adimensionales $\alpha^{2} = \frac{m\omega}{\hbar}$, $\beta = \frac{2mE}{\hbar^{2}}$ y la variable $u = \alpha x$, la ecuaci\'on anterior resulta:
+
+\begin{equation}
+\label{eq:ho1}
+\frac{d^{2}}{du^{2}}\phi(u) + \bigg(\frac{\beta}{\alpha^{2}} - u^{2} \bigg)\phi(u) = 0
+\end{equation}
+
+Las funciones de onda deben ser continuas y acotadas en $u$. Veamos primero el comportamiento asint\'otico de la funci\'on para descartar divergencias. Si consideramos $u^{2} \rightarrow \infty$ en (\ref{eq:ho1}), podemos eliminar $\frac{\beta}{\alpha^{2}}$, obteniendo:
+
+\begin{equation}
+\label{eq:ho2}
+\frac{d^{2}}{du^{2}}\phi_{as}(u) + \phi_{as}(u) = 0
+\end{equation}
+
+Cuya soluci\'on es unas gaussiana $\phi_{as}(u) \propto e^{-\frac{1}{2}u^{2}}$; con energ\'ias $E_{n} = \hbar \omega (n + \frac{1}{2})$. Notemos que el cero de energ\'ias esta en $E_{0} = \frac{1}{2}\hbar \omega$, contrariamente a lo que sucede cl\'asicamente y est\'a relacionado con el principio de incerteza: si tengo a la part\'icula en el m\'inimo de potencial, $\Delta x = 0$, entonces $\Delta p \rightarrow \infty$; y viceversa, por lo tanto el reposo cu\a'ntico es un compromiso entre $\Delta x \neq 0$ y $\Delta p \neq 0$ tal que $\Delta x \Delta p$ es lo m\'inimo posible. Esto corresponde al estado de m\'inima energ\'ia $\phi_{0}(x)$.\\
+
+\subsection{Impulso angular orbital - Conjunto completo de observables que conmutan (CCOC)}
+
+Si el sistema tiene simetr\'ia esf\'erica, $\vec{L}$ es constante de movimiento y comparte autofunciones con $\vec{H}$, es decir, $[\hat{H},\hat{L}]$.\\
+
+Veamos algunas propiedades de $\hat{L}$:
+
+\begin{itemize}
+\item Definimos el operador impulso angular para cada direcci\'on $\hat{L}_{x} = yp_{x} - zp_{y}$, $\hat{L}_{y} = zp_{y} - xp_{z}$ y $\hat{L}_{z} = xp_{y} - yp_{x}$. A modo de ejemplo, calculemos uno de los conmutadores y luego generalicemos para el resto:
+
+$$[\hat{L}_{x}, \hat{L}_{y}] = [yp_{z} - zp_{y},zp_{x} - xp_{z}] = [yp_{z},zp_{x}] - [zp_{y},zp_{x}] - [yp_{z},xp_{z}] + [zp_{y},xp_{z}] $$ $$ = y[p_{z},z]p_{x} + p_{y}[z,p_{z}]x = -i\hbar(yp_{x} - xp_{y}) = i\hbar(xp_{y} - yp_{x})$$
+$$ \Rightarrow [\hat{L}_{x}, \hat{L}_{y}] = i\hbar \hat{L}_{z}$$
+
+En general, las componentes de $\vec{L}$ no conmutan:
+
+\begin{equation}
+\label{eq:ele}
+[\hat{L}_{i}, \hat{L}_{j}] = i\hbar \hat{L}_{k}
+\end{equation}
+
+\item Si definimos el operador $\hat{L}^{2} = \hat{L}_{x}^{2} + \hat{L}_{y}^{2} + \hat{L}_{z}^{2}$, podemos probar que:
+
+\begin{equation}
+\label{eq:ele2}
+[\hat{L}^{2}, \hat{L}_{i}] = 0
+\end{equation}
+
+\item Como las componentes de $\hat{L}$ no conmutan entre si, pero $[\hat{H}, \hat{L}^{2}] = 0$, se elige un subconjunto de todas las constantes de movimiento que conmuten entre s\'i (compartan autofunciones), denominado \textit{conjunto completo de observables que conmutan (CCOC)}.\\
+
+Los autovalores de $\hat{L}^{2}$ y $\hat{L}_{z}$ ser\'an:
+
+\begin{equation}
+\label{eq:eigenvaluesL2}
+\hat{L}^{2}\psi(\hat{r}) = l(l+1)\hbar^{2}\psi(\vec{r}), l \geq 0
+\end{equation}
+
+\begin{equation}
+\label{eq:eigenvaluesLz}
+\hat{L}_{z}\psi(\hat{r}) = m\hbar \psi(\vec{r})
+\end{equation}
+
+La condici\'on $l \geq 0$ determina a $l$ un\'ivocamente. $l$ y $m$ son los n\'umeros cu\'anticos que nos dar\'an los posibles valores de $\hat{L}^{2}$ y $\hat{L}_{z}$. Al n\'umero cu\'antico $l$ se lo denomina \textit{n\'umero cu\'antico orbital}, mientras que $m$ es el \textit{n\'umero cu\'antico magn\'etico}, tal que $-l \leq m \leq l$.\\
+
+Por completitud, mencionaremos las autofunciones de $\hat{L}^{2}$ y $\hat{L}_{z}$, la cuenta es larga y se utilizan coordenadas esf\'ericas, polinomios de Legendre $P_{lm}(x)$ y arm\'onicos esf\'ericos:
+
+\begin{equation}
+\label{eq:armonicos}
+Y_{lm}(\theta, \phi) = \frac{(-1)^{l+m}}{2^{l}l!}\sqrt{\frac{2l + 1 (l-m)!}{4 \pi (l + m)!}}P_{lm}(cos \theta)e^{im\phi}
+\end{equation}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{spharm.jpg}
+  \caption{Arm\'onicos esf\'ericos $Y_{lm}(\theta, \phi)$ para $l = 0,1,2$ y $m = 0, \pm 1, \pm 2$.}
+  \label{fig:spharm}
+\end{figure}
+
+\end{itemize}
+
+\subsection{Spin}
+
+El spin es un impulso angular intr\'inseco que denominaremos $\vec{S}$, de manera tal que se cumplan las siguientes ecuaciones de autovalores con $\sigma$ autofunci\'on de cada uno de los operadores a continuaci\'on:
+
+\begin{equation}
+\label{eq:S2}
+\hat{S}^{2}\sigma = s(s+1)\hbar^{2}\sigma
+\end{equation}
+
+\begin{equation}
+\label{eq:Sz}
+\hat{S}_{z}\sigma = m_{s}\hbar \sigma
+\end{equation}
+
+donde se cumple que $-s \leq m_{s} \leq s$ y $\Delta m_{s} = \pm 1$; adem\'as de satisfacer las reglas de conmutaci\'on an\'alogas (\ref{eq:ele}) y (\ref{eq:ele2}) para $\hat{S}$.\\
+
+Veamos como son las autofunciones de los operadores $\hat{S}^{2}$ y $\hat{S}_{z}$. Para esto, hay distintas representaciones de estados de spin. La m\'as elemental es para $s = \frac{1}{2}$:\\
+
+En este caso tenemos $s = \frac{1}{2}$ y como $-s \leq m_{s} \leq s \Rightarrow m_{s} = \pm \frac{1}{2}$. Llamemos:
+
+$$\alpha = \sigma_{\frac{1}{2},\frac{1}{2}}$$
+$$\beta = \sigma_{\frac{1}{2},-\frac{1}{2}}$$
+
+Al estado $\alpha$ se lo denomina \textit{spin up} y se lo se\~nala con una flecha $\uparrow$. Al estado $\beta$ se lo llama \textit{spin down} y se lo etiqueta como $\downarrow$. Veamos como actuan los operadores de spin sobre estos estados:
+
+\begin{equation}
+\label{eq:S2up}
+\hat{S}^{2}\alpha = \frac{1}{2}\bigg(\frac{1}{2} + 1 \bigg)\hbar^{2}\alpha = \frac{3}{4}\hbar^{2}\alpha
+\end{equation}
+
+\begin{equation}
+\label{eq:S2down}
+\hat{S}^{2}\beta = \frac{1}{2}\bigg(\frac{1}{2} + 1 \bigg)\hbar^{2}\beta = \frac{3}{4}\hbar^{2}\beta
+\end{equation}
+
+\begin{equation}
+\label{eq:Szup}
+\hat{S}_{z}\alpha = \frac{1}{2}\hbar \alpha
+\end{equation}
+
+\begin{equation}
+\label{eq:Szdown}
+\hat{S}_{z}\beta = -\frac{1}{2}\hbar \beta
+\end{equation}
+
+La siguiente representaci\'on es m\'as general y se basa en espinores (vectores). De acuerdo al n\'umero $n$ de proyecciones posibles de spin, tendremos espinores de $n$ componentes. Para el caso de $s = \frac{1}{2}$ que venimos viendo, tendremos:
+
+$$\alpha = \begin{pmatrix} 
+    		1 \\ 
+    		0 
+    		\end{pmatrix}  $$
+		
+$$\beta = \begin{pmatrix} 
+    		0 \\ 
+    		1 
+    		\end{pmatrix}  $$
+
+Para un estado mixto normalizado $\gamma$:
+
+$$\gamma =  \begin{pmatrix}a \\ b \end{pmatrix} = a\begin{pmatrix}1 \\ 0 \end{pmatrix} + b \begin{pmatrix}0 \\ 1 \end{pmatrix}$$
+
+con $\sqrt{a^{2} + b^{2}} = 1$.\\
+
+Notemos que, en esta representaci\'on, los operadores de spin ser\'an matrices que cumplan las reglas de conmutaci\'on y las ecuaciones de autovalores. Por ejemplo, para $s = \frac{1}{2}$, ser\'an matrices de 2x2.\\
+
+Dichas matrices se denominan \textit{matrices de Pauli} y se definen como:
+
+$$ \sigma_{x} = \begin{pmatrix} 
+    		0 & 1 \\ 
+    		1 & 0
+    		\end{pmatrix} $$
+		
+$$ \sigma_{y} = \begin{pmatrix} 
+    		0 & -i \\ 
+    		i & 0
+    		\end{pmatrix} $$
+
+$$ \sigma_{z} = \begin{pmatrix} 
+    		1 & 0 \\ 
+    		0 & -1
+    		\end{pmatrix} $$
+
+Teniendo esto en cuenta, los operadores de spin quedan definidos de la siguiente manera:
+
+\begin{equation}
+\label{eq:si1/2}
+\hat{S}_{i} = \frac{\hbar}{2}\sigma_{i}
+\end{equation}
+
+con $i = x, y, z$.
+
+\subsection{Impulso angular total}
+
+Cada part\'icula tendr\'a un impulso angular orbital $\vec{L}$ y uno  de spin $\vec{S}$. Se define el impulso angular total $\vec{J}$ como:
+
+$$ \vec{J} = \vec{L} + \vec{S}$$
+
+Cumpliendo las mismas relaciones de conmutaci\'on que sus constituyentes y en particular:
+
+\begin{equation}
+\label{eq:J2}
+\langle \hat{J}^{2} \rangle = j(j+1)\hbar^{2}
+\end{equation}
+
+\begin{equation}
+\label{eq:Jz}
+\langle \hat{J}_{z}\rangle = m_{j}\hbar
+\end{equation}
+
+con $-j \leq m_{j} \leq j$ y $\Delta m_{j} = \pm 1$. Como $j$ no va a ser independiente de los n\'umeros $l$ y $s$, los valores que puede tomar ser\'an:
+
+$$ m_{j}^{m\'ax} = m^{m\'ax} + m_{s}^{m\'ax} = l + s$$
+
+$$ \Rightarrow j^{m\'ax} = l + s$$
+
+$$ \Rightarrow |l - s| \leq j \leq l + s$$
+
+\subsection{Part\'iculas id\'enticas}
+
+Consideremos un sistema de dos part\'iculas, representado por un hamiltoniano $\hat{H}(1,2)$, donde los n\'umeros representan las coordenadas de las part\'iculas 1 y 2, respectivamente. Si \'estas son id\'enticas:
+
+$$\hat{H}(1,2) = \hat{H}(2,1)$$
+
+Es decir, el hamiltoniano es invariante frente al intercambio de las part\'iculas (simetr\'ia). Definiremos un operador de permutaci\'on entre ellas tal que:
+
+$$\hat{P}(1,2)f(1,2) = f(2,1)$$
+
+Como $[\hat{P},\hat{H}] = 0$ (hacer la cuenta), tienen autofunciones comunes. Adem\'as $\hat{P}^{2}(1,2) = \hat{1}$, entonces:
+
+$$\psi(2,1) = \pm \psi(1,2) \Rightarrow \psi(1,2)$$ debe ser una funci\'on sim\'etrica o antisim\'etrica frente al intercambio de part\'iculas. Si planteamos la ecuaci\'on de Schr\"odinger para cada funci\'on, obtendremos que son problemas separables:
+
+$$\psi(1,2) = \psi_{\mu}(1)\psi_{\nu}(2) = \psi_{\mu \nu}$$
+
+donde $\psi_{\mu}(1)$ y $\psi_{\nu}(2)$ son las soluciones de los problemas separables y $\mu$, $\nu$ representan todos los n\'umeros cu\'anticos que correspondan. Definiremos entonces las funciones sim\'etricas y antisim\'etricas de la siguiente manera:
+
+\begin{equation}
+\label{eq:simetrica}
+\psi_{s}(1,2) = \frac{1}{\sqrt{2}}[\psi_{\mu}(1)\psi_{\nu}(2) + \psi_{\nu}(1)\psi_{\mu}(2)] = \frac{1}{\sqrt{2}}[\psi_{\mu \nu} + \psi_{\nu \mu}]
+\end{equation}
+
+\begin{equation}
+\label{eq:antisimetrica}
+\psi_{a}(1,2) = \frac{1}{\sqrt{2}}[\psi_{\mu}(1)\psi_{\nu}(2) - \psi_{\nu}(1)\psi_{\mu}(2)] = \frac{1}{\sqrt{2}}[\psi_{\mu \nu} - \psi_{\nu \mu}]
+\end{equation}
+
+Notemos que al intercambiar los indices 1 y 2, $\psi_{s}(1,2) = \psi_{s}(2,1)$ y $\psi_{a}(1,2) = -\psi_{a}(2,1)$.
+
+\subsection{Bosones y fermiones}
+
+Con la distinci\'on de la simetr\'ia de un sistema de part\'iculas, podemos caracterizarlas como \textit{fermiones} (funci\'on de onda antisim\'etrica y spin semientero) y \textit{bosones} (funci\'on de onda sim\'etrica y spin entero).\\
+
+Una caracter\'istica importante es que dos fermiones no pueden ocupar el mismo estado (la funci\'on de onda ser\'ia nula), lo que se conoce como principio de exclusi\'on de Pauli. Por otro lado, los  bosones s\'i pueden, en lo que se conoce como condensado de Bose-Einstein.\\
+
+Por \'ultimo, veamos un ejemplo de un sistema de dos fermiones id\'enticos interactuantes, sin acoplamiento $\vec{L} \dot \vec{S}$. Los estados se escriben teniendo en cuenta tambi\'en la funci\'on de onda de spin $\sigma$, que se factoriza de la parte espacial de la funci\'on de onda $\phi$:
+
+$$\psi(1,2) = \phi(1,2)\sigma(1,2)$$
+
+Como esta func\'on de onda total tiene que ser antisim\'etrica, si $\phi(1,2)$ es sim\'etrica, entonces $\sigma(1,2)$ debe ser antisim\'etrica; y viceversa. Las posibles combinaciones son:
+
+\begin{itemize}
+\item Si $\phi_{s}(1,2) \Rightarrow \sigma_{a}(1,2) = \frac{1}{\sqrt{2}}[\alpha(1)\beta(2) - \alpha(2)\beta(1)]$.
+
+Esto se llama \textbf{estado singlete} y se acoplan a $s = 0$.
+
+\item Si $\phi_{a}(1,2)$, tenemos tres opciones:
+
+$\sigma_{s1}(1,2) = \alpha(1)\alpha(2)$\\
+$\sigma_{s2}(1,2) = \frac{1}{\sqrt{2}}[\alpha(1)\beta(2) + \alpha(2)\beta(1)]$\\
+$\sigma_{s3}(1,2) = \beta(1)\beta(2)$.
+
+Estos se denominan \textbf{estados triplete}, acoplados a $s = 1$.
+
+\end{itemize}
+
+\subsection{Estad\'isticas cu\'anticas}
+
+Dentro de las estad\'isticas cu\'anticas, tenemos dos casos: estad\'istica de Bose-Einstein (BE) para part\'iculas con spin entero (bosones); y la estad\'istica de Fermi-Dirac (FE), para part\'iculas con spin semientero (fermiones).\\
+
+Las formas que tiene cada una de las distribuciones es:
+
+\begin{itemize}
+\item \underline{Maxwell-Boltzmann}:
+$$n_{s} = \frac{g_{s}}{e^{\alpha + \beta \epsilon_{s}}}$$
+
+donde $\alpha$ es el multiplicador de Lagrange asociado al n\'umero de part\'iculas y $\beta = \frac{1}{kT}$ es el multiplicador asociado a la energ\'ia.
+
+\item \underline{Fermi-Dirac}:
+$$n_{s} = \frac{g_{s}}{e^{\alpha + \beta \epsilon_{s}}+1} = \frac{g_{s}}{e^{\beta(\epsilon_{s} - \mu)}+1}$$
+
+con $\mu = -\frac{\alpha}{\beta}$.
+
+\item \underline{Bose-Einstein}:
+
+$$n_{s} = \frac{g_{s}}{e^{\alpha + \beta \epsilon_{s}}-1} = \frac{g_{s}}{e^{\beta(\epsilon_{s} - \mu)}-1}$$
+
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{estadisticasq.jpg}
+  \caption{Forma funcional de las estad\'isticas MB, FD y BE.}
+  \label{fig:estadisticasq}
+\end{figure}
+
+Estas distribuciones cumplen varias propiedades interesantes, a saber:
+
+\begin{itemize}
+\item BE y FD decaen a $T$ altas o energ\'ias $\epsilon_{s}$ altas. Para esos l\'imites, tienden a la distribuci\'on de MB (cl\'asica).\\
+\item BE: las part\'iculas tienden a estar todas en el estado de energ\'ia m\'as bajo, formando un condensado de bosones.\\
+
+\item FD: tienden a estar ocupados los niveles de energ\'ia m\'as bajos, pero $\langle \epsilon \rangle \neq 0$ ($n_{s} = 0,1$), por lo tanto hay m\'as niveles ocupados.\\
+
+A temperaturas altas $\beta \mu = \frac{\mu}{kT} << 1 \Rightarrow e^{\beta(\epsilon_{s} - \mu)} \approx e^{\beta \epsilon_{s}} >> 1$, con lo cual recuperamos la distribuci\'on MB.\\
+
+Para $\epsilon_{s} << \mu \Rightarrow \frac{n_{s}}{g_{s}} \rightarrow 1$, es decir, los estados $\epsilon_{s} < \mu$ est\'an ocupados.\\
+
+Para $\epsilon_{s} >> \mu \Rightarrow \frac{n_{s}}{g_{s}} \rightarrow e^{-\beta(\epsilon_{s} - \mu)}$, es decir, los estados $\epsilon_{s} > \mu$ est\'an desocupados.\\
+
+Esta energ\'ia $\mu = \epsilon_{F}$ se llama \textit{energ\'ia de Fermi} y marca la transici\'on entre estados ocupados y desocupados a $T = 0$. Tambi\'en se define la \textit{temperatura de Fermi} como $\mu = kT_{F}$.
+
+\end{itemize}
+
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\newpage
+\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
+ 
+\end{thebibliography}
+
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
