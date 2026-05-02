@@ -97,23 +97,40 @@
 
 \section{Termodin\'amica}
 
-La termodin\'amica es el estudio de las transformaciones entre calor y trabajo mec\'anico, en particular en sistemas con un gran n\'umero de part\'iculas.\newline
+La termodin\'amica es el estudio de las transformaciones de calor en trabajo mec\'anico y viceversa, en particular en sistemas con un gran n\'umero de part\'iculas.\newline
 
-Definiremos \textit{estado termodin\'amico} del sistema a un conjunto de propiedades que lo caracterizan, a saber:
+Como resulta imposible y complejo conocer el estado exacto de cada una de esas part\'iculas a un cierto tiempo, adem\'as de las interacciones entre s\'i, definiremos \textbf{\textit{estado termodin\'amico}} del sistema a un conjunto de propiedades que lo caracterizan, a saber:\newline
 
-\underline{Propiedades macrosc\'opicas}: volumen \textit{V}, presi\'on \textit{p}, temperatura \textit{T}, energ\'ia \textit{E}, etc. \'Estas determinan un \textbf{macroestado}.
+\underline{Propiedades macrosc\'opicas}: volumen \textit{V}, presi\'on \textit{p}, temperatura \textit{T}, energ\'ia \textit{E}, etc. \'Estas determinan un \textbf{macroestado}.\newline
 
-\underline{Propiedades microsc\'opicas}: promedios tales como energ\'ia media por part\'icula \textit{<E>}, velocidad media por part\'icula \textit{<v>}, etc. Analogamente, estas propiedades determinan un \textbf{microestado}.\newline
+\underline{Propiedades microsc\'opicas}: promedios tales como energ\'ia media por part\'icula $\langle \epsilon \rangle$, velocidad media por part\'icula $\langle \vec{v} \rangle$, etc. Estas propiedades determinan un \textbf{microestado}.\newline
 
 Estas propiedades est\'an relacionadas y son dos maneras de caracterizar a un sistema, sabiendo que para un dado macroestado pueden corresponderse muchos microestados, con lo que definiremos \textbf{multiplicidad del macroestado} al n\'umero de microestados que corresponden a un dado macroestado.\newline
 
 Tambi\'en definimos el \textbf{equilibrio} como el estado tal que los valores medios de todos los valores macrosc\'opicos como microsc\'opicos no var\'ian con el tiempo, m\'as all\'a de peque\~nas fluctuaciones; o como el estado del sistema m\'as desordenado compatible con los v\'inculos.\newline
 
-\underline{Reversibilidad}: un proceso es reversible o cuasiest\a'tico cuando el sistema evoluciona de tal manera que todos los estados intermedios son de equilibrio. Es decir, el tiempo que debe durar el proceso para permitir que el sistema alcance el equilibrio en cada paso debe ser mucho mayor al tiempo de relajaci\'on $\tau$ del sistema.
+\underline{Reversibilidad}: un proceso es reversible o cuasiest\'atico cuando el sistema evoluciona de tal manera que todos los estados intermedios son de equilibrio. Es decir, el tiempo que debe durar el proceso para permitir que el sistema alcance el equilibrio en cada paso debe ser mucho mayor al tiempo de relajaci\'on $\tau$ del sistema.
 
-\subsection{Leyes termodin\'amicas}
+\subsection{Calor $Q$ y temperatura absoluta $T$}
 
-\underline{Ley cero de la Termodin\'amica}: si dos sistemas est\'an en equilibrio t\'ermico con un tercero, tambi\'en lo estar\'an entre s\'i: $T_{a} = T_{c}$ y $T_{b} = T_{c} \Rightarrow T_{a} = T_{b}$.
+Los sistemas que no est\'an aislados pueden interactuar mutuamente y como resultado intercambiar energ\'ia.\newline
+
+Sin embargo, puede suceder que exista este intercambio sin que haya trabajo macrosc\'opico, como por ejemplo mover un pist\'on entre dos recipientes aislados del exterior. A esta transferencia de energ\'ia se la llama \textbf{calor} $Q$.\newline
+
+Los materiales que no permiten el intercambio de calor se denominan \textit{adiab\'aticos}; los que s\'i lo permiten se llaman \textit{diat\'ermicos}.\newline
+
+Con respecto a las magnitudes, si $Q > 0$, el sistema gana energ\'ia (absorbe calor). Por el contrario, cuando $Q < 0$, el sistema pierde energ\'ia (cede calor).\newline
+
+Al llegar al equilibrio t\'ermico, la transferencia de energ\'ia se detiene. Esto se produce cuando ambos sistemas tienen la misma energ\'ia media molecular, es decir, $\langle \epsilon_{A} \rangle = \langle \epsilon_{B} \rangle$. En t\'erminos macrosc\'opicos, $\langle \epsilon \rangle = cT$, por lo tanto la condici\'on de equilibrio t\'ermico puede expresarse como:
+
+$$T_{A} = T_{B}$$
+
+denominado como \textbf{temperatura absoluta}.\newline
+
+
+\subsection{Ley cero de la Termodin\'amica}
+
+Si dos sistemas est\'an en equilibrio t\'ermico con un tercero, tambi\'en lo estar\'an entre s\'i: $T_{A} = T_{C}$ y $T_{B} = T_{C} \Rightarrow T_{A} = T_{B}$.
 
 \subsection{Presi\'on de un gas ideal}
 
@@ -121,7 +138,7 @@ Al confinar un gas en un recipiente, las colisiones de las mol\'eculas de gas so
 
 $$p = -\frac{d\vec{F}}{dA} \cdot \hat{n}$$
 
-Si $p > 0$, el medio est\'a siendo comprimido; si no est\'a tensionado.\newline
+Si $p > 0$, el medio est\'a siendo comprimido; por el contrario, est\'a tensionado.\newline
 
 Ahora veamos como es la presi\'on de un gas ideal mediante una aproximaci\'on muy grosera. Sea un gas de $N$ mol\'eculas de masa $m$ en un recipiente de volumen $V$ en equilibrio, con $\rho = \frac{N}{V}$ la densidad del gas.
 Supongamos que las mol\'eculas se mueven todas con velocidad media $\langle \vec{v} \rangle$. En un $\Delta t$ solo van a llegar al \'area $A$ de la pared aquellas mol\'eculas que se encuentren suficientemente cerca de ella, contenidas en un volumen de \'area $A$ y altura $\Delta x = \langle v_{x} \rangle \Delta t$.
@@ -165,18 +182,18 @@ p = \frac{N}{V}kT
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{0.4\linewidth}
-    \includegraphics[width=\linewidth]{isobaras.jpg}
+    \includegraphics[width=\linewidth]{img/isobaras.jpg}
      \caption{Procesos isob\'aricos (P = cte).\\ $P_{1} < P_{2} < P_{3}$ }
   \end{subfigure}
   \begin{subfigure}[b]{0.4\linewidth}
-    \includegraphics[width=\linewidth]{isocoras.jpg}
+    \includegraphics[width=\linewidth]{img/isocoras.jpg}
     \caption{Procesos isoc\'oricos (V = cte). \\$V_{1} < V_{2} < V_{3}$}
   \end{subfigure}
   \begin{subfigure}[b]{0.4\linewidth}
-    \includegraphics[width=\linewidth]{isotermas.jpg}
+    \includegraphics[width=\linewidth]{img/isotermas.jpg}
     \caption{Procesos isot\'ermicos (T = cte). \\$T_{1} > T_{2} > T_{3}$}
   \end{subfigure}
-  \caption{Procesos reversibles de un gas ideal.}
+  \caption{Procesos reversibles de un gas ideal. Cada punto del espacio representa un estado de equilibrio.}
   \label{fig:procesos}
 \end{figure}
 
@@ -291,7 +308,7 @@ Para demostrar que son equivalentes, primero consideremos un ciclo de Carnot med
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.4\linewidth,height=0.4\linewidth]{carnot.jpg}
+  \includegraphics[width=0.4\linewidth,height=0.4\linewidth]{img/carnot.jpg}
   \caption{El sistema que realiza el ciclo reversible o irreversible (c\'irculo) absorbe calor $Q_{1}$ de la fuente a $T_{1}$, cede calor $Q_{2}$ a la fuente m\'as fr\'ia a $T_{2}$ y entrega trabajo $W$.}
   \label{fig:carnot}
 \end{figure}
@@ -319,7 +336,7 @@ En lo que sigue de esta secci\'on, vamos a buscar una relaci\'on m\'as general.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{carnots.jpg}
+  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{img/carnots.jpg}
   \label{fig:carnots}
 \end{figure}
 
@@ -491,7 +508,7 @@ En la teor\'ia cl\'asica, la energ\'ia es funci\'on de las coordenadas y los imp
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.5\linewidth,height=0.5\linewidth]{espaciofases.jpg}
+  \includegraphics[width=0.5\linewidth,height=0.5\linewidth]{img/espaciofases.jpg}
   \caption{Espacio de fases de una part\'icula.}
   \label{fig:espaciofases}
 \end{figure}
@@ -611,7 +628,7 @@ para una dada temperatura $T$. De manera experimental se encontr\'o lo siguiente
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.6\linewidth,height=0.4\linewidth]{cuerponegro.jpg}
+  \includegraphics[width=0.6\linewidth,height=0.4\linewidth]{img/cuerponegro.jpg}
   \caption{Radiaci\'on espectral $u_{\lambda}$ de un cuerpo negro}
   \label{fig:cuerponegro}
 \end{figure}
@@ -652,7 +669,7 @@ Como se puede ver en la siguiente figura, esta distribuci\'on se comporta razona
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.5\linewidth,height=0.4\linewidth]{quilombouv.jpg}
+  \includegraphics[width=0.5\linewidth,height=0.4\linewidth]{img/quilombouv.jpg}
   \caption{Cat\'astrofe ultravioleta!}
   \label{fig:quilombouv}
 \end{figure}
@@ -749,7 +766,7 @@ $$\Delta t \Delta E \geq \hbar$$
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\linewidth,height=0.5\linewidth]{incertezaET.jpg}
+  \includegraphics[width=0.8\linewidth,height=0.5\linewidth]{img/incertezaET.jpg}
   \caption{Ejemplo donde se observa que si el estado excitado de una part\'icula tiene un tiempo de vida corto (m\'as certeza sobre el momento), las l\'ineas espectrales son m\'as anchas (menos certeza sobre la frecuencia) y viceversa.}
   \label{fig:incertezaET}
 \end{figure}
@@ -1026,7 +1043,7 @@ Y_{lm}(\theta, \phi) = \frac{(-1)^{l+m}}{2^{l}l!}\sqrt{\frac{2l + 1 (l-m)!}{4 \p
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{spharm.jpg}
+  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{img/spharm.jpg}
   \caption{Arm\'onicos esf\'ericos $Y_{lm}(\theta, \phi)$ para $l = 0,1,2$ y $m = 0, \pm 1, \pm 2$.}
   \label{fig:spharm}
 \end{figure}
@@ -1232,7 +1249,7 @@ $$n_{s} = \frac{g_{s}}{e^{\alpha + \beta \epsilon_{s}}-1} = \frac{g_{s}}{e^{\bet
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{estadisticasq.jpg}
+  \includegraphics[width=0.8\linewidth,height=0.6\linewidth]{img/estadisticasq.jpg}
   \caption{Forma funcional de las estad\'isticas MB, FD y BE.}
   \label{fig:estadisticasq}
 \end{figure}
