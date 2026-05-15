@@ -107,7 +107,7 @@ Como resulta imposible y complejo conocer el estado exacto de cada una de esas p
 
 Estas propiedades est\'an relacionadas y son dos maneras de caracterizar a un sistema, sabiendo que para un dado macroestado pueden corresponderse muchos microestados, con lo que definiremos \textbf{multiplicidad del macroestado} al n\'umero de microestados que corresponden a un dado macroestado.\newline
 
-Tambi\'en definimos el \textbf{equilibrio} como el estado tal que los valores medios de todos los valores macrosc\'opicos como microsc\'opicos no var\'ian con el tiempo, m\'as all\'a de peque\~nas fluctuaciones; o como el estado del sistema m\'as desordenado compatible con los v\'inculos.\newline
+Tambi\'en definimos el \textbf{equilibrio} como el estado tal que los valores medios de todos las propiedades macrosc\'opicas como microsc\'opicas no var\'ian con el tiempo, m\'as all\'a de peque\~nas fluctuaciones; o como el estado del sistema m\'as desordenado compatible con los v\'inculos.\newline
 
 \underline{Reversibilidad}: un proceso es reversible o cuasiest\'atico cuando el sistema evoluciona de tal manera que todos los estados intermedios son de equilibrio. Es decir, el tiempo que debe durar el proceso para permitir que el sistema alcance el equilibrio en cada paso debe ser mucho mayor al tiempo de relajaci\'on $\tau$ del sistema.
 
@@ -172,7 +172,7 @@ Si introducimos el valor medio de la energ\'ia cin\'etica en (\ref{eq:presion}),
 p = \frac{1}{3}\frac{N}{V} m \langle v^{2} \rangle = \frac{2}{3}\frac{N}{V} \langle \frac{1}{2}mv^{2} \rangle = \frac{2}{3}\frac{N}{V}\langle \epsilon \rangle
 \end{equation}
 
-Ahora, relacionamos el valor medio de la energ\'ia $\langle \epsilon \rangle$ (par\'ametro microsc\'opico) con la temperatura, $\langle \epsilon \rangle = cT = \frac{3}{2}kT$, por lo tanto la ecuaci\'on (\ref{eq:presion2}) nos queda finalmente la de estado del gas ideal:
+Ahora, relacionamos el valor medio de la energ\'ia $\langle \epsilon \rangle$ (par\'ametro microsc\'opico) con la temperatura, $\langle \epsilon \rangle = cT = \frac{3}{2}kT$, por lo tanto la ecuaci\'on (\ref{eq:presion2}) queda finalmente como la de estado del gas ideal:
 
 \begin{equation}
 \label{eq:ecestado}
@@ -199,7 +199,19 @@ p = \frac{N}{V}kT
 
 \subsection{Primer principio de la termodin\'amica}
 
-Supongamos que tenemos un gas dentro de un recipiente que puede variar su volumen. La fuerza debida a la presi\'on externa al recipiente vale sobre cada elemento de \'area $dA$: $d\vec{F}_{ext} = -p_{ext}dA \hat{n}$.\\
+Supongamos que tenemos un sistema formado por $N$ part\'iculas. Llamamos energ\'ia interna del mismo a:
+
+$$E = E_{K}^{(CM)} + E_{pot, int} = \sum_{i = 1}^{N} E_{K, i}^{(CM)} + \sum_{(i, j)} E_{pot, int}^{i, j}$$
+
+donde el primer t\'ermino corresponde a la energ\'ia cin\'etica del sistema respecto del centro de masa; y el segundo t\'ermino a la energ\'ia potencial de interacci\'on entre pares de part\'iculas.\\
+
+Ahora supongamos que se realiza trabajo sobre ese sistema aislado adiab\'aticamente. El intercambio de energ\'ia con el exterior estar\'a dado por:
+
+$$E - E_{0} = W_{ext}^{adiab.}$$
+
+Supongamos que tenemos un gas dentro de un recipiente que puede variar su volumen. La fuerza debida a la presi\'on externa al recipiente vale sobre cada elemento de \'area $dA$:
+
+$$d\vec{F}_{ext} = -p_{ext}dA \hat{n}$$
 
 El trabajo externo sobre el sistema ser\'a:
 
@@ -217,7 +229,7 @@ dW_{ext} = -pdV
 
 Notemos que solo en el caso que el proceso sea reversible, puede expresarse el trabajo termodin\'amico con la presi\'on interna (dado que la presi\'on est\'a bien definida punto a punto por que el proceso es una sucesi\'on de estados de equilibrio). Si el proceso es irreversible, solo puede calcularse el trabajo externo. \\
 
-Veamos un ejemplo: consideremos el trabajo realizado por un gas realizando una expansi\'on isot\'ermica reversible a $T_{0}$ desde $V_{1}$ a $V_{2}$:
+Veamos un ejemplo: consideremos el trabajo hecho por un gas realizando una expansi\'on isot\'ermica reversible a $T_{0}$ desde $V_{1}$ a $V_{2}$:
 
 $$ W_{1 \rightarrow 2} = \int_{V_{1}}^{V_{2}} pdV = \int_{V_{1}}^{V_{2}} \frac{NkT_{0}}{V} dV = NkT_{0} ln \frac{V_{2}}{V_{1}}$$
 
@@ -277,7 +289,7 @@ C_{P} = \frac{dQ}{dT}\bigg|_{P} = \frac{\partial E}{\partial T}\bigg|_{P} + p \f
 
 A modo de ejemplo, veamos $C_{V}$ y $C_{P}$ para un gas ideal. De los apartados anteriores, $E = N\langle \epsilon \rangle = \frac{1}{2}Nm\langle v^{2} \rangle = \frac{3}{2}NkT$.\\
 
-Consideramos la expansi\'on libre del gas muy diluido hacia una c\'amara donde hay vac\'io, lo suficientemente lento como para que $Q = 0 = \Delta E + W$. Como el gas se expande contra presi\'on nula, el trabajo sobre el mismo es 0, por lo tanto $\Delta E = 0 \Rightarrow E = E(T) = \frac{3}{2}NkT$. \\
+Consideramos la expansi\'on libre del gas muy diluido hacia una c\'amara donde hay vac\'io, lo suficientemente lento como para que $Q = 0 = \Delta E + W$. Como el gas se expande contra presi\'on nula, el trabajo sobre el mismo es 0 (es una expansi\'on libre, luego el proceso es irreversible), por lo tanto $\Delta E = 0 \Rightarrow E = E(T) = \frac{3}{2}NkT$. \\
 
 Aplicando (\ref{eq:cv}) y (\ref{eq:cp}) para las capacidades calor\'ificas:
 
@@ -293,6 +305,13 @@ C_{P} = \frac{\partial E}{\partial T}\bigg|_{P} + p \frac{\partial V}{\partial T
 \end{equation}
 
 \subsection{Segundo principio de la termodin\'amica}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\linewidth,height=0.4\linewidth]{img/ciclos_WQ.jpg}
+  \caption{Procesos de conversi\'on $W \rightarrow Q$ (v\'alido) y $Q \rightarrow W$ (no v\'alido a una \'unica $T$).}
+  \label{fig:ciclos}
+\end{figure}
 
 No es posible convertir calor en trabajo ($Q \rightarrow W$) a una determinada $T$ sin otro cambio en el sistema o en el medio ambiente. En t\'erminos de Lord Kelvin: \\
 
@@ -316,7 +335,6 @@ Para demostrar que son equivalentes, primero consideremos un ciclo de Carnot med
 Supongamos que el enunciado de Clausius fuera falso, entonces ser\'ia posible que una cantidad de calor $Q_{2}$ pase de la fuente m\'as fr\'ia $T_{2}$ a la m\'as caliente $T_{1}$. Como todo lo que entra a $T_{2}$ tambi\'en sale, esta fuente es irrelevante y podr\'ia reemplazarse por un conductor t\'ermico. Con esto el sistema tomar\'ia calor de una \'unica fuente y producir\'ia trabajo, luego el enunciado de Kelvin ser\'ia falso.\\
 
 Si Kelvin fuera falso, la m\'aquina $M$ podr\'ia tomar calor de una \'unica fuente a $T_{1}$ y producir trabajo y transformarlo nuevamente en calor. Ese calor puede utilizarse para elevar la temperatura de un segundo cuerpo que inicialmente se encontrase a $T_{2} > T_{1}$; resultando que se transfiera calor de un cuerpo m\'as fr\'io a otro m\'as caliente, por lo tanto el enunciado de Clausius resultar\'ia falso.\\
-
 
 Por el segundo principio, no todo el calor puede transformarse en trabajo, existir\'an m\'aquinas t\'ermicas m\'as eficientes que otras, para lo cual definimos \textbf{eficiencia} como la raz\'on entre beneficio ($W$ obtenido) y costo ($Q$ absorbido):
 
